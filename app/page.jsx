@@ -1,9 +1,53 @@
 'use client'
+import { useEffect, useState } from 'react'
 
 export default function Home() {
+  const [navVisible, setNavVisible] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [formError, setFormError] = useState(false)
+
+  useEffect(() => {
+    const scrollBar = document.getElementById('scrollBar')
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const scrollPercent = (scrollTop / docHeight) * 100
+      scrollBar.style.width = scrollPercent + '%'
+      setNavVisible(scrollTop > window.innerHeight * 0.8)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    try {
+      const res = await fetch('/__forms.html', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData).toString(),
+      })
+      if (res.ok) setFormSubmitted(true)
+      else setFormError(true)
+    } catch {
+      setFormError(true)
+    }
+  }
+
   return (
     <>
       <div className="scroll-bar" id="scrollBar"></div>
+
+      <nav className={`site-nav${navVisible ? ' site-nav--visible' : ''}`} aria-label="Site navigation">
+        <a href="#top" className="site-nav-brand display-font">LEN JOHNSON</a>
+        <div className="site-nav-links">
+          <a href="#story" className="site-nav-link">Story</a>
+          <a href="#activism" className="site-nav-link">Activism</a>
+          <a href="#campaign" className="site-nav-link">Campaign</a>
+          <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="pill pill-gold site-nav-cta">Donate →</a>
+        </div>
+      </nav>
 
       <section id="top" className="hero">
         <img src="/images/hero.webp" alt="Len Johnson with friends, Manchester" className="hero-bg"/>
@@ -456,7 +500,7 @@ export default function Home() {
                 <span>Donate now</span>
                 <span>→</span>
               </a>
-              <a href="#contact" className="pill pill-outline-light">
+              <a href="#get-involved" className="pill pill-outline-light">
                 <span>Get involved</span>
               </a>
             </div>
@@ -480,6 +524,75 @@ export default function Home() {
             <span className="block text-green">HONOUR.</span>
             <span className="block text-orange">BUILD.</span>
           </div>
+        </div>
+      </section>
+
+      <section id="get-involved" className="section bg-black">
+        <div className="container">
+          <p className="label text-gold mb-6">GET INVOLVED</p>
+          <h2 className="display-font h-huge text-white mb-8">
+            JOIN THE<br/>
+            <span className="text-gold">CAMPAIGN.</span>
+          </h2>
+          <p className="body-lg text-cream max-w-2xl mb-12">
+            Whether you want to volunteer, partner with us, or simply stay informed — we'd love to hear from you.
+          </p>
+
+          {formSubmitted ? (
+            <div className="form-success">
+              <p className="display-font h-small text-gold mb-4">THANK YOU.</p>
+              <p className="body-lg text-white">We'll be in touch soon.</p>
+            </div>
+          ) : (
+            <form name="get-involved" method="POST" data-netlify="true" netlify-honeypot="bot-field" onSubmit={handleFormSubmit} className="get-involved-form">
+              <input type="hidden" name="form-name" value="get-involved" />
+              <p style={{display: 'none'}}>
+                <label>Don't fill this out: <input name="bot-field" /></label>
+              </p>
+              <div className="form-grid">
+                <div className="form-field">
+                  <label htmlFor="name" className="label text-gold mb-2">YOUR NAME</label>
+                  <input type="text" id="name" name="name" required className="form-input" placeholder="Full name" />
+                </div>
+                <div className="form-field">
+                  <label htmlFor="email" className="label text-gold mb-2">EMAIL ADDRESS</label>
+                  <input type="email" id="email" name="email" required className="form-input" placeholder="your@email.com" />
+                </div>
+              </div>
+              <div className="form-field mt-6">
+                <p className="label text-gold mb-4">HOW CAN YOU HELP?</p>
+                <div className="form-radio-group">
+                  <label className="form-radio-label">
+                    <input type="radio" name="involvement" value="volunteer" defaultChecked />
+                    <span>Volunteer</span>
+                  </label>
+                  <label className="form-radio-label">
+                    <input type="radio" name="involvement" value="partner" />
+                    <span>Partner / Sponsor</span>
+                  </label>
+                  <label className="form-radio-label">
+                    <input type="radio" name="involvement" value="media" />
+                    <span>Media / Press</span>
+                  </label>
+                  <label className="form-radio-label">
+                    <input type="radio" name="involvement" value="other" />
+                    <span>Other</span>
+                  </label>
+                </div>
+              </div>
+              <div className="form-field mt-6">
+                <label htmlFor="message" className="label text-gold mb-2">MESSAGE (OPTIONAL)</label>
+                <textarea id="message" name="message" rows={4} className="form-input form-textarea" placeholder="Tell us more..."></textarea>
+              </div>
+              {formError && (
+                <p className="body-md text-orange mt-4">Something went wrong. Please try again or email info@lenjohnsoncampaign.co.uk</p>
+              )}
+              <button type="submit" className="pill pill-gold mt-8">
+                <span>Send message</span>
+                <span>→</span>
+              </button>
+            </form>
+          )}
         </div>
       </section>
 
@@ -511,8 +624,8 @@ export default function Home() {
               <p className="label text-muted mb-6">SUPPORT</p>
               <ul className="space-y-3">
                 <li><a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="body-md link-underline font-bold text-green">Donate</a></li>
-                <li><a href="#" className="body-md link-underline">Volunteer</a></li>
-                <li><a href="#" className="body-md link-underline">Partner with us</a></li>
+                <li><a href="#get-involved" className="body-md link-underline">Volunteer</a></li>
+                <li><a href="#get-involved" className="body-md link-underline">Partner with us</a></li>
               </ul>
             </div>
             <div>
@@ -528,20 +641,9 @@ export default function Home() {
             HERE.WE.<span className="text-green">GO.</span>
           </div>
 
-          <p className="body-sm text-muted text-center mt-8">&copy; 2024 Len Johnson Campaign. Community Interest Company. Manchester deserves justice.</p>
+          <p className="body-sm text-muted text-center mt-8">&copy; {new Date().getFullYear()} Len Johnson Campaign. Community Interest Company. Manchester deserves justice.</p>
         </div>
       </footer>
-
-      <script dangerouslySetInnerHTML={{__html: `
-        const scrollBar = document.getElementById('scrollBar');
-
-        window.addEventListener('scroll', function() {
-          const scrollTop = window.scrollY;
-          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const scrollPercent = (scrollTop / docHeight) * 100;
-          scrollBar.style.width = scrollPercent + '%';
-        });
-      `}} />
     </>
   )
 }
