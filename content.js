@@ -193,7 +193,7 @@ export const content = {
   footer: {
     menu: 'MENU',
     closing: 'HERE.WE.GO.',
-    copyright: 'Community Interest Company. Manchester deserves justice.',
+    copyright: 'Community Interest Company. Manchester.',
   },
 
   // Navigation
