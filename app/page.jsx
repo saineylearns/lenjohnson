@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { content } from '@/content'
+import { content } from '@/content-config'
 
 export default function Home() {
   useEffect(() => {
