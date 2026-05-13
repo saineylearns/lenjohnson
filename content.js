@@ -133,13 +133,13 @@ export const content = {
   // Champions
   champions: {
     label: 'BACKED BY',
-    heading: 'CHAMPIONS FOR LEN.',
+    heading: 'In Lens Corner.',
     list: [
       { name: 'ANDY BURNHAM', role: 'MAYOR OF GREATER MANCHESTER' },
-      { name: 'ANTHONY JOSHUA', role: 'HEAVYWEIGHT CHAMPION' },
-      { name: 'RICKY HATTON', role: 'FORMER WORLD CHAMPION' },
-      { name: 'CARL FRAMPTON', role: 'FORMER WORLD CHAMPION' },
-      { name: 'NATASHA JONAS', role: 'WORLD CHAMPION' },
+      { name: 'ANTHONY JOSHUA', role: 'TWO-TIME WORLD HEAVYWEIGHT CHAMPION' },
+      { name: 'RICKY HATTON', role: 'FORMER TWO-WEIGHT WORLD CHAMPION' },
+      { name: 'CARL FRAMPTON', role: 'FORMER TWO-WEIGHT WORLD CHAMPION' },
+      { name: 'NATASHA JONAS', role: 'FORMER UNIFIED LIGHT-MIDDDLEWEIGHT CHAMPION' },
       { name: 'AMIR KHAN', role: 'FORMER WORLD CHAMPION' },
       { name: 'TONY BELLEW', role: 'FORMER WORLD CHAMPION' },
       { name: 'ANTHONY CROLLA', role: 'FORMER WORLD CHAMPION' },
