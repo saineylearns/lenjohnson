@@ -1,4 +1,5 @@
 import './globals.css'
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: 'Len Johnson — Uncrowned Champion of Manchester',
@@ -39,7 +40,8 @@ export const metadata = {
   robots: 'index, follow',
   canonical: 'https://lenjohnsoncampaign.co.uk',
 }
-{
+
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
@@ -48,15 +50,6 @@ export const metadata = {
         <link rel="icon" href="/favicon.ico" />
         <link rel="canonical" href="https://lenjohnsoncampaign.co.uk" />
       </head>
-      <body>{children}</body>
-    </html>
-  )
-}
-import { Analytics } from "@vercel/analytics/react";
-
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
       <body>
         {children}
         <Analytics />
