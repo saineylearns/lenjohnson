@@ -27,9 +27,12 @@ export default function Home() {
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <p className="label text-gold mb-6 slide-up">{content.hero.location}</p>
-          <h1 className="display-font h-huge text-white slide-up delay-1">
-            {content.hero.heading}
-          </h1>
+         <h1 className="display-font h-huge text-white slide-up delay-1">
+  A BOXER WHO<br/>
+  FOUGHT <span className="text-green">RACISM</span><br/>
+  IN THE RING<br/>
+  AND ON THE <span className="text-orange">STREETS.</span>
+</h1>
           <div className="flex gap-3 flex-wrap mt-12 slide-up delay-2">
             <a href="#story" className="pill pill-gold">
               <span>{content.hero.cta1}</span>
