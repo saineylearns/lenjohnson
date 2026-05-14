@@ -320,8 +320,8 @@ export default function Home() {
               <div className="text-center">
                 <p className="display-font h-large text-gold mb-2">200</p>
                 <p className="display-font h-small text-white mb-6">PROTESTORS</p>
-                <p className="display-font h-large text-green mb-2">4</p>
-                <p className="display-font h-small text-white mb-6">NIGHTS</p>
+                <p className="display-font h-large text-gold mb-2">∞</p>
+                <p className="display-font h-small text-white mb-6">IMPACT</p>
                 <p className="display-font h-large text-orange mb-2">12</p>
                 <p className="display-font h-small text-white">YEARS AHEAD</p>
               </div>
