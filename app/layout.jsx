@@ -39,8 +39,7 @@ export const metadata = {
   robots: 'index, follow',
   canonical: 'https://lenjohnsoncampaign.co.uk',
 }
-
-export default function RootLayout({ children }) {
+{
   return (
     <html lang="en">
       <head>
