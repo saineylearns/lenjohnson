@@ -1,9 +1,12 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { content } from '../content-config'
 
 export default function Home() {
+  const [navVisible, setNavVisible] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   useEffect(() => {
     const scrollBar = document.getElementById('scrollBar')
     
@@ -12,6 +15,9 @@ export default function Home() {
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
       const scrollPercent = (scrollTop / docHeight) * 100
       if (scrollBar) scrollBar.style.width = scrollPercent + '%'
+      
+      // Show nav after scrolling past hero
+      setNavVisible(scrollTop > window.innerHeight * 0.7)
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -20,25 +26,109 @@ export default function Home() {
 
   return (
     <>
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       <div className="scroll-bar" id="scrollBar"></div>
 
+      {/* STICKY NAVIGATION */}
+      <nav className={`sticky-nav ${navVisible ? 'visible' : ''}`} role="navigation" aria-label="Main navigation">
+        <div className="sticky-nav-inner">
+          <a href="#top" className="display-font sticky-nav-brand">{content.nav.brand}</a>
+          
+          <div className="sticky-nav-links">
+            {content.nav.links.map((link) => (
+              <a key={link.text} href={link.href} className="label">{link.text}</a>
+            ))}
+            <a 
+              href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="pill pill-gold sticky-nav-cta"
+            >
+              <span>Donate</span>
+            </a>
+          </div>
+
+          <button 
+            className="mobile-menu-btn"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="mobile-menu">
+            {content.nav.links.map((link) => (
+              <a 
+                key={link.text} 
+                href={link.href} 
+                className="display-font h-small"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.text}
+              </a>
+            ))}
+            <a 
+              href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="pill pill-gold"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span>Donate now</span>
+            </a>
+          </div>
+        )}
+      </nav>
+
+      <main id="main-content">
+
+      {/* HERO */}
       <section id="top" className="hero">
         <img src="/images/hero.webp" alt="Len Johnson with friends, Manchester" className="hero-bg"/>
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <p className="label text-gold mb-6 slide-up">{content.hero.location}</p>
-         <h1 className="display-font h-huge text-white slide-up delay-1">
-  A BOXER WHO<br/>
-  FOUGHT <span className="text-green">RACISM</span><br/>
-  IN THE RING<br/>
-  AND ON THE <span className="text-orange">STREETS.</span>
-</h1>
-          <div className="flex gap-3 flex-wrap mt-12 slide-up delay-2">
-            <a href="#story" className="pill pill-gold">
+          <p className="label text-gold mb-4 slide-up">{content.hero.location}</p>
+          <h1 className="display-font h-huge text-white slide-up delay-1">
+            A BOXER WHO<br/>
+            FOUGHT <span className="text-green">RACISM</span><br/>
+            IN THE RING<br/>
+            AND ON THE <span className="text-orange">STREETS.</span>
+          </h1>
+          <p className="label text-gold mt-6 mb-6 slide-up delay-2" style={{letterSpacing: '0.3em'}}>
+            {content.hero.descriptors}
+          </p>
+          
+          {/* Hero quote */}
+          <div className="hero-quote slide-up delay-2">
+            <p className="body-md text-white italic">
+              {content.hero.quote}
+            </p>
+            <p className="label text-gold mt-3">{content.hero.quoteAttribution}</p>
+          </div>
+
+          {/* Stats */}
+          <p className="display-font h-small text-white slide-up delay-3 mt-8 hero-stats">
+            {content.hero.stats}
+          </p>
+
+          {/* CTA buttons */}
+          <div className="flex gap-3 flex-wrap mt-8 slide-up delay-3">
+            <a 
+              href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="pill pill-gold"
+            >
               <span>{content.hero.cta1}</span>
               <span>→</span>
             </a>
-            <a href="#campaign" className="pill pill-outline-light">
+            <a href="#story" className="pill pill-outline-light">
               <span>{content.hero.cta2}</span>
             </a>
           </div>
@@ -79,7 +169,8 @@ export default function Home() {
         <div className="container">
           <p className="label text-muted mb-6">{content.chapter1.label}</p>
           <h2 className="display-font h-huge text-black mb-16">
-            {content.chapter1.heading}
+            BORN INTO<br/>
+            <span className="text-green">TWO</span> <span className="text-orange">WORLDS.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -87,15 +178,9 @@ export default function Home() {
               <img src="/images/portrait.webp" alt="Young Len Johnson portrait" className="content-img"/>
             </div>
             <div>
-              <p className="body-lg text-black mb-6">
-                {content.chapter1.body1}
-              </p>
-              <p className="body-md text-muted mb-4">
-                {content.chapter1.body2}
-              </p>
-              <p className="body-md text-muted mb-6">
-                {content.chapter1.body3}
-              </p>
+              <p className="body-lg text-black mb-6">{content.chapter1.body1}</p>
+              <p className="body-md text-muted mb-4">{content.chapter1.body2}</p>
+              <p className="body-md text-muted mb-6">{content.chapter1.body3}</p>
               <p className="display-font h-small text-black">{content.chapter1.imageCaption}</p>
             </div>
           </div>
@@ -106,20 +191,15 @@ export default function Home() {
         <div className="container">
           <p className="label text-gold mb-6">{content.chapter2.label}</p>
           <h2 className="display-font h-huge text-white mb-16">
-            {content.chapter2.heading}
+            THE BOXING<br/>
+            <span className="text-gold">BOOTHS.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div>
-              <p className="body-lg text-white mb-6">
-                {content.chapter2.body1}
-              </p>
-              <p className="body-md text-cream mb-4" style={{opacity: 0.9}}>
-                {content.chapter2.body2}
-              </p>
-              <p className="body-md text-cream mb-6" style={{opacity: 0.9}}>
-                {content.chapter2.body3}
-              </p>
+              <p className="body-lg text-white mb-6">{content.chapter2.body1}</p>
+              <p className="body-md text-cream mb-4" style={{opacity: 0.95}}>{content.chapter2.body2}</p>
+              <p className="body-md text-cream mb-6" style={{opacity: 0.95}}>{content.chapter2.body3}</p>
               <p className="display-font h-small text-gold">{content.chapter2.imageStat}</p>
             </div>
             <div className="content-img-frame">
@@ -128,7 +208,8 @@ export default function Home() {
           </div>
 
           <h3 className="display-font h-large text-white mb-12">
-            {content.chapter2.beatChampions}
+            BEAT THE CHAMPIONS.<br/>
+            STILL NO BELT.
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -147,26 +228,26 @@ export default function Home() {
         <div className="container">
           <p className="label text-gold mb-8">{content.rule24.label}</p>
           <h2 className="display-font h-massive text-white mb-16">
-            {content.rule24.heading}
+            RULE <span className="text-gold">24.</span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
             <div>
               <p className="display-font h-medium text-orange mb-6">{content.rule24.subtitle}</p>
-              <p className="body-md text-muted mb-6">
-                {content.rule24.body1}
-              </p>
-              <p className="body-md text-muted">
-                {content.rule24.body2}
-              </p>
+              <p className="body-md text-muted mb-6">{content.rule24.body1}</p>
+              <p className="body-md text-muted">{content.rule24.body2}</p>
             </div>
             <div style={{borderLeft: '4px solid var(--gold)', paddingLeft: '2rem'}}>
               <p className="display-font h-medium text-gold mb-6">"I AM FED UP."</p>
-              <p className="body-md text-white italic mb-6">
-                {content.rule24.quote}
-              </p>
+              <p className="body-md text-white italic mb-6">{content.rule24.quote}</p>
               <p className="label text-orange">{content.rule24.quoteAttribution}</p>
             </div>
+          </div>
+
+          {/* 36 years statistic - prominent */}
+          <div className="year-stat-block">
+            <p className="display-font h-massive text-gold mb-4">{content.rule24.yearStat}</p>
+            <p className="display-font h-small text-white">{content.rule24.yearStatLabel}</p>
           </div>
         </div>
       </section>
@@ -194,7 +275,8 @@ export default function Home() {
         <div className="container">
           <p className="label text-muted mb-6">{content.chapter4.label}</p>
           <h2 className="display-font h-huge text-black mb-16">
-            {content.chapter4.heading}
+            BEYOND<br/>
+            <span className="text-green">BOXING.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
@@ -202,15 +284,9 @@ export default function Home() {
               <img src="/images/crowd.webp" alt="Len Johnson with supporters" className="content-img"/>
             </div>
             <div>
-              <p className="body-lg text-black mb-6">
-                {content.chapter4.intro1}
-              </p>
-              <p className="body-md text-muted mb-4">
-                {content.chapter4.intro2}
-              </p>
-              <p className="body-md text-muted">
-                {content.chapter4.intro3}
-              </p>
+              <p className="body-lg text-black mb-6">{content.chapter4.intro1}</p>
+              <p className="body-md text-muted mb-4">{content.chapter4.intro2}</p>
+              <p className="body-md text-muted">{content.chapter4.intro3}</p>
             </div>
           </div>
 
@@ -230,19 +306,15 @@ export default function Home() {
         <div className="container">
           <p className="label text-black mb-6">{content.oldAbbey.label}</p>
           <h2 className="display-font h-huge text-black mb-12">
-            {content.oldAbbey.heading}
+            200<br/>
+            PROTESTORS.<br/>
+            ONE PUB.
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
-              <p className="body-lg text-black mb-6">
-                {content.oldAbbey.body1}
-              </p>
-              <p className="body-md text-black mb-6">
-                {content.oldAbbey.body2}
-              </p>
-              <p className="body-md text-black font-bold">
-                {content.oldAbbey.body3}
-              </p>
+              <p className="body-lg text-black mb-6">{content.oldAbbey.body1}</p>
+              <p className="body-md text-black mb-6">{content.oldAbbey.body2}</p>
+              <p className="body-md text-black font-bold">{content.oldAbbey.body3}</p>
             </div>
             <div className="bg-black flex items-center justify-center p-8" style={{aspectRatio: '1/1'}}>
               <div className="text-center">
@@ -262,11 +334,10 @@ export default function Home() {
         <div className="container">
           <p className="label text-muted mb-6">{content.events.label}</p>
           <h2 className="display-font h-huge text-black mb-8">
-            {content.events.heading}
+            EVENTS<br/>
+            AND <span className="text-green">CULTURE.</span>
           </h2>
-          <p className="body-lg text-muted max-w-3xl mb-16">
-            {content.events.intro}
-          </p>
+          <p className="body-lg text-muted max-w-3xl mb-16">{content.events.intro}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {content.events.items.map((event, idx) => (
@@ -293,19 +364,35 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section bg-green-dark">
+      {/* IN LEN'S CORNER */}
+      <section id="champions" className="section bg-green-dark">
         <div className="container">
           <p className="label text-gold mb-6">{content.champions.label}</p>
-          <h2 className="display-font h-huge text-white mb-16">
-            {content.champions.heading}
+          <h2 className="display-font h-huge text-white mb-8">
+            IN LEN&apos;S<br/>
+            <span className="text-gold">CORNER.</span>
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <p className="body-lg text-white max-w-3xl mb-16" style={{opacity: 0.95}}>
+            {content.champions.intro}
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-16">
             {content.champions.list.map((champ, idx) => (
-              <div key={idx} className="text-center">
+              <div key={idx} className="champion-card">
                 <p className="display-font h-small text-white mb-2">{champ.name}</p>
                 <p className="label text-gold">{champ.role}</p>
               </div>
             ))}
+          </div>
+
+          {/* Partners row */}
+          <div className="partners-row">
+            <p className="label text-gold mb-4">{content.champions.partnersLabel}</p>
+            <div className="flex flex-wrap gap-x-8 gap-y-3">
+              {content.champions.partners.map((partner, idx) => (
+                <p key={idx} className="label text-white" style={{opacity: 0.8}}>{partner}</p>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -314,11 +401,10 @@ export default function Home() {
         <div className="container">
           <p className="label text-orange mb-6">{content.campaign.label}</p>
           <h2 className="display-font h-massive text-white mb-16">
-            {content.campaign.heading}
+            THE<br/>
+            <span className="text-gold">CAMPAIGN.</span>
           </h2>
-          <p className="body-lg text-cream max-w-3xl mb-16">
-            {content.campaign.intro}
-          </p>
+          <p className="body-lg text-cream max-w-3xl mb-16">{content.campaign.intro}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {content.campaign.goals.map((goal, idx) => (
@@ -332,58 +418,79 @@ export default function Home() {
         </div>
       </section>
 
+      {/* STATUE - BRING LEN HOME */}
       <section id="statue" className="section bg-cream">
         <div className="container">
           <p className="label text-muted mb-6">{content.statue.label}</p>
           <h2 className="display-font h-huge text-black mb-8">
-            {content.statue.heading}
+            BRING LEN<br/>
+            <span className="text-green">HOME.</span>
           </h2>
-          <p className="body-lg text-muted max-w-3xl mb-20">
-            {content.statue.intro}
-          </p>
+          <p className="body-lg text-muted max-w-3xl mb-20">{content.statue.intro}</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
             <div>
-              <div className="content-img-frame wide mb-6">
+              <div className="content-img-frame wide mb-8">
                 <img src="/images/sculptor.webp" alt="Taslim Martin sculpting Len Johnson maquette" className="content-img"/>
               </div>
               <p className="display-font h-small text-black mb-3">{content.statue.sculptor.title}</p>
               <p className="label text-muted mb-4">{content.statue.sculptor.name}</p>
-              <p className="body-md text-muted mb-3">
-                {content.statue.sculptor.bio}
-              </p>
-              <p className="body-md text-muted italic">
-                {content.statue.sculptor.quote}
-              </p>
+              <p className="body-md text-muted mb-3">{content.statue.sculptor.bio}</p>
+              <p className="body-md text-muted italic">{content.statue.sculptor.quote}</p>
             </div>
             <div>
-              <div className="content-img-frame mb-6" style={{aspectRatio: '3/4'}}>
+              <div className="content-img-frame mb-8" style={{aspectRatio: '3/4'}}>
                 <img src="/images/statue.webp" alt="Len Johnson statue maquette" className="content-img"/>
               </div>
               <p className="display-font h-small text-black mb-3">{content.statue.maquette.title}</p>
               <p className="label text-green mb-4">{content.statue.maquette.label}</p>
-              <p className="body-md text-muted">
-                {content.statue.maquette.description}
-              </p>
+              <p className="body-md text-muted">{content.statue.maquette.description}</p>
             </div>
           </div>
 
           <div className="bg-black p-12 md:p-20 rounded-2xl">
-            <p className="display-font h-large text-gold mb-8">
-              {content.statue.cta.heading}
-            </p>
-            <p className="body-lg text-cream max-w-3xl mb-8">
-              {content.statue.cta.body}
-            </p>
+            <p className="display-font h-large text-gold mb-8">{content.statue.cta.heading}</p>
+            <p className="body-lg text-cream max-w-3xl mb-8">{content.statue.cta.body}</p>
             <div className="flex gap-4 flex-wrap">
               <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="pill pill-gold">
                 <span>{content.statue.cta.button1}</span>
                 <span>→</span>
               </a>
-              <a href="#get-involved" className="pill pill-outline-light">
+              <a href="#take-action" className="pill pill-outline-light">
                 <span>{content.statue.cta.button2}</span>
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TAKE ACTION */}
+      <section id="take-action" className="section bg-black">
+        <div className="container">
+          <p className="label text-gold mb-6">{content.takeAction.label}</p>
+          <h2 className="display-font h-massive text-white mb-8">
+            TAKE<br/>
+            <span className="text-gold">ACTION.</span>
+          </h2>
+          <p className="body-lg text-cream max-w-3xl mb-16">{content.takeAction.intro}</p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {content.takeAction.actions.map((action, idx) => (
+              <div key={idx} className={`card ${action.primary ? 'card-primary' : ''}`}>
+                <p className={`label mb-3 ${action.primary ? 'text-gold' : 'text-orange'}`}>{action.label}</p>
+                <p className="display-font h-small text-black mb-3">{action.title}</p>
+                <p className="body-md text-muted mb-6">{action.description}</p>
+                <a 
+                  href={action.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className={`pill ${action.primary ? 'pill-gold' : 'pill-outline-dark'}`}
+                >
+                  <span>{action.cta}</span>
+                  <span>→</span>
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -415,10 +522,11 @@ export default function Home() {
             <div>
               <p className="label text-muted mb-6">EXPLORE</p>
               <ul className="space-y-3">
-                <li><a href="#story" className="body-md link-underline">Len's story</a></li>
+                <li><a href="#story" className="body-md link-underline">Len&apos;s story</a></li>
                 <li><a href="#fight" className="body-md link-underline">Boxing career</a></li>
                 <li><a href="#activism" className="body-md link-underline">Activism</a></li>
                 <li><a href="#events" className="body-md link-underline">Events</a></li>
+                <li><a href="#champions" className="body-md link-underline">Len&apos;s Corner</a></li>
                 <li><a href="#campaign" className="body-md link-underline">The campaign</a></li>
                 <li><a href="#statue" className="body-md link-underline">The statue</a></li>
               </ul>
@@ -426,17 +534,33 @@ export default function Home() {
             <div>
               <p className="label text-muted mb-6">CONNECT</p>
               <ul className="space-y-3">
-                <li><a href="https://facebook.com/LenJohnsonCampaign" target="_blank" rel="noopener noreferrer" className="body-md link-underline">Facebook</a></li>
-                <li><a href="https://instagram.com/lenjohnsonmcr/" target="_blank" rel="noopener noreferrer" className="body-md link-underline">Instagram</a></li>
-                <li><a href="https://instagram.com/breakingbarzmcr/" target="_blank" rel="noopener noreferrer" className="body-md link-underline">Breaking Barz</a></li>
+                <li>
+                  <a href="https://instagram.com/lenjohnsonmcr/" target="_blank" rel="noopener noreferrer" className="body-md link-underline">
+                    Instagram @lenjohnsonmcr
+                  </a>
+                </li>
+                <li>
+                  <a href="https://facebook.com/LenJohnsonCampaign" target="_blank" rel="noopener noreferrer" className="body-md link-underline">
+                    Facebook
+                  </a>
+                </li>
+                <li>
+                  <a href="https://instagram.com/breakingbarzmcr/" target="_blank" rel="noopener noreferrer" className="body-md link-underline">
+                    Breaking Barz
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
-              <p className="label text-muted mb-6">SUPPORT</p>
+              <p className="label text-muted mb-6">TAKE ACTION</p>
               <ul className="space-y-3">
-                <li><a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="body-md link-underline font-bold text-green">Donate</a></li>
-                <li><a href="#get-involved" className="body-md link-underline">Get Involved</a></li>
-                <li><a href="#get-involved" className="body-md link-underline">Partner with us</a></li>
+                <li>
+                  <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="body-md link-underline font-bold text-green">
+                    Donate
+                  </a>
+                </li>
+                <li><a href="#take-action" className="body-md link-underline">Get Involved</a></li>
+                <li><a href="#story" className="body-md link-underline">Read Len&apos;s Story</a></li>
               </ul>
             </div>
             <div>
@@ -444,12 +568,14 @@ export default function Home() {
               <p className="body-md mb-2">Manchester, England</p>
               <p className="body-md mb-2">Community Interest Company</p>
               <p className="body-md mb-4">Est. 2023</p>
-              <a href="mailto:info@lenjohnsoncampaign.co.uk" className="body-md link-underline font-bold">info@lenjohnsoncampaign.co.uk</a>
+              <a href="mailto:info@lenjohnsoncampaign.co.uk" className="body-md link-underline font-bold">
+                info@lenjohnsoncampaign.co.uk
+              </a>
             </div>
           </div>
 
           <div className="display-font h-huge text-black text-center pt-16 border-t border-gray-300">
-            {content.footer.closing}<span className="text-green">GO.</span>
+            HERE.WE.<span className="text-green">GO.</span>
           </div>
 
           <p className="body-sm text-muted text-center mt-8">
@@ -457,6 +583,8 @@ export default function Home() {
           </p>
         </div>
       </footer>
+
+      </main>
     </>
   )
 }

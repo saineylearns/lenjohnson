@@ -1,4 +1,4 @@
-// content.js - All editable text for the Len Johnson Campaign website
+// content-config.js - All editable text for the Len Johnson Campaign website
 // Edit text here, commit to git, and Netlify rebuilds automatically
 
 export const content = {
@@ -12,9 +12,13 @@ export const content = {
   // Hero
   hero: {
     location: 'MANCHESTER · 1902 — 1974',
+    descriptors: 'BOXER · ACTIVIST · MANCUNIAN',
     heading: 'A BOXER WHO FOUGHT RACISM IN THE RING AND ON THE STREETS.',
-    cta1: 'Read his story',
-    cta2: 'Support the statue',
+    quote: '"The prejudice against colour has prevented me from getting a championship bout — I know in my heart I shall never achieve those ambitions."',
+    quoteAttribution: '— Len Johnson, 1930',
+    stats: '95 WINS · 134 BOUTS · 0 TITLES · 36 YEARS THE COLOUR BAR STOOD',
+    cta1: 'Donate now',
+    cta2: 'Read Len\'s story',
   },
 
   // Marquee
@@ -59,6 +63,8 @@ export const content = {
     subtitle: '"TWO WHITE PARENTS."',
     body1: 'Winston Churchill, as Home Secretary in 1911, declared a proposed bout between Black American Jack Johnson and British contender Bombardier Billy Wells illegal. This became the precedent banning all high-profile fights between white and Black boxers.',
     body2: 'The British Boxing Board wrote it directly into its constitution. The colour bar wasn\'t repealed until 1947. By then, Len\'s career was over.',
+    yearStat: '36 YEARS',
+    yearStatLabel: 'THE COLOUR BAR STOOD',
     quote: 'I am barred from the Albert Hall, from the National Sporting Club and from all fights where there is big money. The prejudice against colour has prevented me from getting a championship bout.',
     quoteAttribution: '— LEN JOHNSON, 1930',
   },
@@ -130,19 +136,28 @@ export const content = {
     cta: 'Follow for upcoming events',
   },
 
-  // Champions
+  // Champions (In Len's Corner)
   champions: {
     label: 'BACKED BY',
-    heading: 'In Lens Corner.',
+    heading: 'IN LEN\'S CORNER.',
+    intro: 'Backed by champions who recognise what Len meant — and still means — to Manchester and to boxing.',
     list: [
       { name: 'ANDY BURNHAM', role: 'MAYOR OF GREATER MANCHESTER' },
       { name: 'ANTHONY JOSHUA', role: 'TWO-TIME WORLD HEAVYWEIGHT CHAMPION' },
       { name: 'RICKY HATTON', role: 'FORMER TWO-WEIGHT WORLD CHAMPION' },
+      { name: 'NATASHA JONAS', role: 'UNIFIED LIGHT-MIDDLEWEIGHT CHAMPION' },
+      { name: 'TONY BELLEW', role: 'FORMER CRUISERWEIGHT WORLD CHAMPION' },
+      { name: 'AMIR KHAN', role: 'FORMER UNIFIED LIGHT-WELTERWEIGHT CHAMPION' },
       { name: 'CARL FRAMPTON', role: 'FORMER TWO-WEIGHT WORLD CHAMPION' },
-      { name: 'NATASHA JONAS', role: 'FORMER UNIFIED LIGHT-MIDDDLEWEIGHT CHAMPION' },
-      { name: 'AMIR KHAN', role: 'FORMER WORLD CHAMPION' },
-      { name: 'TONY BELLEW', role: 'FORMER WORLD CHAMPION' },
+      { name: 'JOLEON LESCOTT', role: 'PREMIER LEAGUE WINNER' },
       { name: 'ANTHONY CROLLA', role: 'FORMER WORLD CHAMPION' },
+    ],
+    partnersLabel: 'PARTNERS',
+    partners: [
+      'ODD ARTS',
+      'MAN UTD FOUNDATION',
+      'SHOW RACISM THE RED CARD',
+      'FC UNITED OF MANCHESTER',
     ],
   },
 
@@ -161,8 +176,8 @@ export const content = {
   // The Statue
   statue: {
     label: 'THE MONUMENT',
-    heading: 'THE STATUE.',
-    intro: 'Following a formal selection from a shortlist of six sculptors, we commissioned Taslim Martin — a London-based sculptor of African and Caribbean heritage — to bring Len back to Manchester. Life-size. A man of the people, just as he lived.',
+    heading: 'BRING LEN HOME.',
+    intro: 'Sculptor Taslim Martin (creator of the David Oluwale memorial) has been commissioned to create a life-size bronze of Len for Manchester city centre — a permanent meeting point and place of education for the city he served.',
     sculptor: {
       title: 'THE SCULPTOR',
       name: 'TASLIM MARTIN',
@@ -182,6 +197,39 @@ export const content = {
     },
   },
 
+  // Take Action
+  takeAction: {
+    label: 'JOIN THE MOVEMENT',
+    heading: 'TAKE ACTION.',
+    intro: 'Every contribution — every voice — builds this monument. Here\'s how to be part of it.',
+    actions: [
+      {
+        label: 'DONATE',
+        title: 'FUND THE STATUE',
+        description: 'Direct contributions go towards the bronze, the planning, and the 100-year maintenance fund.',
+        cta: 'Donate now',
+        link: 'https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue',
+        primary: true,
+      },
+      {
+        label: 'GET INVOLVED',
+        title: 'JOIN AN EVENT',
+        description: 'Breaking Barz, the charity match, Knockout Blow performances — show up, bring people.',
+        cta: 'Follow @lenjohnsonmcr',
+        link: 'https://instagram.com/lenjohnsonmcr/',
+        primary: false,
+      },
+      {
+        label: 'SHARE',
+        title: 'TELL LEN\'S STORY',
+        description: 'Share with friends, family, your network. The more people know, the louder the call.',
+        cta: 'Share on Facebook',
+        link: 'https://www.facebook.com/sharer/sharer.php?u=https://lenjohnsoncampaign.co.uk',
+        primary: false,
+      },
+    ],
+  },
+
   // Closing
   closing: {
     line1: 'REMEMBER.',
@@ -193,7 +241,7 @@ export const content = {
   footer: {
     menu: 'MENU',
     closing: 'HERE.WE.GO.',
-    copyright: 'Community Interest Company. Manchester.',
+    copyright: 'Community Interest Company. Manchester deserves justice.',
   },
 
   // Navigation
@@ -201,19 +249,9 @@ export const content = {
     brand: 'LEN.JOHNSON.',
     links: [
       { text: 'Story', href: '#story' },
-      { text: 'Fight', href: '#fight' },
-      { text: 'Activism', href: '#activism' },
-      { text: 'Events', href: '#events' },
-      { text: 'Campaign', href: '#campaign' },
+      { text: 'Statue', href: '#statue' },
+      { text: 'Len\'s Corner', href: '#champions' },
+      { text: 'Take Action', href: '#take-action' },
     ],
-  },
-
-  // Get Involved Form
-  getInvolved: {
-    heading: 'GET INVOLVED',
-    subheading: 'Join the campaign',
-    intro: 'Help us build the statue and keep Len\'s legacy alive.',
-    thankYouHeading: 'Thank you for getting involved!',
-    thankYouMessage: 'We\'ve received your message and will be in touch soon. Manchester deserves justice — and together, we\'ll build it.',
   },
 }
