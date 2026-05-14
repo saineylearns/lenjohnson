@@ -120,7 +120,7 @@ export const content = {
         image: 'charity-match',
         label: 'ANNUAL FIXTURE',
         title: 'CHARITY MATCH',
-        description: 'The annual Len Johnson All-Stars vs. FC United Legends. Past players include Joleon Lescott, Ashley Williams, Andy Burnham, plus Aitch, Avelino, Owen Warner, and current boxing world champion Rhiannon Dixon. Over £10,000 raised in year one.',
+        description: 'The annual Len Johnson All-Stars vs. FC United Legends. Past players include Joleon Lescott, Ashley Williams, Andy Burnham, plus Angry Ginge, Owen Warner and many more. Over £20,000 raised in two years.',
         link: 'https://instagram.com/lenjohnsonmcr/',
         linkText: '@lenjohnsonmcr →',
       },
@@ -129,7 +129,7 @@ export const content = {
         label: 'THEATRE & EDUCATION',
         title: 'KNOCKOUT BLOW',
         description: 'A community-led play exploring Len\'s life, developed with Odd Arts. Performed to over 5,000 people across Greater Manchester schools, colleges and youth groups. Even shown to councillors in the Town Hall chamber.',
-        link: 'https://oddarts.co.uk/knockout-blow-celebrating-black-role-models-collective-history/',
+        link: 'https://oddarts.co.uk/knock-out-blow/',
         linkText: 'Learn more →',
       },
     ],
@@ -240,8 +240,8 @@ export const content = {
   // Footer
   footer: {
     menu: 'MENU',
-    closing: 'HERE.WE.GO.',
-    copyright: 'Community Interest Company. Manchester deserves justice.',
+    closing: 'BREAK.THE.SILENCE.',
+    copyright: 'Community Interest Company. All rights reserved.',
   },
 
   // Navigation
