@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import Image from 'next/image'
 import { content } from '../content-config'
 
 export default function Home() {
@@ -23,16 +24,25 @@ export default function Home() {
       <div className="scroll-bar" id="scrollBar"></div>
 
       <section id="top" className="hero">
-        <img src="/images/hero.webp" alt="Len Johnson with friends, Manchester" className="hero-bg"/>
+        <Image 
+          src="/images/hero.webp" 
+          alt="Len Johnson with friends, Manchester" 
+          fill
+          priority
+          quality={85}
+          sizes="100vw"
+          className="hero-bg"
+          style={{objectFit: 'cover', objectPosition: 'center 20%'}}
+        />
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <p className="label text-gold mb-6 slide-up">{content.hero.location}</p>
-         <h1 className="display-font h-huge text-white slide-up delay-1">
-  A BOXER WHO<br/>
-  FOUGHT <span className="text-green">RACISM</span><br/>
-  IN THE RING<br/>
-  AND ON THE <span className="text-orange">STREETS.</span>
-</h1>
+          <h1 className="display-font h-huge text-white slide-up delay-1">
+            A BOXER WHO<br/>
+            FOUGHT <span className="text-green">RACISM</span><br/>
+            IN THE RING<br/>
+            AND ON THE <span className="text-orange">STREETS.</span>
+          </h1>
           <div className="flex gap-3 flex-wrap mt-12 slide-up delay-2">
             <a href="#story" className="pill pill-gold">
               <span>{content.hero.cta1}</span>
@@ -79,23 +89,26 @@ export default function Home() {
         <div className="container">
           <p className="label text-muted mb-6">{content.chapter1.label}</p>
           <h2 className="display-font h-huge text-black mb-16">
-            {content.chapter1.heading}
+            BORN INTO<br/>
+            <span className="text-green">TWO</span> <span className="text-orange">WORLDS.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="content-img-frame">
-              <img src="/images/portrait.webp" alt="Young Len Johnson portrait" className="content-img"/>
+              <Image 
+                src="/images/portrait.webp" 
+                alt="Young Len Johnson portrait" 
+                fill
+                quality={85}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="content-img"
+                style={{objectFit: 'cover'}}
+              />
             </div>
             <div>
-              <p className="body-lg text-black mb-6">
-                {content.chapter1.body1}
-              </p>
-              <p className="body-md text-muted mb-4">
-                {content.chapter1.body2}
-              </p>
-              <p className="body-md text-muted mb-6">
-                {content.chapter1.body3}
-              </p>
+              <p className="body-lg text-black mb-6">{content.chapter1.body1}</p>
+              <p className="body-md text-muted mb-4">{content.chapter1.body2}</p>
+              <p className="body-md text-muted mb-6">{content.chapter1.body3}</p>
               <p className="display-font h-small text-black">{content.chapter1.imageCaption}</p>
             </div>
           </div>
@@ -106,29 +119,33 @@ export default function Home() {
         <div className="container">
           <p className="label text-gold mb-6">{content.chapter2.label}</p>
           <h2 className="display-font h-huge text-white mb-16">
-            {content.chapter2.heading}
+            THE BOXING<br/>
+            <span className="text-gold">BOOTHS.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div>
-              <p className="body-lg text-white mb-6">
-                {content.chapter2.body1}
-              </p>
-              <p className="body-md text-cream mb-4" style={{opacity: 0.9}}>
-                {content.chapter2.body2}
-              </p>
-              <p className="body-md text-cream mb-6" style={{opacity: 0.9}}>
-                {content.chapter2.body3}
-              </p>
+              <p className="body-lg text-white mb-6">{content.chapter2.body1}</p>
+              <p className="body-md text-cream mb-4" style={{opacity: 0.9}}>{content.chapter2.body2}</p>
+              <p className="body-md text-cream mb-6" style={{opacity: 0.9}}>{content.chapter2.body3}</p>
               <p className="display-font h-small text-gold">{content.chapter2.imageStat}</p>
             </div>
             <div className="content-img-frame">
-              <img src="/images/boxing.webp" alt="Len Johnson in fighting stance" className="content-img"/>
+              <Image 
+                src="/images/boxing.webp" 
+                alt="Len Johnson in fighting stance" 
+                fill
+                quality={85}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="content-img"
+                style={{objectFit: 'cover'}}
+              />
             </div>
           </div>
 
           <h3 className="display-font h-large text-white mb-12">
-            {content.chapter2.beatChampions}
+            BEAT THE CHAMPIONS.<br/>
+            STILL NO BELT.
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -147,24 +164,18 @@ export default function Home() {
         <div className="container">
           <p className="label text-gold mb-8">{content.rule24.label}</p>
           <h2 className="display-font h-massive text-white mb-16">
-            {content.rule24.heading}
+            RULE <span className="text-gold">24.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
               <p className="display-font h-medium text-orange mb-6">{content.rule24.subtitle}</p>
-              <p className="body-md text-muted mb-6">
-                {content.rule24.body1}
-              </p>
-              <p className="body-md text-muted">
-                {content.rule24.body2}
-              </p>
+              <p className="body-md text-muted mb-6">{content.rule24.body1}</p>
+              <p className="body-md text-muted">{content.rule24.body2}</p>
             </div>
             <div style={{borderLeft: '4px solid var(--gold)', paddingLeft: '2rem'}}>
               <p className="display-font h-medium text-gold mb-6">"I AM FED UP."</p>
-              <p className="body-md text-white italic mb-6">
-                {content.rule24.quote}
-              </p>
+              <p className="body-md text-white italic mb-6">{content.rule24.quote}</p>
               <p className="label text-orange">{content.rule24.quoteAttribution}</p>
             </div>
           </div>
@@ -194,23 +205,26 @@ export default function Home() {
         <div className="container">
           <p className="label text-muted mb-6">{content.chapter4.label}</p>
           <h2 className="display-font h-huge text-black mb-16">
-            {content.chapter4.heading}
+            BEYOND<br/>
+            <span className="text-green">BOXING.</span>
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div className="content-img-frame wide">
-              <img src="/images/crowd.webp" alt="Len Johnson with supporters" className="content-img"/>
+              <Image 
+                src="/images/crowd.webp" 
+                alt="Len Johnson with supporters" 
+                fill
+                quality={85}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="content-img"
+                style={{objectFit: 'cover'}}
+              />
             </div>
             <div>
-              <p className="body-lg text-black mb-6">
-                {content.chapter4.intro1}
-              </p>
-              <p className="body-md text-muted mb-4">
-                {content.chapter4.intro2}
-              </p>
-              <p className="body-md text-muted">
-                {content.chapter4.intro3}
-              </p>
+              <p className="body-lg text-black mb-6">{content.chapter4.intro1}</p>
+              <p className="body-md text-muted mb-4">{content.chapter4.intro2}</p>
+              <p className="body-md text-muted">{content.chapter4.intro3}</p>
             </div>
           </div>
 
@@ -230,19 +244,15 @@ export default function Home() {
         <div className="container">
           <p className="label text-black mb-6">{content.oldAbbey.label}</p>
           <h2 className="display-font h-huge text-black mb-12">
-            {content.oldAbbey.heading}
+            200<br/>
+            PROTESTORS.<br/>
+            ONE PUB.
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div>
-              <p className="body-lg text-black mb-6">
-                {content.oldAbbey.body1}
-              </p>
-              <p className="body-md text-black mb-6">
-                {content.oldAbbey.body2}
-              </p>
-              <p className="body-md text-black font-bold">
-                {content.oldAbbey.body3}
-              </p>
+              <p className="body-lg text-black mb-6">{content.oldAbbey.body1}</p>
+              <p className="body-md text-black mb-6">{content.oldAbbey.body2}</p>
+              <p className="body-md text-black font-bold">{content.oldAbbey.body3}</p>
             </div>
             <div className="bg-black flex items-center justify-center p-8" style={{aspectRatio: '1/1'}}>
               <div className="text-center">
@@ -262,17 +272,24 @@ export default function Home() {
         <div className="container">
           <p className="label text-muted mb-6">{content.events.label}</p>
           <h2 className="display-font h-huge text-black mb-8">
-            {content.events.heading}
+            EVENTS<br/>
+            AND <span className="text-green">CULTURE.</span>
           </h2>
-          <p className="body-lg text-muted max-w-3xl mb-16">
-            {content.events.intro}
-          </p>
+          <p className="body-lg text-muted max-w-3xl mb-16">{content.events.intro}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {content.events.items.map((event, idx) => (
               <div key={idx} className="card">
                 <div className="card-img-container">
-                  <img src={`/images/${event.image}.webp`} alt={event.title} className="card-img"/>
+                  <Image 
+                    src={`/images/${event.image}.webp`} 
+                    alt={event.title} 
+                    fill
+                    quality={80}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="card-img"
+                    style={{objectFit: 'cover'}}
+                  />
                 </div>
                 <p className="label text-orange mb-3">{event.label}</p>
                 <p className="display-font h-small text-black mb-3">{event.title}</p>
@@ -297,7 +314,8 @@ export default function Home() {
         <div className="container">
           <p className="label text-gold mb-6">{content.champions.label}</p>
           <h2 className="display-font h-huge text-white mb-16">
-            {content.champions.heading}
+            CHAMPIONS<br/>
+            <span className="text-gold">FOR LEN.</span>
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {content.champions.list.map((champ, idx) => (
@@ -314,11 +332,10 @@ export default function Home() {
         <div className="container">
           <p className="label text-orange mb-6">{content.campaign.label}</p>
           <h2 className="display-font h-massive text-white mb-16">
-            {content.campaign.heading}
+            THE<br/>
+            <span className="text-gold">CAMPAIGN.</span>
           </h2>
-          <p className="body-lg text-cream max-w-3xl mb-16">
-            {content.campaign.intro}
-          </p>
+          <p className="body-lg text-cream max-w-3xl mb-16">{content.campaign.intro}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
             {content.campaign.goals.map((goal, idx) => (
@@ -336,45 +353,50 @@ export default function Home() {
         <div className="container">
           <p className="label text-muted mb-6">{content.statue.label}</p>
           <h2 className="display-font h-huge text-black mb-8">
-            {content.statue.heading}
+            THE<br/>
+            <span className="text-green">STATUE.</span>
           </h2>
-          <p className="body-lg text-muted max-w-3xl mb-20">
-            {content.statue.intro}
-          </p>
+          <p className="body-lg text-muted max-w-3xl mb-20">{content.statue.intro}</p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
             <div>
               <div className="content-img-frame wide mb-6">
-                <img src="/images/sculptor.webp" alt="Taslim Martin sculpting Len Johnson maquette" className="content-img"/>
+                <Image 
+                  src="/images/sculptor.webp" 
+                  alt="Taslim Martin sculpting Len Johnson maquette" 
+                  fill
+                  quality={85}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="content-img"
+                  style={{objectFit: 'cover'}}
+                />
               </div>
               <p className="display-font h-small text-black mb-3">{content.statue.sculptor.title}</p>
               <p className="label text-muted mb-4">{content.statue.sculptor.name}</p>
-              <p className="body-md text-muted mb-3">
-                {content.statue.sculptor.bio}
-              </p>
-              <p className="body-md text-muted italic">
-                {content.statue.sculptor.quote}
-              </p>
+              <p className="body-md text-muted mb-3">{content.statue.sculptor.bio}</p>
+              <p className="body-md text-muted italic">{content.statue.sculptor.quote}</p>
             </div>
             <div>
               <div className="content-img-frame mb-6" style={{aspectRatio: '3/4'}}>
-                <img src="/images/statue.webp" alt="Len Johnson statue maquette" className="content-img"/>
+                <Image 
+                  src="/images/statue.webp" 
+                  alt="Len Johnson statue maquette" 
+                  fill
+                  quality={85}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="content-img"
+                  style={{objectFit: 'cover'}}
+                />
               </div>
               <p className="display-font h-small text-black mb-3">{content.statue.maquette.title}</p>
               <p className="label text-green mb-4">{content.statue.maquette.label}</p>
-              <p className="body-md text-muted">
-                {content.statue.maquette.description}
-              </p>
+              <p className="body-md text-muted">{content.statue.maquette.description}</p>
             </div>
           </div>
 
           <div className="bg-black p-12 md:p-20 rounded-2xl">
-            <p className="display-font h-large text-gold mb-8">
-              {content.statue.cta.heading}
-            </p>
-            <p className="body-lg text-cream max-w-3xl mb-8">
-              {content.statue.cta.body}
-            </p>
+            <p className="display-font h-large text-gold mb-8">{content.statue.cta.heading}</p>
+            <p className="body-lg text-cream max-w-3xl mb-8">{content.statue.cta.body}</p>
             <div className="flex gap-4 flex-wrap">
               <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="pill pill-gold">
                 <span>{content.statue.cta.button1}</span>
@@ -415,7 +437,7 @@ export default function Home() {
             <div>
               <p className="label text-muted mb-6">EXPLORE</p>
               <ul className="space-y-3">
-                <li><a href="#story" className="body-md link-underline">Len's story</a></li>
+                <li><a href="#story" className="body-md link-underline">Len&apos;s story</a></li>
                 <li><a href="#fight" className="body-md link-underline">Boxing career</a></li>
                 <li><a href="#activism" className="body-md link-underline">Activism</a></li>
                 <li><a href="#events" className="body-md link-underline">Events</a></li>
@@ -449,7 +471,7 @@ export default function Home() {
           </div>
 
           <div className="display-font h-huge text-black text-center pt-16 border-t border-gray-300">
-            {content.footer.closing}<span className="text-green">GO.</span>
+            HERE.WE.<span className="text-green">GO.</span>
           </div>
 
           <p className="body-sm text-muted text-center mt-8">
