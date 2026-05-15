@@ -6,6 +6,8 @@ import { content } from '../content-config'
 export default function Home() {
   const [navVisible, setNavVisible] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [expandedGallery, setExpandedGallery] = useState(null)
+  const [expandedVideos, setExpandedVideos] = useState(null)
 
   useEffect(() => {
     const scrollBar = document.getElementById('scrollBar')
@@ -134,6 +136,30 @@ export default function Home() {
             </a>
             <a href="#story" className="pill pill-outline-light">
               <span>{content.hero.cta2}</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURED IN */}
+      <section className="section bg-cream py-8">
+        <div className="container">
+          <p className="label text-muted text-center mb-6">AS FEATURED IN</p>
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+            <a href="https://www.bbc.co.uk/sport/boxing/54480882" target="_blank" rel="noopener noreferrer" aria-label="BBC Sport article (opens in new tab)">
+              <span className="display-font h-small text-black font-bold">BBC</span>
+            </a>
+            <a href="https://www.skysports.com/watch/video/sports/boxing/12116758" target="_blank" rel="noopener noreferrer" aria-label="Sky Sports video (opens in new tab)">
+              <span className="display-font h-small text-green">SKY</span>
+            </a>
+            <a href="https://www.itv.com/news/granada/2024-05-21/charity-football-match-raises-money-for-boxing-legend-statue" target="_blank" rel="noopener noreferrer" aria-label="ITV News article (opens in new tab)">
+              <span className="display-font h-small text-orange">ITV</span>
+            </a>
+            <a href="https://www.manchestereveningnews.co.uk/news/greater-manchester-news/one-best-boxers-world-dont-30226520" target="_blank" rel="noopener noreferrer" aria-label="Manchester Evening News article (opens in new tab)">
+              <span className="display-font h-small text-black">MEN</span>
+            </a>
+            <a href="https://manchesterarchiveplus.wordpress.com/2024/10/15/honouring-manchester-boxing-legend-len-johnson/" target="_blank" rel="noopener noreferrer" aria-label="archivesplus article (opens in new tab)">
+              <span className="display-font h-small text-gold">ARCHIVES+</span>
             </a>
           </div>
         </div>
@@ -352,15 +378,94 @@ export default function Home() {
                 <p className="label text-orange mb-3">{event.label}</p>
                 <h3 className="display-font h-small text-black mb-3">{event.title}</h3>
                 <p className="body-md mb-6">{event.description}</p>
-                <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green" aria-label={`${event.title} link (opens in new tab)`}>
-                  {event.linkText.includes('→') ? (
-                    <>
-                      {event.linkText.replace(' →', '')}
-                      <span aria-hidden="true"> →</span>
-                    </>
-                  ) : event.linkText}
-                </a>
+                <div className="flex flex-col gap-2">
+                  <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green" aria-label={`${event.title} link (opens in new tab)`}>
+                    {event.linkText.includes('→') ? (
+                      <>
+                        {event.linkText.replace(' →', '')}
+                        <span aria-hidden="true"> →</span>
+                      </>
+                    ) : event.linkText}
+                  </a>
+                  {(event.title === 'CHARITY MATCH' || event.title === 'BREAKING BARZ') && (
+                    <button
+                      onClick={() => setExpandedGallery(expandedGallery === event.title ? null : event.title)}
+                      className="text-left link-underline body-sm font-bold text-orange"
+                      aria-expanded={expandedGallery === event.title}
+                    >
+                      {expandedGallery === event.title ? '← Hide gallery' : 'View gallery →'}
+                    </button>
+                  )}
+                </div>
               </div>
+
+              {/* Expandable galleries */}
+              {expandedGallery === event.title && event.title === 'CHARITY MATCH' && (
+                <div className="col-span-1 md:col-span-3 mt-6 border-t border-gray-300 pt-6">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {[1,2,3,4,5,6,7].map((idx) => (
+                      <img
+                        key={idx}
+                        src={`/images/media/charity-match/0${idx}-${['burnham','theo','trophy','throw','crolla','team','fc-team'][idx-1]}.webp`}
+                        alt={`Charity match moment ${idx}`}
+                        className="w-full aspect-video object-cover rounded cursor-pointer hover:opacity-80 transition"
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => setExpandedVideos(expandedVideos === 'charity' ? null : 'charity')}
+                    className="mt-6 w-full text-center py-3 bg-black text-gold font-bold rounded hover:bg-opacity-90 transition"
+                  >
+                    {expandedVideos === 'charity' ? '← Hide videos' : 'Watch match videos →'}
+                  </button>
+                  {expandedVideos === 'charity' && (
+                    <div className="mt-6 space-y-6">
+                      <div className="aspect-video bg-black rounded overflow-hidden">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/NaIR78fEG2g" title="FC United VS Celebrity Team" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                      </div>
+                      <div className="aspect-video bg-black rounded overflow-hidden">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/V1GRCML2eig" title="Angry Ginge: 2 Charity Matches" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                      </div>
+                      <div className="aspect-video bg-black rounded overflow-hidden">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1yncDk_CwiE" title="BIG G Charity Match" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {expandedGallery === event.title && event.title === 'BREAKING BARZ' && (
+                <div className="col-span-1 md:col-span-3 mt-6 border-t border-gray-300 pt-6">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                    {[1,2,3,4,5,6,7,8].map((idx) => (
+                      <img
+                        key={idx}
+                        src={`/images/media/breaking-barz/0${idx}-${['blazer','band','artist','group','artist2','artist3','artist4','artist5'][idx-1]}.webp`}
+                        alt={`Breaking Barz moment ${idx}`}
+                        className="w-full aspect-square object-cover rounded cursor-pointer hover:opacity-80 transition"
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => setExpandedVideos(expandedVideos === 'breaking' ? null : 'breaking')}
+                    className="mt-6 w-full text-center py-3 bg-black text-gold font-bold rounded hover:bg-opacity-90 transition"
+                  >
+                    {expandedVideos === 'breaking' ? '← Hide videos' : 'Watch performances →'}
+                  </button>
+                  {expandedVideos === 'breaking' && (
+                    <div className="mt-6 space-y-6">
+                      <div className="aspect-video bg-black rounded overflow-hidden">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5fx-FXHWGBE" title="Breaking Barz Grime Cypher" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                      </div>
+                      <div className="aspect-video bg-black rounded overflow-hidden">
+                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/AiB82bu8AUw" title="Rush Breaking Bars" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             ))}
           </div>
 
@@ -423,6 +528,36 @@ export default function Home() {
                 <p className="body-md text-muted">{goal.description}</p>
               </div>
             ))}
+          </div>
+
+          {/* IN THE PRESS */}
+          <div className="mt-20 pt-12 border-t border-gray-300">
+            <p className="label text-orange mb-6">{content.press.label}</p>
+            <h3 className="display-font h-large text-black mb-12">{content.press.heading}</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {content.press.items.map((article, idx) => (
+                <a
+                  key={idx}
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card hover:shadow-lg transition group"
+                  aria-label={`${article.title} - ${article.outlet} (opens in new tab)`}
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <p className="label text-green">{article.outlet}</p>
+                    <p className="label text-muted">{article.date}</p>
+                  </div>
+                  <h4 className="display-font h-small text-black mb-3 group-hover:text-green transition">
+                    {article.title}
+                  </h4>
+                  <span className="text-orange font-bold inline-flex items-center gap-2">
+                    Read article <span aria-hidden="true">→</span>
+                  </span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>

@@ -239,6 +239,78 @@ export const content = {
     button: 'Subscribe',
   },
 
+  // Press
+  press: {
+    label: 'IN THE PRESS',
+    heading: 'THE WORLD IS TALKING ABOUT LEN.',
+    items: [
+      {
+        id: 'bbc-93-wins',
+        title: 'Len Johnson: The boxer with 93 wins who could never become British champion',
+        outlet: 'BBC Sport',
+        date: '2020',
+        url: 'https://www.bbc.co.uk/sport/boxing/54480882',
+        image: '/images/press/bbc-len-johnson.jpg',
+      },
+      {
+        id: 'sky-uncrowned',
+        title: 'Len Johnson: The uncrowned British Empire champion',
+        outlet: 'Sky Sports',
+        date: '2020',
+        url: 'https://www.skysports.com/watch/video/sports/boxing/12116758/len-johnson-the-uncrowned-british-empire-champion',
+        image: '/images/press/sky-len-johnson.jpg',
+      },
+      {
+        id: 'men-best-boxers',
+        title: 'He was one of the best boxers in the world — so why don\'t people know his name?',
+        outlet: 'Manchester Evening News',
+        date: '2024',
+        url: 'https://www.manchestereveningnews.co.uk/news/greater-manchester-news/one-best-boxers-world-dont-30226520',
+        image: '/images/press/men-len-johnson.jpg',
+      },
+      {
+        id: 'itv-charity',
+        title: 'Charity football match raises money for boxing legend statue',
+        outlet: 'ITV News',
+        date: '2024',
+        url: 'https://www.itv.com/news/granada/2024-05-21/charity-football-match-raises-money-for-boxing-legend-statue',
+        image: null,
+      },
+      {
+        id: 'archivesplus',
+        title: 'Honouring Manchester Boxing Legend Len Johnson',
+        outlet: 'archivesplus',
+        date: '2024',
+        url: 'https://manchesterarchiveplus.wordpress.com/2024/10/15/honouring-manchester-boxing-legend-len-johnson/',
+        image: '/images/press/archivesplus-len.jpg',
+      },
+    ],
+  },
+
+  // Media galleries
+  media: {
+    charityMatch: {
+      label: 'CHARITY MATCH GALLERY',
+      title: 'Len Johnson All-Stars vs FC United Legends',
+    },
+    breakingBarz: {
+      label: 'BREAKING BARZ GALLERY',
+      title: 'Music & Culture Nights',
+    },
+    videos: {
+      charityMatch: [
+        { title: 'FC United VS Celebrity Team', youtubeId: 'NaIR78fEG2g', channel: 'Skiddle' },
+        { title: 'Angry Ginge: 2 Charity Matches In 1 Day', youtubeId: 'V1GRCML2eig', channel: 'angryginge13' },
+      ],
+      breakingBarz: [
+        { title: 'Breaking Barz All-Star Grime Cypher', youtubeId: '5fx-FXHWGBE', channel: 'Pie Radio' },
+      ],
+      other: [
+        { title: 'Len Johnson: British Boxing Champion | Drunk History', youtubeId: 'mubC_K5HCuQ', channel: 'Comedy Central UK' },
+      ],
+    },
+  },
+
   // Closing
   closing: {
     line1: 'REMEMBER.',
