@@ -9,11 +9,11 @@ export const metadata = {
   openGraph: {
     title: 'Len Johnson — Uncrowned Champion of Manchester',
     description: 'The story of a boxer denied the title he deserved. A campaign to build a statue of Manchester\'s boxing legend.',
-    url: 'https://lenjohnsoncampaign.co.uk',
+    url: 'https://lenjohnsoncampaign.vercel.app',
     siteName: 'Len Johnson Campaign',
     images: [
       {
-        url: 'https://lenjohnsoncampaign.co.uk/images/hero.webp',
+        url: 'https://lenjohnsoncampaign.vercel.app/images/hero.webp',
         width: 1200,
         height: 630,
         alt: 'Len Johnson with friends and supporters in Manchester',
@@ -28,7 +28,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Len Johnson — Uncrowned Champion of Manchester',
     description: 'The story of a boxer denied the title he deserved. A campaign to build a statue of Manchester\'s boxing legend.',
-    image: 'https://lenjohnsoncampaign.co.uk/images/hero.webp',
+    image: 'https://lenjohnsoncampaign.vercel.app/images/hero.webp',
     creator: '@lenjohnsonmcr',
   },
 
@@ -38,7 +38,7 @@ export const metadata = {
   creator: 'Len Johnson Campaign',
   publisher: 'Len Johnson Campaign',
   robots: 'index, follow',
-  canonical: 'https://lenjohnsoncampaign.co.uk',
+  canonical: 'https://lenjohnsoncampaign.vercel.app',
 }
 
 const jsonLd = {
@@ -46,7 +46,7 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'Person',
-      '@id': 'https://lenjohnsoncampaign.co.uk/#len-johnson',
+      '@id': 'https://lenjohnsoncampaign.vercel.app/#len-johnson',
       name: 'Len Johnson',
       description: 'British boxer and civil rights activist, 1902-1974. Denied a championship title due to Rule 24 (the colour bar).',
       birthDate: '1902-01-01',
@@ -60,10 +60,10 @@ const jsonLd = {
     },
     {
       '@type': 'Campaign',
-      '@id': 'https://lenjohnsoncampaign.co.uk/#campaign',
+      '@id': 'https://lenjohnsoncampaign.vercel.app/#campaign',
       name: 'Len Johnson Campaign',
       description: 'A community campaign to build a statue of Len Johnson in Manchester city centre.',
-      url: 'https://lenjohnsoncampaign.co.uk',
+      url: 'https://lenjohnsoncampaign.vercel.app',
       sameAs: [
         'https://www.facebook.com/LenJohnsonCampaign',
         'https://instagram.com/lenjohnsonmcr',
@@ -79,10 +79,10 @@ const jsonLd = {
     },
     {
       '@type': 'CreativeWork',
-      '@id': 'https://lenjohnsoncampaign.co.uk/#website',
+      '@id': 'https://lenjohnsoncampaign.vercel.app/#website',
       name: 'Len Johnson Campaign Website',
       description: 'Official website for the Len Johnson Campaign',
-      url: 'https://lenjohnsoncampaign.co.uk',
+      url: 'https://lenjohnsoncampaign.vercel.app',
       author: {
         '@type': 'Organization',
         name: 'Len Johnson Campaign',
@@ -92,17 +92,17 @@ const jsonLd = {
         name: 'Len Johnson Campaign CIC',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://lenjohnsoncampaign.co.uk/images/hero.webp',
+          url: 'https://lenjohnsoncampaign.vercel.app/images/hero.webp',
         },
       },
     },
     {
       '@type': 'Organization',
-      '@id': 'https://lenjohnsoncampaign.co.uk/#organization',
+      '@id': 'https://lenjohnsoncampaign.vercel.app/#organization',
       name: 'Len Johnson Campaign CIC',
       legalName: 'Len Johnson Campaign Community Interest Company',
       description: 'Community Interest Company dedicated to honouring Len Johnson\'s legacy.',
-      url: 'https://lenjohnsoncampaign.co.uk',
+      url: 'https://lenjohnsoncampaign.vercel.app',
       foundingDate: '2023',
       email: 'info@lenjohnsoncampaign.co.uk',
       contactPoint: {
@@ -117,7 +117,7 @@ const jsonLd = {
       },
       logo: {
         '@type': 'ImageObject',
-        url: 'https://lenjohnsoncampaign.co.uk/images/hero.webp',
+        url: 'https://lenjohnsoncampaign.vercel.app/images/hero.webp',
         width: 1200,
         height: 630,
       },
@@ -128,21 +128,21 @@ const jsonLd = {
     },
     {
       '@type': 'WebSite',
-      '@id': 'https://lenjohnsoncampaign.co.uk/#website',
+      '@id': 'https://lenjohnsoncampaign.vercel.app/#website',
       name: 'Len Johnson Campaign',
-      url: 'https://lenjohnsoncampaign.co.uk',
+      url: 'https://lenjohnsoncampaign.vercel.app',
       potentialAction: {
         '@type': 'SearchAction',
         target: {
           '@type': 'EntryPoint',
-          urlTemplate: 'https://lenjohnsoncampaign.co.uk?s={search_term_string}',
+          urlTemplate: 'https://lenjohnsoncampaign.vercel.app?s={search_term_string}',
         },
         'query-input': 'required name=search_term_string',
       },
     },
     {
       '@type': 'DonateAction',
-      '@id': 'https://lenjohnsoncampaign.co.uk/#donate',
+      '@id': 'https://lenjohnsoncampaign.vercel.app/#donate',
       name: 'Donate to Len Johnson Campaign',
       description: 'Support the campaign to build a statue of Manchester boxing legend Len Johnson.',
       url: 'https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue',
@@ -168,8 +168,8 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="canonical" href="https://lenjohnsoncampaign.co.uk" />
-        <link rel="alternate" hrefLang="en-GB" href="https://lenjohnsoncampaign.co.uk" />
+        <link rel="canonical" href="https://lenjohnsoncampaign.vercel.app" />
+        <link rel="alternate" hrefLang="en-GB" href="https://lenjohnsoncampaign.vercel.app" />
         <link rel="preload" as="image" href="/images/hero.webp" />
         
         {/* JSON-LD Structured Data */}
