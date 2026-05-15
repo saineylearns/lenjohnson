@@ -230,6 +230,15 @@ export const content = {
     ],
   },
 
+  // Newsletter
+  newsletter: {
+    label: 'STAY UPDATED',
+    heading: 'GET MONTHLY UPDATES',
+    body: 'Be the first to know about campaign milestones, events, and how to support Len\'s legacy.',
+    placeholder: 'Enter your email',
+    button: 'Subscribe',
+  },
+
   // Closing
   closing: {
     line1: 'REMEMBER.',

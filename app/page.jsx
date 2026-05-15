@@ -505,6 +505,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* NEWSLETTER SIGNUP */}
+      <section className="section bg-black">
+        <div className="container max-w-2xl">
+          <p className="label text-gold mb-4 text-center">{content.newsletter.label}</p>
+          <h2 className="display-font h-large text-white mb-6 text-center">
+            {content.newsletter.heading}
+          </h2>
+          <p className="body-lg text-cream mb-8 text-center max-w-xl mx-auto">{content.newsletter.body}</p>
+
+          <form action="https://formspree.io/f/xyzgqpvl" method="POST" className="flex gap-3 flex-col sm:flex-row max-w-md mx-auto">
+            <input
+              type="email"
+              name="email"
+              placeholder={content.newsletter.placeholder}
+              required
+              className="flex-1 px-4 py-3 rounded bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold"
+            />
+            <button
+              type="submit"
+              className="px-6 py-3 bg-gold text-black font-bold rounded hover:bg-opacity-90 transition"
+            >
+              {content.newsletter.button}
+            </button>
+          </form>
+        </div>
+      </section>
+
       <div className="flag-stripe">
         <div className="bg-green"></div>
         <div className="bg-white"></div>
