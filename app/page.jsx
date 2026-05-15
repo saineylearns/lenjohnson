@@ -369,104 +369,108 @@ export default function Home() {
           </h2>
           <p className="body-lg text-muted max-w-3xl mb-16">{content.events.intro}</p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {content.events.items.map((event, idx) => (
-              <div key={idx} className="card">
-                <div className="card-img-container">
-                  <img src={`/images/${event.image}.webp`} alt={event.title} className="card-img" loading="lazy"/>
+          <div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              {content.events.items.map((event, idx) => (
+                <div key={idx} className="card">
+                  <div className="card-img-container">
+                    <img src={`/images/${event.image}.webp`} alt={event.title} className="card-img" loading="lazy"/>
+                  </div>
+                  <p className="label text-orange mb-3">{event.label}</p>
+                  <h3 className="display-font h-small text-black mb-3">{event.title}</h3>
+                  <p className="body-md mb-6">{event.description}</p>
+                  <div className="flex flex-col gap-2">
+                    <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green" aria-label={`${event.title} link (opens in new tab)`}>
+                      {event.linkText.includes('→') ? (
+                        <>
+                          {event.linkText.replace(' →', '')}
+                          <span aria-hidden="true"> →</span>
+                        </>
+                      ) : event.linkText}
+                    </a>
+                    {(event.title === 'CHARITY MATCH' || event.title === 'BREAKING BARZ') && (
+                      <button
+                        onClick={() => setExpandedGallery(expandedGallery === event.title ? null : event.title)}
+                        className="text-left link-underline body-sm font-bold text-orange"
+                        aria-expanded={expandedGallery === event.title}
+                      >
+                        {expandedGallery === event.title ? '← Hide gallery' : 'View gallery →'}
+                      </button>
+                    )}
+                  </div>
                 </div>
-                <p className="label text-orange mb-3">{event.label}</p>
-                <h3 className="display-font h-small text-black mb-3">{event.title}</h3>
-                <p className="body-md mb-6">{event.description}</p>
-                <div className="flex flex-col gap-2">
-                  <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green" aria-label={`${event.title} link (opens in new tab)`}>
-                    {event.linkText.includes('→') ? (
-                      <>
-                        {event.linkText.replace(' →', '')}
-                        <span aria-hidden="true"> →</span>
-                      </>
-                    ) : event.linkText}
-                  </a>
-                  {(event.title === 'CHARITY MATCH' || event.title === 'BREAKING BARZ') && (
-                    <button
-                      onClick={() => setExpandedGallery(expandedGallery === event.title ? null : event.title)}
-                      className="text-left link-underline body-sm font-bold text-orange"
-                      aria-expanded={expandedGallery === event.title}
-                    >
-                      {expandedGallery === event.title ? '← Hide gallery' : 'View gallery →'}
-                    </button>
-                  )}
+              ))}
+            </div>
+
+            {/* Charity Match Gallery */}
+            {expandedGallery === 'CHARITY MATCH' && (
+              <div className="mt-6 border-t border-gray-300 pt-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                  {[1,2,3,4,5,6,7].map((idx) => (
+                    <img
+                      key={idx}
+                      src={`/images/media/charity-match/0${idx}-${['burnham','theo','trophy','throw','crolla','team','fc-team'][idx-1]}.webp`}
+                      alt={`Charity match moment ${idx}`}
+                      className="w-full aspect-video object-cover rounded cursor-pointer hover:opacity-80 transition"
+                      loading="lazy"
+                    />
+                  ))}
                 </div>
+                <button
+                  onClick={() => setExpandedVideos(expandedVideos === 'charity' ? null : 'charity')}
+                  className="w-full text-center py-3 bg-black text-gold font-bold rounded hover:bg-opacity-90 transition"
+                >
+                  {expandedVideos === 'charity' ? '← Hide videos' : 'Watch match videos →'}
+                </button>
+                {expandedVideos === 'charity' && (
+                  <div className="mt-6 space-y-6">
+                    <div className="aspect-video bg-black rounded overflow-hidden">
+                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/NaIR78fEG2g" title="FC United VS Celebrity Team" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    </div>
+                    <div className="aspect-video bg-black rounded overflow-hidden">
+                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/V1GRCML2eig" title="Angry Ginge: 2 Charity Matches" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    </div>
+                    <div className="aspect-video bg-black rounded overflow-hidden">
+                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1yncDk_CwiE" title="BIG G Charity Match" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    </div>
+                  </div>
+                )}
               </div>
+            )}
 
-              {/* Expandable galleries */}
-              {expandedGallery === event.title && event.title === 'CHARITY MATCH' && (
-                <div className="col-span-1 md:col-span-3 mt-6 border-t border-gray-300 pt-6">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {[1,2,3,4,5,6,7].map((idx) => (
-                      <img
-                        key={idx}
-                        src={`/images/media/charity-match/0${idx}-${['burnham','theo','trophy','throw','crolla','team','fc-team'][idx-1]}.webp`}
-                        alt={`Charity match moment ${idx}`}
-                        className="w-full aspect-video object-cover rounded cursor-pointer hover:opacity-80 transition"
-                        loading="lazy"
-                      />
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => setExpandedVideos(expandedVideos === 'charity' ? null : 'charity')}
-                    className="mt-6 w-full text-center py-3 bg-black text-gold font-bold rounded hover:bg-opacity-90 transition"
-                  >
-                    {expandedVideos === 'charity' ? '← Hide videos' : 'Watch match videos →'}
-                  </button>
-                  {expandedVideos === 'charity' && (
-                    <div className="mt-6 space-y-6">
-                      <div className="aspect-video bg-black rounded overflow-hidden">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/NaIR78fEG2g" title="FC United VS Celebrity Team" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                      </div>
-                      <div className="aspect-video bg-black rounded overflow-hidden">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/V1GRCML2eig" title="Angry Ginge: 2 Charity Matches" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                      </div>
-                      <div className="aspect-video bg-black rounded overflow-hidden">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1yncDk_CwiE" title="BIG G Charity Match" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                      </div>
-                    </div>
-                  )}
+            {/* Breaking Barz Gallery */}
+            {expandedGallery === 'BREAKING BARZ' && (
+              <div className="mt-6 border-t border-gray-300 pt-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                  {[1,2,3,4,5,6,7,8].map((idx) => (
+                    <img
+                      key={idx}
+                      src={`/images/media/breaking-barz/0${idx}-${['blazer','band','artist','group','artist2','artist3','artist4','artist5'][idx-1]}.webp`}
+                      alt={`Breaking Barz moment ${idx}`}
+                      className="w-full aspect-square object-cover rounded cursor-pointer hover:opacity-80 transition"
+                      loading="lazy"
+                    />
+                  ))}
                 </div>
-              )}
-
-              {expandedGallery === event.title && event.title === 'BREAKING BARZ' && (
-                <div className="col-span-1 md:col-span-3 mt-6 border-t border-gray-300 pt-6">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {[1,2,3,4,5,6,7,8].map((idx) => (
-                      <img
-                        key={idx}
-                        src={`/images/media/breaking-barz/0${idx}-${['blazer','band','artist','group','artist2','artist3','artist4','artist5'][idx-1]}.webp`}
-                        alt={`Breaking Barz moment ${idx}`}
-                        className="w-full aspect-square object-cover rounded cursor-pointer hover:opacity-80 transition"
-                        loading="lazy"
-                      />
-                    ))}
-                  </div>
-                  <button
-                    onClick={() => setExpandedVideos(expandedVideos === 'breaking' ? null : 'breaking')}
-                    className="mt-6 w-full text-center py-3 bg-black text-gold font-bold rounded hover:bg-opacity-90 transition"
-                  >
-                    {expandedVideos === 'breaking' ? '← Hide videos' : 'Watch performances →'}
-                  </button>
-                  {expandedVideos === 'breaking' && (
-                    <div className="mt-6 space-y-6">
-                      <div className="aspect-video bg-black rounded overflow-hidden">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5fx-FXHWGBE" title="Breaking Barz Grime Cypher" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                      </div>
-                      <div className="aspect-video bg-black rounded overflow-hidden">
-                        <iframe width="100%" height="100%" src="https://www.youtube.com/embed/AiB82bu8AUw" title="Rush Breaking Bars" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                      </div>
+                <button
+                  onClick={() => setExpandedVideos(expandedVideos === 'breaking' ? null : 'breaking')}
+                  className="w-full text-center py-3 bg-black text-gold font-bold rounded hover:bg-opacity-90 transition"
+                >
+                  {expandedVideos === 'breaking' ? '← Hide videos' : 'Watch performances →'}
+                </button>
+                {expandedVideos === 'breaking' && (
+                  <div className="mt-6 space-y-6">
+                    <div className="aspect-video bg-black rounded overflow-hidden">
+                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5fx-FXHWGBE" title="Breaking Barz Grime Cypher" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                     </div>
-                  )}
-                </div>
-              )}
-            ))}
+                    <div className="aspect-video bg-black rounded overflow-hidden">
+                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/AiB82bu8AUw" title="Rush Breaking Bars" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
           </div>
 
           <div className="text-center mt-16">
