@@ -97,11 +97,14 @@ const jsonLd = {
       },
     },
     {
-      '@type': 'LocalBusiness',
+      '@type': 'Organization',
       '@id': 'https://lenjohnsoncampaign.co.uk/#organization',
-      name: 'Len Johnson Campaign',
+      name: 'Len Johnson Campaign CIC',
+      legalName: 'Len Johnson Campaign Community Interest Company',
       description: 'Community Interest Company dedicated to honouring Len Johnson\'s legacy.',
       url: 'https://lenjohnsoncampaign.co.uk',
+      foundingDate: '2023',
+      email: 'info@lenjohnsoncampaign.co.uk',
       contactPoint: {
         '@type': 'ContactPoint',
         email: 'info@lenjohnsoncampaign.co.uk',
@@ -112,10 +115,45 @@ const jsonLd = {
         addressLocality: 'Manchester',
         addressCountry: 'GB',
       },
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://lenjohnsoncampaign.co.uk/images/hero.webp',
+        width: 1200,
+        height: 630,
+      },
       sameAs: [
         'https://www.facebook.com/LenJohnsonCampaign',
         'https://instagram.com/lenjohnsonmcr',
       ],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://lenjohnsoncampaign.co.uk/#website',
+      name: 'Len Johnson Campaign',
+      url: 'https://lenjohnsoncampaign.co.uk',
+      potentialAction: {
+        '@type': 'SearchAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: 'https://lenjohnsoncampaign.co.uk?s={search_term_string}',
+        },
+        'query-input': 'required name=search_term_string',
+      },
+    },
+    {
+      '@type': 'DonateAction',
+      '@id': 'https://lenjohnsoncampaign.co.uk/#donate',
+      name: 'Donate to Len Johnson Campaign',
+      description: 'Support the campaign to build a statue of Manchester boxing legend Len Johnson.',
+      url: 'https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue',
+      agent: {
+        '@type': 'Organization',
+        name: 'Len Johnson Campaign CIC',
+      },
+      recipient: {
+        '@type': 'Organization',
+        name: 'Len Johnson Campaign CIC',
+      },
     },
   ],
 }

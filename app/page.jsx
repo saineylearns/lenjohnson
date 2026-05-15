@@ -39,11 +39,12 @@ export default function Home() {
             {content.nav.links.map((link) => (
               <a key={link.text} href={link.href} className="label">{link.text}</a>
             ))}
-            <a 
-              href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue"
+              target="_blank"
+              rel="noopener noreferrer"
               className="pill pill-gold sticky-nav-cta"
+              aria-label="Donate via GoFundMe (opens in new tab)"
             >
               <span>Donate</span>
             </a>
@@ -121,14 +122,15 @@ export default function Home() {
 
           {/* CTA buttons */}
           <div className="flex gap-3 flex-wrap mt-8 slide-up delay-3">
-            <a 
-              href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue"
+              target="_blank"
+              rel="noopener noreferrer"
               className="pill pill-gold"
+              aria-label="Donate now via GoFundMe (opens in new tab)"
             >
               <span>{content.hero.cta1}</span>
-              <span>→</span>
+              <span aria-hidden="true">→</span>
             </a>
             <a href="#story" className="pill pill-outline-light">
               <span>{content.hero.cta2}</span>
@@ -350,17 +352,22 @@ export default function Home() {
                 <p className="label text-orange mb-3">{event.label}</p>
                 <h3 className="display-font h-small text-black mb-3">{event.title}</h3>
                 <p className="body-md mb-6">{event.description}</p>
-                <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green">
-                  {event.linkText}
+                <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green" aria-label={`${event.title} link (opens in new tab)`}>
+                  {event.linkText.includes('→') ? (
+                    <>
+                      {event.linkText.replace(' →', '')}
+                      <span aria-hidden="true"> →</span>
+                    </>
+                  ) : event.linkText}
                 </a>
               </div>
             ))}
           </div>
 
           <div className="text-center mt-16">
-            <a href="https://facebook.com/LenJohnsonCampaign/" target="_blank" rel="noopener noreferrer" className="pill pill-primary">
+            <a href="https://facebook.com/LenJohnsonCampaign/" target="_blank" rel="noopener noreferrer" className="pill pill-primary" aria-label="Follow for upcoming events on Facebook (opens in new tab)">
               <span>{content.events.cta}</span>
-              <span>→</span>
+              <span aria-hidden="true">→</span>
             </a>
           </div>
         </div>
@@ -454,9 +461,9 @@ export default function Home() {
             <p className="display-font h-large text-gold mb-8">{content.statue.cta.heading}</p>
             <p className="body-lg text-cream max-w-3xl mb-8">{content.statue.cta.body}</p>
             <div className="flex gap-4 flex-wrap">
-              <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="pill pill-gold">
+              <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="pill pill-gold" aria-label="Donate now via GoFundMe (opens in new tab)">
                 <span>{content.statue.cta.button1}</span>
-                <span>→</span>
+                <span aria-hidden="true">→</span>
               </a>
               <a href="#take-action" className="pill pill-outline-light">
                 <span>{content.statue.cta.button2}</span>
@@ -487,9 +494,10 @@ export default function Home() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`pill ${action.primary ? 'pill-gold' : 'pill-outline-dark'}`}
+                  aria-label={`${action.cta} (opens in new tab)`}
                 >
                   <span>{action.cta}</span>
-                  <span>→</span>
+                  <span aria-hidden="true">→</span>
                 </a>
               </div>
             ))}
@@ -537,17 +545,17 @@ export default function Home() {
               <p className="label text-muted mb-6">CONNECT</p>
               <ul className="space-y-3">
                 <li>
-                  <a href="https://instagram.com/lenjohnsonmcr/" target="_blank" rel="noopener noreferrer" className="body-md link-underline">
+                  <a href="https://instagram.com/lenjohnsonmcr/" target="_blank" rel="noopener noreferrer" className="body-md link-underline" aria-label="Instagram @lenjohnsonmcr (opens in new tab)">
                     Instagram @lenjohnsonmcr
                   </a>
                 </li>
                 <li>
-                  <a href="https://facebook.com/LenJohnsonCampaign" target="_blank" rel="noopener noreferrer" className="body-md link-underline">
+                  <a href="https://facebook.com/LenJohnsonCampaign" target="_blank" rel="noopener noreferrer" className="body-md link-underline" aria-label="Facebook (opens in new tab)">
                     Facebook
                   </a>
                 </li>
                 <li>
-                  <a href="https://instagram.com/breakingbarzmcr/" target="_blank" rel="noopener noreferrer" className="body-md link-underline">
+                  <a href="https://instagram.com/breakingbarzmcr/" target="_blank" rel="noopener noreferrer" className="body-md link-underline" aria-label="Breaking Barz on Instagram (opens in new tab)">
                     Breaking Barz
                   </a>
                 </li>
@@ -557,7 +565,7 @@ export default function Home() {
               <p className="label text-muted mb-6">TAKE ACTION</p>
               <ul className="space-y-3">
                 <li>
-                  <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="body-md link-underline font-bold text-green">
+                  <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="body-md link-underline font-bold text-green" aria-label="Donate via GoFundMe (opens in new tab)">
                     Donate
                   </a>
                 </li>
