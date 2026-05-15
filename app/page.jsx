@@ -6,8 +6,30 @@ import { content } from '../content-config'
 export default function Home() {
   const [navVisible, setNavVisible] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [expandedGallery, setExpandedGallery] = useState(null)
-  const [expandedVideos, setExpandedVideos] = useState(null)
+  const [lightboxGallery, setLightboxGallery] = useState(null)
+  const [lightboxIndex, setLightboxIndex] = useState(0)
+  const [watchOpen, setWatchOpen] = useState(false)
+
+  const charityImages = [
+    { src: '/images/media/charity-match/01-burnham.webp', alt: 'Andy Burnham at charity match' },
+    { src: '/images/media/charity-match/02-theo.webp', alt: 'Theo at the charity match' },
+    { src: '/images/media/charity-match/03-trophy.webp', alt: 'Lifting the trophy' },
+    { src: '/images/media/charity-match/04-throw.webp', alt: 'Throw in moment' },
+    { src: '/images/media/charity-match/05-crolla.webp', alt: 'Anthony Crolla at match' },
+    { src: '/images/media/charity-match/06-team.webp', alt: 'Team photo' },
+    { src: '/images/media/charity-match/07-fc-team.webp', alt: 'Len Johnson FC team' },
+  ]
+
+  const breakingBarzImages = [
+    { src: '/images/media/breaking-barz/01-blazer.webp', alt: 'Breaking Barz at Blazer Boccle' },
+    { src: '/images/media/breaking-barz/02-band.webp', alt: 'Breaking Barz at Band on the Wall' },
+    { src: '/images/media/breaking-barz/03-artist.webp', alt: 'Artist performing' },
+    { src: '/images/media/breaking-barz/04-group.webp', alt: 'Group photo' },
+    { src: '/images/media/breaking-barz/05-artist2.webp', alt: 'Artist performing' },
+    { src: '/images/media/breaking-barz/06-artist3.webp', alt: 'Artist performing' },
+    { src: '/images/media/breaking-barz/07-artist4.webp', alt: 'Artist performing' },
+    { src: '/images/media/breaking-barz/08-artist5.webp', alt: 'Artist performing' },
+  ]
 
   useEffect(() => {
     const scrollBar = document.getElementById('scrollBar')
@@ -26,8 +48,50 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const activeImages = lightboxGallery === 'charity' ? charityImages : lightboxGallery === 'breaking' ? breakingBarzImages : []
+
   return (
     <>
+      {/* LIGHTBOX MODAL */}
+      {lightboxGallery && (
+        <div
+          className="lightbox-overlay"
+          onClick={() => setLightboxGallery(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image gallery"
+        >
+          <button
+            className="lightbox-close"
+            onClick={() => setLightboxGallery(null)}
+            aria-label="Close gallery"
+          >
+            ×
+          </button>
+          <button
+            className="lightbox-prev"
+            onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + activeImages.length) % activeImages.length); }}
+            aria-label="Previous image"
+          >
+            ‹
+          </button>
+          <img
+            src={activeImages[lightboxIndex]?.src}
+            alt={activeImages[lightboxIndex]?.alt}
+            className="lightbox-image"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            className="lightbox-next"
+            onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % activeImages.length); }}
+            aria-label="Next image"
+          >
+            ›
+          </button>
+          <p className="lightbox-counter">{lightboxIndex + 1} / {activeImages.length}</p>
+        </div>
+      )}
+
       <a href="#main-content" className="skip-link">Skip to main content</a>
       <div className="scroll-bar" id="scrollBar"></div>
 
@@ -369,105 +433,98 @@ export default function Home() {
           </h2>
           <p className="body-lg text-muted max-w-3xl mb-16">{content.events.intro}</p>
 
-          <div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-              {content.events.items.map((event, idx) => (
-                <div key={idx} className="card">
-                  <div className="card-img-container">
-                    <img src={`/images/${event.image}.webp`} alt={event.title} className="card-img" loading="lazy"/>
-                  </div>
-                  <p className="label text-orange mb-3">{event.label}</p>
-                  <h3 className="display-font h-small text-black mb-3">{event.title}</h3>
-                  <p className="body-md mb-6">{event.description}</p>
-                  <div className="flex flex-col gap-2">
-                    <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green" aria-label={`${event.title} link (opens in new tab)`}>
-                      {event.linkText.includes('→') ? (
-                        <>
-                          {event.linkText.replace(' →', '')}
-                          <span aria-hidden="true"> →</span>
-                        </>
-                      ) : event.linkText}
-                    </a>
-                    {(event.title === 'CHARITY MATCH' || event.title === 'BREAKING BARZ') && (
-                      <button
-                        onClick={() => setExpandedGallery(expandedGallery === event.title ? null : event.title)}
-                        className="text-left link-underline body-sm font-bold text-orange"
-                        aria-expanded={expandedGallery === event.title}
-                      >
-                        {expandedGallery === event.title ? '← Hide gallery' : 'View gallery →'}
-                      </button>
-                    )}
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {content.events.items.map((event, idx) => (
+              <div key={idx} className="card">
+                <div className="card-img-container">
+                  <img src={`/images/${event.image}.webp`} alt={event.title} className="card-img" loading="lazy"/>
                 </div>
-              ))}
-            </div>
-
-            {/* Charity Match Gallery */}
-            {expandedGallery === 'CHARITY MATCH' && (
-              <div className="mt-6 border-t border-gray-300 pt-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                  {[1,2,3,4,5,6,7].map((idx) => (
-                    <img
-                      key={idx}
-                      src={`/images/media/charity-match/0${idx}-${['burnham','theo','trophy','throw','crolla','team','fc-team'][idx-1]}.webp`}
-                      alt={`Charity match moment ${idx}`}
-                      className="w-full aspect-video object-cover rounded cursor-pointer hover:opacity-80 transition"
-                      loading="lazy"
-                    />
-                  ))}
+                <p className="label text-orange mb-3">{event.label}</p>
+                <h3 className="display-font h-small text-black mb-3">{event.title}</h3>
+                <p className="body-md mb-6">{event.description}</p>
+                <div className="flex flex-col gap-2">
+                  <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green" aria-label={`${event.title} link (opens in new tab)`}>
+                    {event.linkText.includes('→') ? (
+                      <>
+                        {event.linkText.replace(' →', '')}
+                        <span aria-hidden="true"> →</span>
+                      </>
+                    ) : event.linkText}
+                  </a>
+                  {event.title === 'CHARITY MATCH' && (
+                    <button
+                      onClick={() => { setLightboxGallery('charity'); setLightboxIndex(0); }}
+                      className="text-left link-underline body-sm font-bold text-orange"
+                      aria-label="Open Charity Match photo gallery"
+                    >
+                      View gallery →
+                    </button>
+                  )}
+                  {event.title === 'BREAKING BARZ' && (
+                    <button
+                      onClick={() => { setLightboxGallery('breaking'); setLightboxIndex(0); }}
+                      className="text-left link-underline body-sm font-bold text-orange"
+                      aria-label="Open Breaking Barz photo gallery"
+                    >
+                      View gallery →
+                    </button>
+                  )}
                 </div>
-                <button
-                  onClick={() => setExpandedVideos(expandedVideos === 'charity' ? null : 'charity')}
-                  className="w-full text-center py-3 bg-black text-gold font-bold rounded hover:bg-opacity-90 transition"
-                >
-                  {expandedVideos === 'charity' ? '← Hide videos' : 'Watch match videos →'}
-                </button>
-                {expandedVideos === 'charity' && (
-                  <div className="mt-6 space-y-6">
-                    <div className="aspect-video bg-black rounded overflow-hidden">
-                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/NaIR78fEG2g" title="FC United VS Celebrity Team" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </div>
-                    <div className="aspect-video bg-black rounded overflow-hidden">
-                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/V1GRCML2eig" title="Angry Ginge: 2 Charity Matches" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </div>
-                    <div className="aspect-video bg-black rounded overflow-hidden">
-                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1yncDk_CwiE" title="BIG G Charity Match" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </div>
-                  </div>
-                )}
               </div>
-            )}
+            ))}
+          </div>
 
-            {/* Breaking Barz Gallery */}
-            {expandedGallery === 'BREAKING BARZ' && (
-              <div className="mt-6 border-t border-gray-300 pt-6">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                  {[1,2,3,4,5,6,7,8].map((idx) => (
-                    <img
-                      key={idx}
-                      src={`/images/media/breaking-barz/0${idx}-${['blazer','band','artist','group','artist2','artist3','artist4','artist5'][idx-1]}.webp`}
-                      alt={`Breaking Barz moment ${idx}`}
-                      className="w-full aspect-square object-cover rounded cursor-pointer hover:opacity-80 transition"
-                      loading="lazy"
-                    />
-                  ))}
-                </div>
-                <button
-                  onClick={() => setExpandedVideos(expandedVideos === 'breaking' ? null : 'breaking')}
-                  className="w-full text-center py-3 bg-black text-gold font-bold rounded hover:bg-opacity-90 transition"
-                >
-                  {expandedVideos === 'breaking' ? '← Hide videos' : 'Watch performances →'}
-                </button>
-                {expandedVideos === 'breaking' && (
-                  <div className="mt-6 space-y-6">
-                    <div className="aspect-video bg-black rounded overflow-hidden">
-                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5fx-FXHWGBE" title="Breaking Barz Grime Cypher" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </div>
-                    <div className="aspect-video bg-black rounded overflow-hidden">
-                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/AiB82bu8AUw" title="Rush Breaking Bars" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </div>
+          {/* WATCH accordion */}
+          <div className="mt-16 border-t border-gray-300 pt-12">
+            <button
+              onClick={() => setWatchOpen(!watchOpen)}
+              className="w-full flex items-center justify-between py-4 group"
+              aria-expanded={watchOpen}
+              aria-controls="watch-content"
+            >
+              <span className="display-font h-large text-black">
+                WATCH<span className="text-green">.</span>
+              </span>
+              <span className={`display-font h-large text-orange transition-transform ${watchOpen ? 'rotate-45' : ''}`} aria-hidden="true">+</span>
+            </button>
+            {watchOpen && (
+              <div id="watch-content" className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                <div>
+                  <p className="label text-orange mb-3">DRUNK HISTORY</p>
+                  <div className="aspect-video bg-black rounded overflow-hidden">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/mubC_K5HCuQ" title="Len Johnson: British Boxing Champion | Drunk History" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                   </div>
-                )}
+                </div>
+                <div>
+                  <p className="label text-orange mb-3">CHARITY MATCH · SKIDDLE</p>
+                  <div className="aspect-video bg-black rounded overflow-hidden">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/NaIR78fEG2g" title="FC United VS Celebrity Team" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                  </div>
+                </div>
+                <div>
+                  <p className="label text-orange mb-3">CHARITY MATCH · ANGRY GINGE</p>
+                  <div className="aspect-video bg-black rounded overflow-hidden">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/V1GRCML2eig" title="Angry Ginge: 2 Charity Matches" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                  </div>
+                </div>
+                <div>
+                  <p className="label text-orange mb-3">CHARITY MATCH · BIG G</p>
+                  <div className="aspect-video bg-black rounded overflow-hidden">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/1yncDk_CwiE" title="BIG G Charity Match" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                  </div>
+                </div>
+                <div>
+                  <p className="label text-orange mb-3">BREAKING BARZ · PIE RADIO</p>
+                  <div className="aspect-video bg-black rounded overflow-hidden">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/5fx-FXHWGBE" title="Breaking Barz Grime Cypher" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                  </div>
+                </div>
+                <div>
+                  <p className="label text-orange mb-3">BREAKING BARZ · RUSH</p>
+                  <div className="aspect-video bg-black rounded overflow-hidden">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/AiB82bu8AUw" title="Rush Breaking Bars" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -538,21 +595,39 @@ export default function Home() {
             <p className="label text-orange mb-6">{content.press.label}</p>
             <h3 className="display-font h-large text-black mb-12">{content.press.heading}</h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {content.press.items.map((article, idx) => (
+            {/* Pull-quote: standout press headline */}
+            <div className="mb-16 border-l-4 border-orange pl-8 py-4">
+              <p className="display-font h-medium text-black italic mb-4 leading-tight">
+                &ldquo;He was one of the best boxers in the world — so why don&apos;t people know his name?&rdquo;
+              </p>
+              <p className="label text-green">— MANCHESTER EVENING NEWS, 2024</p>
+            </div>
+
+            {/* 3-column press card grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                { outlet: 'BBC SPORT', date: '2020', title: 'The boxer with 93 wins who could never become British champion', url: 'https://www.bbc.co.uk/sport/boxing/54480882', image: '/images/press/bbc.webp' },
+                { outlet: 'SKY SPORTS', date: '2020', title: 'The uncrowned British Empire champion', url: 'https://www.skysports.com/watch/video/sports/boxing/12116758/len-johnson-the-uncrowned-british-empire-champion', image: '/images/press/sky.webp' },
+                { outlet: 'MANCHESTER EVENING NEWS', date: '2024', title: 'He was one of the best boxers in the world', url: 'https://www.manchestereveningnews.co.uk/news/greater-manchester-news/one-best-boxers-world-dont-30226520', image: '/images/press/men.webp' },
+                { outlet: 'ITV NEWS', date: '2024', title: 'Charity football match raises money for boxing legend statue', url: 'https://www.itv.com/news/granada/2024-05-21/charity-football-match-raises-money-for-boxing-legend-statue', image: '/images/charity-match.webp' },
+                { outlet: 'ARCHIVES+', date: '2024', title: 'Honouring Manchester Boxing Legend Len Johnson', url: 'https://manchesterarchiveplus.wordpress.com/2024/10/15/honouring-manchester-boxing-legend-len-johnson/', image: '/images/press/archives.webp' },
+              ].map((article, idx) => (
                 <a
                   key={idx}
                   href={article.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="card hover:shadow-lg transition group"
+                  className="card hover:shadow-lg transition group flex flex-col"
                   aria-label={`${article.title} - ${article.outlet} (opens in new tab)`}
                 >
+                  <div className="card-img-container mb-4 -mx-6 -mt-6">
+                    <img src={article.image} alt={article.title} className="card-img" loading="lazy"/>
+                  </div>
                   <div className="flex justify-between items-start mb-3">
                     <p className="label text-green">{article.outlet}</p>
                     <p className="label text-muted">{article.date}</p>
                   </div>
-                  <h4 className="display-font h-small text-black mb-3 group-hover:text-green transition">
+                  <h4 className="display-font h-small text-black mb-4 group-hover:text-green transition flex-1">
                     {article.title}
                   </h4>
                   <span className="text-orange font-bold inline-flex items-center gap-2">
