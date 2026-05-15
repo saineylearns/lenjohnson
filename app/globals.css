@@ -684,3 +684,74 @@ body {
     /* padding handled by hero section */
   }
 }
+
+/* Print styles */
+@media print {
+  /* Hide navigation and interactive elements */
+  .sticky-nav,
+  .scroll-bar,
+  .skip-link {
+    display: none !important;
+  }
+
+  /* Hide CTA buttons but keep text content */
+  .pill {
+    border: none;
+    background: transparent !important;
+    text-decoration: underline;
+  }
+
+  .pill span:last-child {
+    display: none;
+  }
+
+  /* Optimize text colors for printing */
+  body {
+    color: #000;
+    background: #fff;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  /* Remove background colors */
+  .bg-black,
+  .bg-green,
+  .bg-orange,
+  .bg-gold,
+  .bg-cream {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .text-white,
+  .text-cream,
+  .text-gold,
+  .text-green,
+  .text-orange {
+    color: #000 !important;
+  }
+
+  /* Better page breaks */
+  section {
+    page-break-inside: avoid;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  /* Ensure images print well */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Hide decorative elements */
+  .flag-stripe,
+  .marquee {
+    display: none !important;
+  }
+}

@@ -165,7 +165,9 @@ export default function RootLayout({ children }) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#169B62" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="canonical" href="https://lenjohnsoncampaign.co.uk" />
         <link rel="alternate" hrefLang="en-GB" href="https://lenjohnsoncampaign.co.uk" />
         <link rel="preload" as="image" href="/images/hero.webp" />
