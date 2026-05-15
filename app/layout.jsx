@@ -13,7 +13,7 @@ export const metadata = {
     siteName: 'Len Johnson Campaign',
     images: [
       {
-        url: 'https://lenjohnsoncampaign.vercel.app/images/hero.webp',
+        url: 'https://lenjohnsoncampaign.co.uk/images/hero.webp',
         width: 1200,
         height: 630,
         alt: 'Len Johnson with friends and supporters in Manchester',
@@ -28,7 +28,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Len Johnson — Uncrowned Champion of Manchester',
     description: 'The story of a boxer denied the title he deserved. A campaign to build a statue of Manchester\'s boxing legend.',
-    image: 'https://lenjohnsoncampaign.vercel.app/images/hero.webp',
+    image: 'https://lenjohnsoncampaign.co.uk/images/hero.webp',
     creator: '@lenjohnsonmcr',
   },
 
@@ -92,7 +92,7 @@ const jsonLd = {
         name: 'Len Johnson Campaign CIC',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://lenjohnsoncampaign.vercel.app/images/hero.webp',
+          url: 'https://lenjohnsoncampaign.co.uk/images/hero.webp',
         },
       },
     },
@@ -130,6 +130,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="canonical" href="https://lenjohnsoncampaign.co.uk" />
         <link rel="alternate" hrefLang="en-GB" href="https://lenjohnsoncampaign.co.uk" />
+        <link rel="preload" as="image" href="/images/hero.webp" />
         
         {/* JSON-LD Structured Data */}
         <script

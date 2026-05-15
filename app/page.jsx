@@ -30,6 +30,7 @@ export default function Home() {
       <div className="scroll-bar" id="scrollBar"></div>
 
       {/* STICKY NAVIGATION */}
+      <header role="banner">
       <nav className={`sticky-nav ${navVisible ? 'visible' : ''}`} role="navigation" aria-label="Main navigation">
         <div className="sticky-nav-inner">
           <a href="#top" className="display-font sticky-nav-brand">{content.nav.brand}</a>
@@ -85,6 +86,7 @@ export default function Home() {
           </div>
         )}
       </nav>
+      </header>
 
       <main id="main-content">
 
@@ -175,7 +177,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="content-img-frame">
-              <img src="/images/portrait.webp" alt="Young Len Johnson portrait" className="content-img"/>
+              <img src="/images/portrait.webp" alt="Young Len Johnson portrait" className="content-img" loading="lazy"/>
             </div>
             <div>
               <p className="body-lg text-black mb-6">{content.chapter1.body1}</p>
@@ -203,7 +205,7 @@ export default function Home() {
               <p className="display-font h-small text-gold">{content.chapter2.imageStat}</p>
             </div>
             <div className="content-img-frame">
-              <img src="/images/boxing.webp" alt="Len Johnson in fighting stance" className="content-img"/>
+              <img src="/images/boxing.webp" alt="Len Johnson in fighting stance" className="content-img" loading="lazy"/>
             </div>
           </div>
 
@@ -215,7 +217,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {content.chapter2.champions.map((champ, idx) => (
               <div key={idx} className="card">
-                <p className="display-font h-small text-black mb-2">{champ.name}</p>
+                <h4 className="display-font h-small text-black mb-2">{champ.name}</h4>
                 <p className="label text-muted mb-3">{champ.year}</p>
                 <p className="body-md">{champ.description}</p>
               </div>
@@ -281,7 +283,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
             <div className="content-img-frame wide">
-              <img src="/images/crowd.webp" alt="Len Johnson with supporters" className="content-img"/>
+              <img src="/images/crowd.webp" alt="Len Johnson with supporters" className="content-img" loading="lazy"/>
             </div>
             <div>
               <p className="body-lg text-black mb-6">{content.chapter4.intro1}</p>
@@ -294,7 +296,7 @@ export default function Home() {
             {content.chapter4.timeline.map((item, idx) => (
               <div key={idx} className="card">
                 <p className="display-font h-small text-green mb-2">{item.year}</p>
-                <p className="label text-muted mb-3">{item.label}</p>
+                <h4 className="label text-muted mb-3">{item.label}</h4>
                 <p className="body-md">{item.description}</p>
               </div>
             ))}
@@ -343,10 +345,10 @@ export default function Home() {
             {content.events.items.map((event, idx) => (
               <div key={idx} className="card">
                 <div className="card-img-container">
-                  <img src={`/images/${event.image}.webp`} alt={event.title} className="card-img"/>
+                  <img src={`/images/${event.image}.webp`} alt={event.title} className="card-img" loading="lazy"/>
                 </div>
                 <p className="label text-orange mb-3">{event.label}</p>
-                <p className="display-font h-small text-black mb-3">{event.title}</p>
+                <h3 className="display-font h-small text-black mb-3">{event.title}</h3>
                 <p className="body-md mb-6">{event.description}</p>
                 <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green">
                   {event.linkText}
@@ -379,7 +381,7 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-16">
             {content.champions.list.map((champ, idx) => (
               <div key={idx} className="champion-card">
-                <p className="display-font h-small text-white mb-2">{champ.name}</p>
+                <h3 className="display-font h-small text-white mb-2">{champ.name}</h3>
                 <p className="label text-gold">{champ.role}</p>
               </div>
             ))}
@@ -410,7 +412,7 @@ export default function Home() {
             {content.campaign.goals.map((goal, idx) => (
               <div key={idx} className="card bg-cream">
                 <p className="display-font h-medium text-green mb-4">{goal.number}</p>
-                <p className="label text-black mb-3">{goal.label}</p>
+                <h4 className="label text-black mb-3">{goal.label}</h4>
                 <p className="body-md text-muted">{goal.description}</p>
               </div>
             ))}
@@ -431,19 +433,19 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20">
             <div>
               <div className="content-img-frame wide mb-8">
-                <img src="/images/sculptor.webp" alt="Taslim Martin sculpting Len Johnson maquette" className="content-img"/>
+                <img src="/images/sculptor.webp" alt="Taslim Martin sculpting Len Johnson maquette" className="content-img" loading="lazy"/>
               </div>
-              <p className="display-font h-small text-black mb-3">{content.statue.sculptor.title}</p>
-              <p className="label text-muted mb-4">{content.statue.sculptor.name}</p>
+              <h3 className="display-font h-small text-black mb-3">{content.statue.sculptor.title}</h3>
+              <h4 className="label text-muted mb-4">{content.statue.sculptor.name}</h4>
               <p className="body-md text-muted mb-3">{content.statue.sculptor.bio}</p>
               <p className="body-md text-muted italic">{content.statue.sculptor.quote}</p>
             </div>
             <div>
               <div className="content-img-frame mb-8" style={{aspectRatio: '3/4'}}>
-                <img src="/images/statue.webp" alt="Len Johnson statue maquette" className="content-img"/>
+                <img src="/images/statue.webp" alt="Len Johnson statue maquette" className="content-img" loading="lazy"/>
               </div>
-              <p className="display-font h-small text-black mb-3">{content.statue.maquette.title}</p>
-              <p className="label text-green mb-4">{content.statue.maquette.label}</p>
+              <h3 className="display-font h-small text-black mb-3">{content.statue.maquette.title}</h3>
+              <h4 className="label text-green mb-4">{content.statue.maquette.label}</h4>
               <p className="body-md text-muted">{content.statue.maquette.description}</p>
             </div>
           </div>
@@ -478,12 +480,12 @@ export default function Home() {
             {content.takeAction.actions.map((action, idx) => (
               <div key={idx} className={`card ${action.primary ? 'card-primary' : ''}`}>
                 <p className={`label mb-3 ${action.primary ? 'text-gold' : 'text-orange'}`}>{action.label}</p>
-                <p className="display-font h-small text-black mb-3">{action.title}</p>
+                <h3 className="display-font h-small text-black mb-3">{action.title}</h3>
                 <p className="body-md text-muted mb-6">{action.description}</p>
-                <a 
-                  href={action.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <a
+                  href={action.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className={`pill ${action.primary ? 'pill-gold' : 'pill-outline-dark'}`}
                 >
                   <span>{action.cta}</span>
@@ -516,7 +518,7 @@ export default function Home() {
 
       <footer id="contact" className="section bg-cream">
         <div className="container">
-          <h2 className="display-font h-huge text-black mb-16">{content.footer.menu}</h2>
+          <h2 className="sr-only">{content.footer.menu}</h2>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
             <div>
