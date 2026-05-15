@@ -471,7 +471,6 @@ export default function Home() {
               </div>
             )}
           </div>
-          </div>
 
           <div className="text-center mt-16">
             <a href="https://facebook.com/LenJohnsonCampaign/" target="_blank" rel="noopener noreferrer" className="pill pill-primary" aria-label="Follow for upcoming events on Facebook (opens in new tab)">
