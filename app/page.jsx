@@ -639,16 +639,18 @@ export default function Home() {
           </div>
 
           {/* IN THE PRESS */}
-          <div className="mt-20 pt-12 border-t border-gray-300">
+          <div className="mt-20 pt-12 border-t border-gold" style={{borderTopColor: 'rgba(212, 175, 55, 0.3)'}}>
             <p className="label text-orange mb-6">{content.press.label}</p>
-            <h3 className="display-font h-large text-black mb-6">{content.press.heading}</h3>
+            <h3 className="display-font h-large text-white mb-6">
+              THE WORLD IS TALKING ABOUT <span className="text-green">LEN</span><span className="text-orange">.</span>
+            </h3>
 
             {/* Pull-quote: standout press headline */}
             <div className="mb-12 border-l-4 border-orange pl-8 py-2">
-              <p className="display-font h-medium text-black italic mb-3 leading-tight">
+              <p className="display-font h-medium text-cream italic mb-3 leading-tight">
                 &ldquo;He was one of the best boxers in the world — so why don&apos;t people know his name?&rdquo;
               </p>
-              <p className="label text-green">— MANCHESTER EVENING NEWS, 2024</p>
+              <p className="label text-gold">— MANCHESTER EVENING NEWS, 2024</p>
             </div>
 
             {/* 3-column press card grid */}
