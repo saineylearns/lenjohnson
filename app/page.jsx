@@ -9,6 +9,7 @@ export default function Home() {
   const [lightboxGallery, setLightboxGallery] = useState(null)
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [watchOpen, setWatchOpen] = useState(false)
+  const [newsletterStatus, setNewsletterStatus] = useState('idle')
 
   const charityImages = [
     { src: '/images/media/charity-match/01-burnham.webp', alt: 'Andy Burnham at charity match' },
@@ -33,13 +34,13 @@ export default function Home() {
 
   useEffect(() => {
     const scrollBar = document.getElementById('scrollBar')
-    
+
     const handleScroll = () => {
       const scrollTop = window.scrollY
       const docHeight = document.documentElement.scrollHeight - window.innerHeight
       const scrollPercent = (scrollTop / docHeight) * 100
       if (scrollBar) scrollBar.style.width = scrollPercent + '%'
-      
+
       // Show nav after scrolling past hero
       setNavVisible(scrollTop > window.innerHeight * 0.7)
     }
@@ -49,6 +50,30 @@ export default function Home() {
   }, [])
 
   const activeImages = lightboxGallery === 'charity' ? charityImages : lightboxGallery === 'breaking' ? breakingBarzImages : []
+
+  // Keyboard support: Escape closes overlays, arrow keys navigate lightbox
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Escape') {
+        if (lightboxGallery) setLightboxGallery(null)
+        else if (mobileMenuOpen) setMobileMenuOpen(false)
+      } else if (lightboxGallery && activeImages.length > 0) {
+        if (e.key === 'ArrowRight') {
+          setLightboxIndex((i) => (i + 1) % activeImages.length)
+        } else if (e.key === 'ArrowLeft') {
+          setLightboxIndex((i) => (i - 1 + activeImages.length) % activeImages.length)
+        }
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [lightboxGallery, mobileMenuOpen, activeImages.length])
+
+  // Lock body scroll when lightbox is open
+  useEffect(() => {
+    document.body.style.overflow = lightboxGallery ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [lightboxGallery])
 
   return (
     <>
@@ -639,7 +664,7 @@ export default function Home() {
           </div>
 
           {/* IN THE PRESS */}
-          <div className="mt-20 pt-12 border-t border-gold" style={{borderTopColor: 'rgba(212, 175, 55, 0.3)'}}>
+          <div className="mt-20 pt-12 border-t" style={{borderTopColor: 'rgba(212, 175, 55, 0.3)'}}>
             <p className="label text-orange mb-6">{content.press.label}</p>
             <h3 className="display-font h-large text-white mb-6">
               THE WORLD IS TALKING ABOUT <span className="text-green">LEN</span><span className="text-orange">.</span>
@@ -648,29 +673,23 @@ export default function Home() {
             {/* Pull-quote: standout press headline */}
             <div className="mb-12 border-l-4 border-orange pl-8 py-2">
               <p className="display-font h-medium text-cream italic mb-3 leading-tight">
-                &ldquo;He was one of the best boxers in the world — so why don&apos;t people know his name?&rdquo;
+                &ldquo;{content.press.pullQuote}&rdquo;
               </p>
-              <p className="label text-gold">— MANCHESTER EVENING NEWS, 2024</p>
+              <p className="label text-gold">{content.press.pullQuoteAttribution}</p>
             </div>
 
             {/* 3-column press card grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { outlet: 'BBC SPORT', date: '2020', title: 'The boxer with 93 wins who could never become British champion', url: 'https://www.bbc.co.uk/sport/boxing/54480882', image: '/images/press/bbc.webp' },
-                { outlet: 'SKY SPORTS', date: '2020', title: 'The uncrowned British Empire champion', url: 'https://www.skysports.com/watch/video/sports/boxing/12116758/len-johnson-the-uncrowned-british-empire-champion', image: '/images/press/sky.webp' },
-                { outlet: 'MANCHESTER EVENING NEWS', date: '2024', title: 'He was one of the best boxers in the world', url: 'https://www.manchestereveningnews.co.uk/news/greater-manchester-news/one-best-boxers-world-dont-30226520', image: '/images/press/men.webp' },
-                { outlet: 'ITV NEWS', date: '2024', title: 'Charity football match raises money for boxing legend statue', url: 'https://www.itv.com/news/granada/2024-05-21/charity-football-match-raises-money-for-boxing-legend-statue', image: '/images/charity-match.webp' },
-                { outlet: 'ARCHIVES+', date: '2024', title: 'Honouring Manchester Boxing Legend Len Johnson', url: 'https://manchesterarchiveplus.wordpress.com/2024/10/15/honouring-manchester-boxing-legend-len-johnson/', image: '/images/press/archives.webp' },
-              ].map((article, idx) => (
+              {content.press.items.map((article, idx) => (
                 <a
                   key={idx}
                   href={article.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="card hover:shadow-lg transition group flex flex-col"
+                  className="card transition group flex flex-col"
                   aria-label={`${article.title} - ${article.outlet} (opens in new tab)`}
                 >
-                  <div className="card-img-container mb-4 -mx-6 -mt-6">
+                  <div className="card-img-container">
                     <img src={article.image} alt={article.title} className="card-img" loading="lazy"/>
                   </div>
                   <div className="flex justify-between items-start mb-3">
@@ -777,21 +796,54 @@ export default function Home() {
           </h2>
           <p className="body-lg text-cream mb-8 text-center max-w-xl mx-auto">{content.newsletter.body}</p>
 
-          <form action="https://formspree.io/f/xyzgqpvl" method="POST" className="flex gap-3 flex-col sm:flex-row max-w-md mx-auto">
-            <input
-              type="email"
-              name="email"
-              placeholder={content.newsletter.placeholder}
-              required
-              className="flex-1 px-4 py-3 rounded bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gold"
-            />
-            <button
-              type="submit"
-              className="px-6 py-3 bg-gold text-black font-bold rounded hover:bg-opacity-90 transition"
+          {newsletterStatus === 'success' ? (
+            <div className="newsletter-success">
+              <p className="display-font h-small text-gold mb-2">THANK YOU.</p>
+              <p className="body-md text-cream">You&apos;re on the list. We&apos;ll be in touch with campaign updates.</p>
+            </div>
+          ) : (
+            <form
+              onSubmit={async (e) => {
+                e.preventDefault()
+                setNewsletterStatus('submitting')
+                const formData = new FormData(e.target)
+                try {
+                  const res = await fetch('https://formspree.io/f/mzzpvabq', {
+                    method: 'POST',
+                    body: formData,
+                    headers: { Accept: 'application/json' },
+                  })
+                  if (res.ok) setNewsletterStatus('success')
+                  else setNewsletterStatus('error')
+                } catch {
+                  setNewsletterStatus('error')
+                }
+              }}
+              className="newsletter-form"
             >
-              {content.newsletter.button}
-            </button>
-          </form>
+              <input
+                type="email"
+                name="email"
+                placeholder={content.newsletter.placeholder}
+                required
+                aria-label="Email address"
+                className="newsletter-input"
+                disabled={newsletterStatus === 'submitting'}
+              />
+              <button
+                type="submit"
+                className="newsletter-button"
+                disabled={newsletterStatus === 'submitting'}
+              >
+                {newsletterStatus === 'submitting' ? 'Sending…' : content.newsletter.button}
+              </button>
+              {newsletterStatus === 'error' && (
+                <p className="newsletter-error" role="alert">
+                  Something went wrong. Please try again or email info@lenjohnsoncampaign.co.uk
+                </p>
+              )}
+            </form>
+          )}
         </div>
       </section>
 

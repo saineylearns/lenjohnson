@@ -79,7 +79,7 @@ const jsonLd = {
     },
     {
       '@type': 'CreativeWork',
-      '@id': 'https://lenjohnsoncampaign.vercel.app/#website',
+      '@id': 'https://lenjohnsoncampaign.vercel.app/#creative-work',
       name: 'Len Johnson Campaign Website',
       description: 'Official website for the Len Johnson Campaign',
       url: 'https://lenjohnsoncampaign.vercel.app',
