@@ -442,36 +442,84 @@ export default function Home() {
                 <p className="label text-orange mb-3">{event.label}</p>
                 <h3 className="display-font h-small text-black mb-3">{event.title}</h3>
                 <p className="body-md mb-6">{event.description}</p>
-                <div className="flex flex-col gap-2">
-                  <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green" aria-label={`${event.title} link (opens in new tab)`}>
-                    {event.linkText.includes('→') ? (
-                      <>
-                        {event.linkText.replace(' →', '')}
-                        <span aria-hidden="true"> →</span>
-                      </>
-                    ) : event.linkText}
-                  </a>
-                  {event.title === 'CHARITY MATCH' && (
-                    <button
-                      onClick={() => { setLightboxGallery('charity'); setLightboxIndex(0); }}
-                      className="text-left link-underline body-sm font-bold text-orange"
-                      aria-label="Open Charity Match photo gallery"
-                    >
-                      View gallery →
-                    </button>
-                  )}
-                  {event.title === 'BREAKING BARZ' && (
-                    <button
-                      onClick={() => { setLightboxGallery('breaking'); setLightboxIndex(0); }}
-                      className="text-left link-underline body-sm font-bold text-orange"
-                      aria-label="Open Breaking Barz photo gallery"
-                    >
-                      View gallery →
-                    </button>
-                  )}
-                </div>
+                <a href={event.link} target="_blank" rel="noopener noreferrer" className="link-underline body-sm font-bold text-green" aria-label={`${event.title} link (opens in new tab)`}>
+                  {event.linkText.includes('→') ? (
+                    <>
+                      {event.linkText.replace(' →', '')}
+                      <span aria-hidden="true"> →</span>
+                    </>
+                  ) : event.linkText}
+                </a>
               </div>
             ))}
+          </div>
+
+          {/* CHARITY MATCH GALLERY */}
+          <div className="mt-20 pt-12 border-t border-gray-300">
+            <div className="flex justify-between items-end mb-8 flex-wrap gap-4">
+              <div>
+                <p className="label text-orange mb-2">CHARITY MATCH</p>
+                <h3 className="display-font h-medium text-black">PHOTO GALLERY.</h3>
+              </div>
+              <button
+                onClick={() => { setLightboxGallery('charity'); setLightboxIndex(0); }}
+                className="link-underline body-sm font-bold text-orange"
+                aria-label="Open Charity Match gallery in fullscreen"
+              >
+                View fullscreen →
+              </button>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {charityImages.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => { setLightboxGallery('charity'); setLightboxIndex(idx); }}
+                  className="overflow-hidden rounded cursor-zoom-in group"
+                  aria-label={`Open ${img.alt} in fullscreen`}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full aspect-video object-cover group-hover:scale-105 transition duration-300"
+                    loading="lazy"
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* BREAKING BARZ GALLERY */}
+          <div className="mt-20 pt-12 border-t border-gray-300">
+            <div className="flex justify-between items-end mb-8 flex-wrap gap-4">
+              <div>
+                <p className="label text-orange mb-2">BREAKING BARZ</p>
+                <h3 className="display-font h-medium text-black">PHOTO GALLERY.</h3>
+              </div>
+              <button
+                onClick={() => { setLightboxGallery('breaking'); setLightboxIndex(0); }}
+                className="link-underline body-sm font-bold text-orange"
+                aria-label="Open Breaking Barz gallery in fullscreen"
+              >
+                View fullscreen →
+              </button>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {breakingBarzImages.map((img, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => { setLightboxGallery('breaking'); setLightboxIndex(idx); }}
+                  className="overflow-hidden rounded cursor-zoom-in group"
+                  aria-label={`Open ${img.alt} in fullscreen`}
+                >
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full aspect-square object-cover group-hover:scale-105 transition duration-300"
+                    loading="lazy"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* WATCH accordion */}
@@ -593,11 +641,11 @@ export default function Home() {
           {/* IN THE PRESS */}
           <div className="mt-20 pt-12 border-t border-gray-300">
             <p className="label text-orange mb-6">{content.press.label}</p>
-            <h3 className="display-font h-large text-black mb-12">{content.press.heading}</h3>
+            <h3 className="display-font h-large text-black mb-6">{content.press.heading}</h3>
 
             {/* Pull-quote: standout press headline */}
-            <div className="mb-16 border-l-4 border-orange pl-8 py-4">
-              <p className="display-font h-medium text-black italic mb-4 leading-tight">
+            <div className="mb-12 border-l-4 border-orange pl-8 py-2">
+              <p className="display-font h-medium text-black italic mb-3 leading-tight">
                 &ldquo;He was one of the best boxers in the world — so why don&apos;t people know his name?&rdquo;
               </p>
               <p className="label text-green">— MANCHESTER EVENING NEWS, 2024</p>
