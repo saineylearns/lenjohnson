@@ -602,21 +602,27 @@ export default function Home() {
               <p className="label text-gold">WORLD CHAMPION</p>
             </div>
             <div className="backer-card">
-              <div className="backer-avatar">AK</div>
+              <div className="backer-avatar">
+                <img src="/images/backers/khan.webp" alt="Amir Khan" loading="lazy" decoding="async" />
+              </div>
               <p className="display-font h-small text-white mb-2">
                 AMIR<br />KHAN
               </p>
               <p className="label text-gold">FORMER WORLD CHAMPION</p>
             </div>
             <div className="backer-card">
-              <div className="backer-avatar">TB</div>
+              <div className="backer-avatar">
+                <img src="/images/backers/bellew.webp" alt="Tony Bellew" loading="lazy" decoding="async" />
+              </div>
               <p className="display-font h-small text-white mb-2">
                 TONY<br />BELLEW
               </p>
               <p className="label text-gold">FORMER WORLD CHAMPION</p>
             </div>
             <div className="backer-card">
-              <div className="backer-avatar">AC</div>
+              <div className="backer-avatar">
+                <img src="/images/backers/crolla.webp" alt="Anthony Crolla" loading="lazy" decoding="async" />
+              </div>
               <p className="display-font h-small text-white mb-2">
                 ANTHONY<br />CROLLA
               </p>
