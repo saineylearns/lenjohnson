@@ -196,13 +196,13 @@ export default function Home() {
       <section className="section bg-black">
         <div className="container">
           <p className="label text-gold mb-8">CHAPTER THREE · 1911 — 1947</p>
-          <h2 className="display-font h-massive text-white mb-16">
+          <h2 className="display-font h-massive text-white mb-12">
             RULE <span className="text-gold">24.</span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
             <div>
-              <p className="display-font h-medium text-orange mb-6">
+              <p className="display-font h-medium text-orange mb-8">
                 &quot;TWO WHITE PARENTS.&quot;
               </p>
               <p className="body-md text-muted mb-6">
@@ -217,7 +217,7 @@ export default function Home() {
               </p>
             </div>
             <div className="border-l-4 border-gold pl-8">
-              <p className="display-font h-medium text-gold mb-6">&quot;I AM FED UP.&quot;</p>
+              <p className="display-font h-medium text-gold mb-8">&quot;I AM FED UP.&quot;</p>
               <p className="body-md text-white italic mb-6">
                 I am barred from the Albert Hall, from the National Sporting Club and from all
                 fights where there is big money. The prejudice against colour has prevented me
@@ -483,49 +483,57 @@ export default function Home() {
             <span className="text-gold">FOR LEN.</span>
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center">
+            <div className="backer-card">
+              <div className="backer-avatar">AB</div>
               <p className="display-font h-small text-white mb-2">
                 ANDY<br />BURNHAM
               </p>
               <p className="label text-gold">MAYOR OF GREATER MANCHESTER</p>
             </div>
-            <div className="text-center">
+            <div className="backer-card">
+              <div className="backer-avatar">AJ</div>
               <p className="display-font h-small text-white mb-2">
                 ANTHONY<br />JOSHUA
               </p>
               <p className="label text-gold">HEAVYWEIGHT CHAMPION</p>
             </div>
-            <div className="text-center">
+            <div className="backer-card">
+              <div className="backer-avatar">RH</div>
               <p className="display-font h-small text-white mb-2">
                 RICKY<br />HATTON
               </p>
               <p className="label text-gold">FORMER WORLD CHAMPION</p>
             </div>
-            <div className="text-center">
+            <div className="backer-card">
+              <div className="backer-avatar">CF</div>
               <p className="display-font h-small text-white mb-2">
                 CARL<br />FRAMPTON
               </p>
               <p className="label text-gold">FORMER WORLD CHAMPION</p>
             </div>
-            <div className="text-center">
+            <div className="backer-card">
+              <div className="backer-avatar">NJ</div>
               <p className="display-font h-small text-white mb-2">
                 NATASHA<br />JONAS
               </p>
               <p className="label text-gold">WORLD CHAMPION</p>
             </div>
-            <div className="text-center">
+            <div className="backer-card">
+              <div className="backer-avatar">AK</div>
               <p className="display-font h-small text-white mb-2">
                 AMIR<br />KHAN
               </p>
               <p className="label text-gold">FORMER WORLD CHAMPION</p>
             </div>
-            <div className="text-center">
+            <div className="backer-card">
+              <div className="backer-avatar">TB</div>
               <p className="display-font h-small text-white mb-2">
                 TONY<br />BELLEW
               </p>
               <p className="label text-gold">FORMER WORLD CHAMPION</p>
             </div>
-            <div className="text-center">
+            <div className="backer-card">
+              <div className="backer-avatar">AC</div>
               <p className="display-font h-small text-white mb-2">
                 ANTHONY<br />CROLLA
               </p>
@@ -684,7 +692,7 @@ export default function Home() {
         <div className="container">
           <h2 className="display-font h-huge text-black mb-16">MENU</h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
             <div>
               <p className="label text-muted mb-6">EXPLORE</p>
               <ul className="space-y-3">
@@ -794,7 +802,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="display-font h-huge text-black text-center pt-16 border-t border-gray-300">
+          <div className="display-font h-huge text-black text-center pt-20 pb-4 border-t border-gray-300">
             HERE.WE.<span className="text-green">GO.</span>
           </div>
 
