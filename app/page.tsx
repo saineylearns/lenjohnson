@@ -557,35 +557,45 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="backer-card">
-              <div className="backer-avatar">AB</div>
+              <div className="backer-avatar">
+                <img src="/images/backers/burnham.webp" alt="Andy Burnham" loading="lazy" decoding="async" />
+              </div>
               <p className="display-font h-small text-white mb-2">
                 ANDY<br />BURNHAM
               </p>
               <p className="label text-gold">MAYOR OF GREATER MANCHESTER</p>
             </div>
             <div className="backer-card">
-              <div className="backer-avatar">AJ</div>
+              <div className="backer-avatar">
+                <img src="/images/backers/joshua.webp" alt="Anthony Joshua" loading="lazy" decoding="async" />
+              </div>
               <p className="display-font h-small text-white mb-2">
                 ANTHONY<br />JOSHUA
               </p>
               <p className="label text-gold">HEAVYWEIGHT CHAMPION</p>
             </div>
             <div className="backer-card">
-              <div className="backer-avatar">RH</div>
+              <div className="backer-avatar">
+                <img src="/images/backers/hatton.webp" alt="Ricky Hatton" loading="lazy" decoding="async" />
+              </div>
               <p className="display-font h-small text-white mb-2">
                 RICKY<br />HATTON
               </p>
               <p className="label text-gold">FORMER WORLD CHAMPION</p>
             </div>
             <div className="backer-card">
-              <div className="backer-avatar">CF</div>
+              <div className="backer-avatar">
+                <img src="/images/backers/frampton.webp" alt="Carl Frampton" loading="lazy" decoding="async" />
+              </div>
               <p className="display-font h-small text-white mb-2">
                 CARL<br />FRAMPTON
               </p>
               <p className="label text-gold">FORMER WORLD CHAMPION</p>
             </div>
             <div className="backer-card">
-              <div className="backer-avatar">NJ</div>
+              <div className="backer-avatar">
+                <img src="/images/backers/jonas.webp" alt="Natasha Jonas" loading="lazy" decoding="async" />
+              </div>
               <p className="display-font h-small text-white mb-2">
                 NATASHA<br />JONAS
               </p>
