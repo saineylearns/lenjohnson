@@ -1,5 +1,28 @@
 import type { Metadata, Viewport } from "next";
+import { Anton, Archivo_Black, Instrument_Sans } from "next/font/google";
 import "./globals.css";
+
+// Self-hosted via next/font so the bold display fonts always load on the
+// deployed build (Tailwind v4 strips remote @import url() font links).
+const anton = Anton({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-anton",
+  display: "swap",
+});
+
+const archivoBlack = Archivo_Black({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+
+const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  display: "swap",
+});
 
 const SITE_URL = "https://lenjohnsoncampaign.co.uk";
 const TITLE = "Len Johnson — Uncrowned Champion of Manchester";
@@ -112,7 +135,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en-GB">
+    <html
+      lang="en-GB"
+      className={`${anton.variable} ${archivoBlack.variable} ${instrumentSans.variable}`}
+    >
       <body>
         <script
           type="application/ld+json"

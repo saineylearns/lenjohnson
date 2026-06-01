@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Instrument+Sans:wght@400;500;600;700&display=swap');
-
 :root {
   --gold: #d4af37;
   --green: #169B62;
@@ -22,7 +20,7 @@ html {
 }
 
 body {
-  font-family: 'Instrument Sans', -apple-system, sans-serif;
+  font-family: var(--font-instrument), 'Instrument Sans', -apple-system, sans-serif;
   background: var(--cream);
   color: var(--black);
   overflow-x: hidden;
@@ -31,7 +29,7 @@ body {
 }
 
 .display-font {
-  font-family: 'Anton', 'Archivo Black', sans-serif;
+  font-family: var(--font-anton), var(--font-archivo), 'Anton', 'Archivo Black', sans-serif;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: -0.02em;
@@ -44,9 +42,9 @@ body {
 .h-medium { font-size: clamp(2rem, 6vw, 5rem); }
 .h-small { font-size: clamp(1.5rem, 4vw, 3rem); }
 
-.body-lg { font-size: 1.25rem; line-height: 1.5; }
-.body-md { font-size: 1.125rem; line-height: 1.6; }
-.body-sm { font-size: 0.95rem; line-height: 1.5; }
+.body-lg { font-size: 1.25rem; line-height: 1.5; overflow-wrap: break-word; }
+.body-md { font-size: 1.125rem; line-height: 1.6; overflow-wrap: break-word; }
+.body-sm { font-size: 0.95rem; line-height: 1.5; overflow-wrap: break-word; }
 
 .label {
   font-size: 0.75rem;
