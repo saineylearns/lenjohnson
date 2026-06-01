@@ -882,14 +882,14 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div>
+            <div className="min-w-0">
               <p className="label text-muted mb-6">CONTACT</p>
               <p className="body-md mb-2">Manchester, England</p>
               <p className="body-md mb-2">Community Interest Company</p>
               <p className="body-md mb-4">Est. 2023</p>
               <a
                 href="mailto:info@lenjohnsoncampaign.co.uk"
-                className="body-md link-underline font-bold"
+                className="body-md link-underline font-bold break-anywhere"
               >
                 info@lenjohnsoncampaign.co.uk
               </a>
@@ -901,8 +901,8 @@ export default function Home() {
           </div>
 
           <p className="body-sm text-muted text-center mt-8">
-            &copy; 2024 Len Johnson Campaign. Community Interest Company. Manchester deserves
-            justice.
+            &copy; {new Date().getFullYear()} Len Johnson Campaign. Community Interest Company.
+            Manchester deserves justice.
           </p>
         </div>
       </footer>

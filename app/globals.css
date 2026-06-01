@@ -64,6 +64,13 @@ h3.display-font {
 .body-md { font-size: 1.125rem; line-height: 1.6; overflow-wrap: break-word; }
 .body-sm { font-size: 0.95rem; line-height: 1.5; overflow-wrap: break-word; }
 
+/* Long unbreakable strings (e.g. the contact email) must be able to break at
+   any point so they never overflow narrow footer columns on mobile. */
+.break-anywhere {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
 .label {
   font-size: 0.75rem;
   font-weight: 700;
