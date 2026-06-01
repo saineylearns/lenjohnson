@@ -1,8 +1,34 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+
+const galleryImages = [
+  { src: '/images/media/charity-match/01-burnham.webp', alt: 'Andy Burnham at the Len Johnson charity match' },
+  { src: '/images/media/charity-match/06-team.webp', alt: 'Len Johnson All-Stars team photo' },
+  { src: '/images/media/charity-match/03-trophy.webp', alt: 'Lifting the trophy at the charity match' },
+  { src: '/images/media/breaking-barz/02-band.webp', alt: 'Breaking Barz live at Band on the Wall' },
+  { src: '/images/media/charity-match/05-crolla.webp', alt: 'Anthony Crolla at the charity match' },
+  { src: '/images/media/breaking-barz/04-group.webp', alt: 'Breaking Barz group photo' },
+  { src: '/images/media/charity-match/02-theo.webp', alt: 'Player at the charity match' },
+  { src: '/images/media/breaking-barz/03-artist.webp', alt: 'Artist performing at Breaking Barz' },
+  { src: '/images/media/charity-match/04-throw.webp', alt: 'Action from the charity match' },
+  { src: '/images/media/breaking-barz/05-artist2.webp', alt: 'Artist performing at Breaking Barz' },
+  { src: '/images/media/charity-match/07-fc-team.webp', alt: 'FC United Legends team photo' },
+  { src: '/images/media/breaking-barz/01-blazer.webp', alt: 'Breaking Barz performance' },
+  { src: '/images/media/breaking-barz/06-artist3.webp', alt: 'Artist performing at Breaking Barz' },
+  { src: '/images/media/breaking-barz/07-artist4.webp', alt: 'Artist performing at Breaking Barz' },
+  { src: '/images/media/breaking-barz/08-artist5.webp', alt: 'Artist performing at Breaking Barz' },
+];
 
 export default function Home() {
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  const scrollGallery = (direction: number) => {
+    const el = galleryRef.current;
+    if (!el) return;
+    el.scrollBy({ left: direction * el.clientWidth * 0.85, behavior: 'smooth' });
+  };
+
   useEffect(() => {
     const scrollBar = document.getElementById('scrollBar');
     if (!scrollBar) return;
@@ -474,6 +500,53 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PHOTO GALLERY */}
+      <section id="gallery" className="section bg-black">
+        <div className="container">
+          <p className="label text-gold mb-6">IN PICTURES</p>
+          <h2 className="display-font h-huge text-white mb-8">
+            THE<br />
+            <span className="text-orange">GALLERY.</span>
+          </h2>
+          <p className="body-lg text-cream max-w-3xl mb-12">
+            Moments from the Len Johnson charity matches and Breaking Barz nights — the
+            community keeping his legacy alive.
+          </p>
+
+          <div className="gallery">
+            <button
+              type="button"
+              className="gallery-arrow gallery-arrow-left"
+              onClick={() => scrollGallery(-1)}
+              aria-label="Previous photos"
+            >
+              <span aria-hidden="true">←</span>
+            </button>
+
+            <div className="gallery-track" ref={galleryRef}>
+              {galleryImages.map((img) => (
+                <figure className="gallery-item" key={img.src}>
+                  <img src={img.src} alt={img.alt} loading="lazy" decoding="async" />
+                </figure>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="gallery-arrow gallery-arrow-right"
+              onClick={() => scrollGallery(1)}
+              aria-label="Next photos"
+            >
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <p className="label text-muted text-center mt-8">
+            ← Swipe or use the arrows to browse →
+          </p>
+        </div>
+      </section>
+
       {/* CHAMPIONS FOR LEN */}
       <section className="section bg-green-dark">
         <div className="container">
@@ -714,6 +787,11 @@ export default function Home() {
                 <li>
                   <a href="#events" className="body-md link-underline">
                     Events
+                  </a>
+                </li>
+                <li>
+                  <a href="#gallery" className="body-md link-underline">
+                    Gallery
                   </a>
                 </li>
                 <li>
