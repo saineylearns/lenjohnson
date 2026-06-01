@@ -5,57 +5,23 @@ import { useEffect } from 'react';
 export default function Home() {
   useEffect(() => {
     const scrollBar = document.getElementById('scrollBar');
+    if (!scrollBar) return;
 
     const handleScroll = () => {
-      if (!scrollBar) return;
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
       scrollBar.style.width = scrollPercent + '%';
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll);
     handleScroll();
-
-    // Scroll-reveal — gated behind a JS-only class so no-JS users see everything,
-    // and disabled entirely when the visitor prefers reduced motion.
-    const prefersReduced = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
-
-    let observer: IntersectionObserver | undefined;
-
-    if (!prefersReduced && 'IntersectionObserver' in window) {
-      document.documentElement.classList.add('reveal-ready');
-      const targets = Array.from(
-        document.querySelectorAll<HTMLElement>('.section .container, .section-tight .container')
-      );
-      targets.forEach((el) => el.classList.add('reveal'));
-
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('in-view');
-              observer?.unobserve(entry.target);
-            }
-          });
-        },
-        { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }
-      );
-
-      targets.forEach((el) => observer?.observe(el));
-    }
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      observer?.disconnect();
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <>
-      <div className="scroll-bar" id="scrollBar" aria-hidden="true"></div>
+      <div className="scroll-bar" id="scrollBar"></div>
 
       {/* CINEMATIC HERO */}
       <section id="top" className="hero">
@@ -63,9 +29,6 @@ export default function Home() {
           src="/images/hero.webp"
           alt="Len Johnson with friends, Manchester"
           className="hero-bg"
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
         />
         <div className="hero-overlay"></div>
         <div className="hero-content">
@@ -88,7 +51,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="flag-stripe" aria-hidden="true">
+      <div className="flag-stripe">
         <div className="bg-green"></div>
         <div className="bg-white"></div>
         <div className="bg-orange"></div>
@@ -98,7 +61,7 @@ export default function Home() {
       </div>
 
       {/* MARQUEE */}
-      <section className="bg-black marquee" aria-hidden="true">
+      <section className="bg-black marquee">
         <div className="marquee-track">
           <span className="display-font h-medium text-gold">95 WINS</span>
           <span className="display-font h-medium text-white">·</span>
@@ -134,8 +97,6 @@ export default function Home() {
                 src="/images/portrait.webp"
                 alt="Young Len Johnson portrait"
                 className="content-img"
-                loading="lazy"
-                decoding="async"
               />
             </div>
             <div>
@@ -192,8 +153,6 @@ export default function Home() {
                 src="/images/boxing.webp"
                 alt="Len Johnson in fighting stance"
                 className="content-img"
-                loading="lazy"
-                decoding="async"
               />
             </div>
           </div>
@@ -325,8 +284,6 @@ export default function Home() {
                 src="/images/crowd.webp"
                 alt="Len Johnson with supporters"
                 className="content-img"
-                loading="lazy"
-                decoding="async"
               />
             </div>
             <div>
@@ -433,8 +390,6 @@ export default function Home() {
                   src="/images/breaking-barz.webp"
                   alt="Breaking Barz event poster"
                   className="card-img"
-                  loading="lazy"
-                  decoding="async"
                 />
               </div>
               <p className="label text-orange mb-3">MUSIC NIGHT</p>
@@ -460,8 +415,6 @@ export default function Home() {
                   src="/images/charity-match.webp"
                   alt="Len Johnson Charity Match - fans and players"
                   className="card-img"
-                  loading="lazy"
-                  decoding="async"
                 />
               </div>
               <p className="label text-green mb-3">ANNUAL FIXTURE</p>
@@ -487,8 +440,6 @@ export default function Home() {
                   src="/images/knockout.webp"
                   alt="Knockout Blow play - Odd Arts production"
                   className="card-img"
-                  loading="lazy"
-                  decoding="async"
                 />
               </div>
               <p className="label text-blue mb-3">THEATRE &amp; EDUCATION</p>
@@ -646,8 +597,6 @@ export default function Home() {
                   src="/images/sculptor.webp"
                   alt="Taslim Martin sculpting Len Johnson maquette"
                   className="content-img"
-                  loading="lazy"
-                  decoding="async"
                 />
               </div>
               <p className="display-font h-small text-black mb-3">THE SCULPTOR</p>
@@ -669,8 +618,6 @@ export default function Home() {
                   src="/images/statue.webp"
                   alt="Len Johnson statue maquette"
                   className="content-img"
-                  loading="lazy"
-                  decoding="async"
                 />
               </div>
               <p className="display-font h-small text-black mb-3">THE MAQUETTE</p>
@@ -712,7 +659,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="flag-stripe" aria-hidden="true">
+      <div className="flag-stripe">
         <div className="bg-green"></div>
         <div className="bg-white"></div>
         <div className="bg-orange"></div>
@@ -852,8 +799,8 @@ export default function Home() {
           </div>
 
           <p className="body-sm text-muted text-center mt-8">
-            &copy; {new Date().getFullYear()} Len Johnson Campaign. Community Interest Company.
-            Manchester deserves justice.
+            &copy; 2024 Len Johnson Campaign. Community Interest Company. Manchester deserves
+            justice.
           </p>
         </div>
       </footer>
