@@ -1,26 +1,377 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Instrument+Sans:wght@400;500;600;700&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gold: #d4af37;
+  --green: #169B62;
+  --green-dark: #0d6b43;
+  --orange: #FF883E;
+  --blue: #0072C6;
+  --cream: #f6f6f6;
+  --white: #ffffff;
+  --black: #000000;
+  --muted: #9a928a;
+  --border: #ededed;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Instrument Sans', -apple-system, sans-serif;
+  background: var(--cream);
+  color: var(--black);
+  overflow-x: hidden;
+}
+
+.display-font {
+  font-family: 'Anton', 'Archivo Black', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.85;
+}
+
+.h-massive { font-size: clamp(5rem, 18vw, 18rem); }
+.h-huge { font-size: clamp(4rem, 14vw, 12rem); }
+.h-large { font-size: clamp(3rem, 10vw, 8rem); }
+.h-medium { font-size: clamp(2rem, 6vw, 5rem); }
+.h-small { font-size: clamp(1.5rem, 4vw, 3rem); }
+
+.body-lg { font-size: 1.25rem; line-height: 1.5; }
+.body-md { font-size: 1.125rem; line-height: 1.6; }
+.body-sm { font-size: 0.95rem; line-height: 1.5; }
+
+.label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border-radius: 51px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.pill-primary {
+  background: var(--green);
+  color: var(--white);
+  border-color: var(--green);
+}
+
+.pill-primary:hover {
+  background: var(--black);
+  color: var(--gold);
+  border-color: var(--black);
+}
+
+.pill-gold {
+  background: var(--gold);
+  color: var(--black);
+  border-color: var(--gold);
+}
+
+.pill-gold:hover {
+  background: var(--black);
+  color: var(--gold);
+  border-color: var(--black);
+}
+
+.pill-outline-dark {
+  background: transparent;
+  color: var(--black);
+  border-color: var(--black);
+}
+
+.pill-outline-dark:hover {
+  background: var(--black);
+  color: var(--white);
+}
+
+.pill-outline-light {
+  background: transparent;
+  color: var(--white);
+  border-color: var(--white);
+}
+
+.pill-outline-light:hover {
+  background: var(--white);
+  color: var(--black);
+}
+
+.bg-cream { background: var(--cream); }
+.bg-gold { background: var(--gold); }
+.bg-green { background: var(--green); }
+.bg-green-dark { background: var(--green-dark); }
+.bg-orange { background: var(--orange); }
+.bg-blue { background: var(--blue); }
+.bg-black { background: var(--black); }
+.bg-white { background: var(--white); }
+
+.text-cream { color: var(--cream); }
+.text-gold { color: var(--gold); }
+.text-green { color: var(--green); }
+.text-orange { color: var(--orange); }
+.text-blue { color: var(--blue); }
+.text-white { color: var(--white); }
+.text-black { color: var(--black); }
+.text-muted { color: var(--muted); }
+
+.card {
+  border-radius: 13px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card-img-container {
+  border-radius: 13px;
+  overflow: hidden;
+  margin: -2rem -2rem 1.5rem;
+  aspect-ratio: 4/5;
+  background: var(--black);
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card:hover .card-img {
+  transform: scale(1.03);
+}
+
+.section {
+  padding: 8rem 2rem;
+}
+
+.section-tight {
+  padding: 4rem 2rem;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.scroll-bar {
+  position: fixed;
+  top: 0; left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--green) 0%, var(--orange) 50%, var(--blue) 100%);
+  z-index: 1001;
+  width: 0%;
+  transition: width 100ms linear;
+}
+
+.repeated-heading > span {
+  display: block;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.repeated-heading > span:hover {
+  transform: translateX(20px);
+}
+
+@keyframes scroll-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 2rem 0;
+}
+
+.marquee-track {
+  display: inline-flex;
+  animation: scroll-x 40s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-track > span {
+  padding: 0 2rem;
+}
+
+.flag-stripe {
+  display: flex;
+  height: 8px;
+  width: 100%;
+}
+
+.flag-stripe > div {
+  flex: 1;
+}
+
+/* HERO - shows full figure, Len in centre */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  background: var(--black);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: grayscale(0.15) contrast(1.05);
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    rgba(0,0,0,0.2) 0%,
+    rgba(0,0,0,0.1) 40%,
+    rgba(0,0,0,0.7) 75%,
+    rgba(0,0,0,0.95) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 2rem 5rem;
+  width: 100%;
+}
+
+.content-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-img-frame {
+  border-radius: 13px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  position: relative;
+  background: var(--black);
+}
+
+.content-img-frame.wide {
+  aspect-ratio: 4/3;
+}
+
+.content-img-frame.square {
+  aspect-ratio: 1/1;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-up {
+  animation: slideUp 800ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.delay-1 { animation-delay: 100ms; }
+.delay-2 { animation-delay: 250ms; }
+.delay-3 { animation-delay: 400ms; }
+
+.link-underline {
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: currentColor;
+  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Scroll-reveal — only active once JS adds .reveal-ready to <html>,
+   so visitors without JS always see fully rendered content. */
+.reveal-ready .reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-ready .reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+/* Keyboard accessibility — visible focus ring on interactive elements */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 4rem 1.5rem; }
+  .section-tight { padding: 3rem 1.5rem; }
+  .hero-bg { object-position: center 30%; }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-ready .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
