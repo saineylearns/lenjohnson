@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { content } from '../content-config'
 
 export default function Home() {
@@ -10,6 +10,15 @@ export default function Home() {
   const [lightboxIndex, setLightboxIndex] = useState(0)
   const [watchOpen, setWatchOpen] = useState(false)
   const [newsletterStatus, setNewsletterStatus] = useState('idle')
+
+  const charityTrackRef = useRef(null)
+  const breakingTrackRef = useRef(null)
+
+  const scrollTrack = (ref, dir) => {
+    if (ref.current) {
+      ref.current.scrollBy({ left: dir * ref.current.clientWidth * 0.8, behavior: 'smooth' })
+    }
+  }
 
   const charityImages = [
     { src: '/images/media/charity-match/01-burnham.webp', alt: 'Andy Burnham at charity match' },
@@ -494,22 +503,35 @@ export default function Home() {
                 View fullscreen →
               </button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {charityImages.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => { setLightboxGallery('charity'); setLightboxIndex(idx); }}
-                  className="overflow-hidden rounded cursor-zoom-in group"
-                  aria-label={`Open ${img.alt} in fullscreen`}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full aspect-video object-cover group-hover:scale-105 transition duration-300"
-                    loading="lazy"
-                  />
-                </button>
-              ))}
+            <div className="gallery">
+              <button
+                type="button"
+                className="gallery-arrow gallery-arrow-left"
+                onClick={() => scrollTrack(charityTrackRef, -1)}
+                aria-label="Scroll to previous Charity Match photos"
+              >
+                <span aria-hidden="true">‹</span>
+              </button>
+              <div className="gallery-track" ref={charityTrackRef}>
+                {charityImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => { setLightboxGallery('charity'); setLightboxIndex(idx); }}
+                    className="gallery-item"
+                    aria-label={`Open ${img.alt} in fullscreen`}
+                  >
+                    <img src={img.src} alt={img.alt} loading="lazy" />
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="gallery-arrow gallery-arrow-right"
+                onClick={() => scrollTrack(charityTrackRef, 1)}
+                aria-label="Scroll to next Charity Match photos"
+              >
+                <span aria-hidden="true">›</span>
+              </button>
             </div>
           </div>
 
@@ -528,22 +550,35 @@ export default function Home() {
                 View fullscreen →
               </button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {breakingBarzImages.map((img, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => { setLightboxGallery('breaking'); setLightboxIndex(idx); }}
-                  className="overflow-hidden rounded cursor-zoom-in group"
-                  aria-label={`Open ${img.alt} in fullscreen`}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full aspect-square object-cover group-hover:scale-105 transition duration-300"
-                    loading="lazy"
-                  />
-                </button>
-              ))}
+            <div className="gallery">
+              <button
+                type="button"
+                className="gallery-arrow gallery-arrow-left"
+                onClick={() => scrollTrack(breakingTrackRef, -1)}
+                aria-label="Scroll to previous Breaking Barz photos"
+              >
+                <span aria-hidden="true">‹</span>
+              </button>
+              <div className="gallery-track" ref={breakingTrackRef}>
+                {breakingBarzImages.map((img, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => { setLightboxGallery('breaking'); setLightboxIndex(idx); }}
+                    className="gallery-item"
+                    aria-label={`Open ${img.alt} in fullscreen`}
+                  >
+                    <img src={img.src} alt={img.alt} loading="lazy" />
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                className="gallery-arrow gallery-arrow-right"
+                onClick={() => scrollTrack(breakingTrackRef, 1)}
+                aria-label="Scroll to next Breaking Barz photos"
+              >
+                <span aria-hidden="true">›</span>
+              </button>
             </div>
           </div>
 
@@ -739,10 +774,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-black p-12 md:p-20 rounded-2xl">
-            <p className="display-font h-large text-gold mb-8">{content.statue.cta.heading}</p>
-            <p className="body-lg text-cream max-w-3xl mb-8">{content.statue.cta.body}</p>
-            <div className="flex gap-4 flex-wrap">
+          <div className="monument-cta">
+            <span className="monument-cta-accent" aria-hidden="true"></span>
+            <p className="display-font monument-cta-heading">{content.statue.cta.heading}</p>
+            <p className="body-lg monument-cta-body">{content.statue.cta.body}</p>
+            <div className="monument-cta-actions">
               <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="pill pill-gold" aria-label="Donate now via GoFundMe (opens in new tab)">
                 <span>{content.statue.cta.button1}</span>
                 <span aria-hidden="true">→</span>
