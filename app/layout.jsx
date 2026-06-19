@@ -4,15 +4,15 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   // Resolves all relative metadata URLs (canonical, OG images) to the production domain
-  metadataBase: new URL('https://lenjohnsoncampaign.org'),
+  metadataBase: new URL('https://www.lenjohnsoncampaign.org'),
   title: 'Len Johnson — Uncrowned Champion of Manchester',
   description: 'The story of a boxer denied the title he deserved. A campaign to build a statue of Manchester\'s boxing legend.',
 
   // Canonical + language alternates (the authoritative URL for this content)
   alternates: {
-    canonical: 'https://lenjohnsoncampaign.org',
+    canonical: 'https://www.lenjohnsoncampaign.org',
     languages: {
-      'en-GB': 'https://lenjohnsoncampaign.org',
+      'en-GB': 'https://www.lenjohnsoncampaign.org',
     },
   },
 
@@ -20,11 +20,11 @@ export const metadata = {
   openGraph: {
     title: 'Len Johnson — Uncrowned Champion of Manchester',
     description: 'The story of a boxer denied the title he deserved. A campaign to build a statue of Manchester\'s boxing legend.',
-    url: 'https://lenjohnsoncampaign.org',
+    url: 'https://www.lenjohnsoncampaign.org',
     siteName: 'Len Johnson Campaign',
     images: [
       {
-        url: 'https://lenjohnsoncampaign.org/images/hero.webp',
+        url: 'https://www.lenjohnsoncampaign.org/images/hero.webp',
         width: 1200,
         height: 630,
         alt: 'Len Johnson with friends and supporters in Manchester',
@@ -39,7 +39,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Len Johnson — Uncrowned Champion of Manchester',
     description: 'The story of a boxer denied the title he deserved. A campaign to build a statue of Manchester\'s boxing legend.',
-    image: 'https://lenjohnsoncampaign.org/images/hero.webp',
+    image: 'https://www.lenjohnsoncampaign.org/images/hero.webp',
     creator: '@lenjohnsonmcr',
   },
 
@@ -56,7 +56,7 @@ const jsonLd = {
   '@graph': [
     {
       '@type': 'Person',
-      '@id': 'https://lenjohnsoncampaign.org/#len-johnson',
+      '@id': 'https://www.lenjohnsoncampaign.org/#len-johnson',
       name: 'Len Johnson',
       description: 'British boxer and civil rights activist, 1902-1974. Denied a championship title due to Rule 24 (the colour bar).',
       birthDate: '1902-01-01',
@@ -70,10 +70,10 @@ const jsonLd = {
     },
     {
       '@type': 'Campaign',
-      '@id': 'https://lenjohnsoncampaign.org/#campaign',
+      '@id': 'https://www.lenjohnsoncampaign.org/#campaign',
       name: 'Len Johnson Campaign',
       description: 'A community campaign to build a statue of Len Johnson in Manchester city centre.',
-      url: 'https://lenjohnsoncampaign.org',
+      url: 'https://www.lenjohnsoncampaign.org',
       sameAs: [
         'https://www.facebook.com/LenJohnsonCampaign',
         'https://instagram.com/lenjohnsonmcr',
@@ -89,10 +89,10 @@ const jsonLd = {
     },
     {
       '@type': 'CreativeWork',
-      '@id': 'https://lenjohnsoncampaign.org/#creative-work',
+      '@id': 'https://www.lenjohnsoncampaign.org/#creative-work',
       name: 'Len Johnson Campaign Website',
       description: 'Official website for the Len Johnson Campaign',
-      url: 'https://lenjohnsoncampaign.org',
+      url: 'https://www.lenjohnsoncampaign.org',
       author: {
         '@type': 'Organization',
         name: 'Len Johnson Campaign',
@@ -102,17 +102,17 @@ const jsonLd = {
         name: 'Len Johnson Campaign CIC',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://lenjohnsoncampaign.org/images/hero.webp',
+          url: 'https://www.lenjohnsoncampaign.org/images/hero.webp',
         },
       },
     },
     {
       '@type': 'Organization',
-      '@id': 'https://lenjohnsoncampaign.org/#organization',
+      '@id': 'https://www.lenjohnsoncampaign.org/#organization',
       name: 'Len Johnson Campaign CIC',
       legalName: 'Len Johnson Campaign Community Interest Company',
       description: 'Community Interest Company dedicated to honouring Len Johnson\'s legacy.',
-      url: 'https://lenjohnsoncampaign.org',
+      url: 'https://www.lenjohnsoncampaign.org',
       foundingDate: '2023',
       email: 'info@lenjohnsoncampaign.co.uk',
       contactPoint: {
@@ -127,7 +127,7 @@ const jsonLd = {
       },
       logo: {
         '@type': 'ImageObject',
-        url: 'https://lenjohnsoncampaign.org/images/hero.webp',
+        url: 'https://www.lenjohnsoncampaign.org/images/hero.webp',
         width: 1200,
         height: 630,
       },
@@ -138,21 +138,21 @@ const jsonLd = {
     },
     {
       '@type': 'WebSite',
-      '@id': 'https://lenjohnsoncampaign.org/#website',
+      '@id': 'https://www.lenjohnsoncampaign.org/#website',
       name: 'Len Johnson Campaign',
-      url: 'https://lenjohnsoncampaign.org',
+      url: 'https://www.lenjohnsoncampaign.org',
       potentialAction: {
         '@type': 'SearchAction',
         target: {
           '@type': 'EntryPoint',
-          urlTemplate: 'https://lenjohnsoncampaign.org?s={search_term_string}',
+          urlTemplate: 'https://www.lenjohnsoncampaign.org?s={search_term_string}',
         },
         'query-input': 'required name=search_term_string',
       },
     },
     {
       '@type': 'DonateAction',
-      '@id': 'https://lenjohnsoncampaign.org/#donate',
+      '@id': 'https://www.lenjohnsoncampaign.org/#donate',
       name: 'Donate to Len Johnson Campaign',
       description: 'Support the campaign to build a statue of Manchester boxing legend Len Johnson.',
       url: 'https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue',
