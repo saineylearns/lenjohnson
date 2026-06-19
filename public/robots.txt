@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /api/
-Disallow: /.next/
-
-Sitemap: https://lenjohnsoncampaign.co.uk/sitemap.xml

@@ -1,13 +1,15 @@
 import type { MetadataRoute } from "next";
 
-const SITE_URL = "https://lenjohnsoncampaign.co.uk";
+const SITE_URL = "https://lenjohnsoncampaign.org";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/api/", "/.next/"],
     },
     sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }
