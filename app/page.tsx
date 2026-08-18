@@ -105,7 +105,7 @@ export default function Home() {
             </div>
 
             {/* Right: varied size image grid */}
-            <div className="grid gap-4" style={{
+            <div className="grid gap-3" style={{
               gridTemplateColumns: 'repeat(3, 1fr)',
               gridAutoRows: '240px',
             }}>
