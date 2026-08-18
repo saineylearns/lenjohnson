@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 const galleryImages = [
   { src: '/images/media/charity-match/01-burnham.webp', alt: 'Andy Burnham at the Len Johnson charity match' },
@@ -29,26 +29,8 @@ export default function Home() {
     el.scrollBy({ left: direction * el.clientWidth * 0.85, behavior: 'smooth' });
   };
 
-  useEffect(() => {
-    const scrollBar = document.getElementById('scrollBar');
-    if (!scrollBar) return;
-
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      scrollBar.style.width = scrollPercent + '%';
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <>
-      <div className="scroll-bar" id="scrollBar"></div>
-
       {/* CINEMATIC HERO */}
       <section id="top" className="hero">
         <img
@@ -776,136 +758,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer id="contact" className="section bg-cream">
-        <div className="container">
-          <h2 className="display-font h-huge text-black mb-16">MENU</h2>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20">
-            <div>
-              <p className="label text-muted mb-6">EXPLORE</p>
-              <ul className="space-y-3">
-                <li>
-                  <a href="#story" className="body-md link-underline">
-                    Len&apos;s story
-                  </a>
-                </li>
-                <li>
-                  <a href="#fight" className="body-md link-underline">
-                    Boxing career
-                  </a>
-                </li>
-                <li>
-                  <a href="#activism" className="body-md link-underline">
-                    Activism
-                  </a>
-                </li>
-                <li>
-                  <a href="#events" className="body-md link-underline">
-                    Events
-                  </a>
-                </li>
-                <li>
-                  <a href="#gallery" className="body-md link-underline">
-                    Gallery
-                  </a>
-                </li>
-                <li>
-                  <a href="#campaign" className="body-md link-underline">
-                    The campaign
-                  </a>
-                </li>
-                <li>
-                  <a href="#statue" className="body-md link-underline">
-                    The statue
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="label text-muted mb-6">CONNECT</p>
-              <ul className="space-y-3">
-                <li>
-                  <a
-                    href="https://facebook.com/LenJohnsonCampaign"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="body-md link-underline"
-                  >
-                    Facebook
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://instagram.com/lenjohnsonmcr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="body-md link-underline"
-                  >
-                    Instagram
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://instagram.com/breakingbarzmcr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="body-md link-underline"
-                  >
-                    Breaking Barz
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <p className="label text-muted mb-6">SUPPORT</p>
-              <ul className="space-y-3">
-                <li>
-                  <a
-                    href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="body-md link-underline font-bold text-green"
-                  >
-                    Donate
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="body-md link-underline">
-                    Volunteer
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="body-md link-underline">
-                    Partner with us
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div className="min-w-0">
-              <p className="label text-muted mb-6">CONTACT</p>
-              <p className="body-md mb-2">Manchester, England</p>
-              <p className="body-md mb-2">Community Interest Company</p>
-              <p className="body-md mb-4">Est. 2023</p>
-              <a
-                href="mailto:info@lenjohnsoncampaign.co.uk"
-                className="body-md link-underline font-bold break-anywhere"
-              >
-                info@lenjohnsoncampaign.co.uk
-              </a>
-            </div>
-          </div>
-
-          <div className="display-font h-huge text-black text-center pt-20 pb-4 border-t border-gray-300">
-            HERE.WE.<span className="text-green">GO.</span>
-          </div>
-
-          <p className="body-sm text-muted text-center mt-8">
-            &copy; {new Date().getFullYear()} Len Johnson Campaign. Community Interest Company.
-            Manchester deserves justice.
-          </p>
-        </div>
-      </footer>
     </>
   );
 }

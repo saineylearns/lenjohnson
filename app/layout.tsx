@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Anton, Archivo_Black, Instrument_Sans } from "next/font/google";
 import "./globals.css";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
+import ScrollBar from "@/components/ScrollBar";
 
 // Self-hosted via next/font so the bold display fonts always load on the
 // deployed build (Tailwind v4 strips remote @import url() font links).
@@ -144,7 +147,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
+        <ScrollBar />
+        <Nav />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
