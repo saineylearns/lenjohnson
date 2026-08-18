@@ -105,26 +105,41 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Right: 2x2 image grid */}
-            <div className="grid grid-cols-2 gap-4">
-              {explorerLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="group relative overflow-hidden rounded-lg aspect-square hover:shadow-xl transition-all duration-300"
-                  style={{ borderTop: `4px solid ${link.color}` }}
-                >
-                  <img
-                    src={link.image}
-                    alt={link.label}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                  <div className="absolute inset-0 flex flex-col justify-end p-4">
-                    <p className="display-font h-small text-white">{link.label}</p>
-                  </div>
-                </Link>
-              ))}
+            {/* Right: varied size image grid */}
+            <div className="grid gap-4" style={{
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gridAutoRows: '200px',
+            }}>
+              {explorerLinks.map((link, idx) => {
+                // Vary sizes: Story spans 2 rows, Gallery spans 2 columns
+                const isStory = idx === 0;
+                const isGallery = idx === 3;
+                const spanRows = isStory ? 2 : 1;
+                const spanCols = isGallery ? 2 : 1;
+
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="group relative overflow-hidden rounded-lg hover:shadow-xl transition-all duration-300"
+                    style={{
+                      gridColumn: `span ${spanCols}`,
+                      gridRow: `span ${spanRows}`,
+                      borderTop: `4px solid ${link.color}`,
+                    }}
+                  >
+                    <img
+                      src={link.image}
+                      alt={link.label}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
+                    <div className="absolute inset-0 flex flex-col justify-end p-4">
+                      <p className="display-font h-small text-white">{link.label}</p>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
