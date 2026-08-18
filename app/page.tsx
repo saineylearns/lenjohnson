@@ -90,17 +90,17 @@ export default function Home() {
       </section>
 
       {/* EXPLORE SECTION */}
-      <section id="explore" className="section bg-cream">
+      <section id="explore" className="section bg-blue">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left: Heading + description */}
             <div>
-              <p className="label text-muted mb-4">DISCOVER</p>
-              <h2 className="display-font h-huge text-black mb-6">
+              <p className="label text-white opacity-80 mb-4">DISCOVER</p>
+              <h2 className="display-font h-huge text-white mb-6">
                 EXPLORE<br />
-                <span className="text-green">LEN&apos;S</span> <span className="text-orange">LEGACY.</span>
+                <span className="text-gold">LEN&apos;S</span> <span className="text-orange">LEGACY.</span>
               </h2>
-              <p className="body-md text-black">
+              <p className="body-md text-white opacity-90">
                 Dive into his life story, meet the champions supporting the campaign, discover the events that keep his memory alive, and explore the gallery of moments that define this movement.
               </p>
             </div>
