@@ -111,11 +111,11 @@ export default function Home() {
               gridAutoRows: '200px',
             }}>
               {explorerLinks.map((link, idx) => {
-                // Vary sizes: Story spans 2 rows, Gallery spans 2 columns
+                // Vary sizes: Story spans 2 rows + 2 columns (large), Gallery spans 2 columns
                 const isStory = idx === 0;
                 const isGallery = idx === 3;
                 const spanRows = isStory ? 2 : 1;
-                const spanCols = isGallery ? 2 : 1;
+                const spanCols = isStory ? 2 : isGallery ? 2 : 1;
 
                 return (
                   <Link
