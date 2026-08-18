@@ -105,16 +105,16 @@ export default function Home() {
             </div>
 
             {/* Right: varied size image grid */}
-            <div className="grid gap-6" style={{
+            <div className="grid gap-3 relative" style={{
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gridAutoRows: '260px',
+              gridAutoRows: '240px',
             }}>
               {explorerLinks.map((link, idx) => {
-                // Vary sizes: Story spans 2 rows + 2 columns (large), Gallery spans 2 columns
+                // Vary sizes: Story spans 1.7 columns + 2 rows, Gallery spans 2 columns
                 const isStory = idx === 0;
                 const isGallery = idx === 3;
                 const spanRows = isStory ? 2 : 1;
-                const spanCols = isStory ? 2 : isGallery ? 2 : 1;
+                const spanCols = isStory ? 1.7 : isGallery ? 2 : 1;
 
                 return (
                   <Link
@@ -139,6 +139,27 @@ export default function Home() {
                   </Link>
                 );
               })}
+
+              {/* Boxing Glove with Donate Button */}
+              <div className="absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/4" style={{ width: '200px', height: '200px' }}>
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                  {/* Glove padding */}
+                  <ellipse cx="100" cy="80" rx="60" ry="65" fill="var(--gold)" opacity="0.9"/>
+                  {/* Thumb */}
+                  <ellipse cx="55" cy="60" rx="25" ry="35" fill="var(--gold)" opacity="0.9"/>
+                  {/* Wrist */}
+                  <rect x="70" y="135" width="60" height="50" fill="var(--green)" opacity="0.9" rx="10"/>
+                  {/* Highlight */}
+                  <ellipse cx="85" cy="60" rx="20" ry="25" fill="var(--white)" opacity="0.3"/>
+                </svg>
+
+                {/* Donate Button */}
+                <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="absolute inset-0 flex items-center justify-center">
+                  <button className="pill pill-green font-bold text-sm">
+                    DONATE
+                  </button>
+                </a>
+              </div>
             </div>
           </div>
         </div>
