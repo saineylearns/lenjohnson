@@ -51,8 +51,8 @@ export default function Nav() {
   return (
     <header className={`site-nav ${scrolled ? 'is-scrolled' : ''}`}>
       <nav className="site-nav-inner" aria-label="Main">
-        <Link href="/" className="site-wordmark display-font">
-          LEN JOHNSON
+        <Link href="/" className="site-wordmark display-font text-sm">
+          LEN JOHNSON<br />CAMPAIGN
         </Link>
 
         <ul className="site-nav-links">

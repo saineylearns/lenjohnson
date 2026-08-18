@@ -39,7 +39,6 @@ export default function Home() {
         />
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <p className="label text-gold mb-6 slide-up">MANCHESTER · 1902 — 1974</p>
           <h1 className="display-font h-huge text-white slide-up delay-1">
             A BOXER WHO<br />
             FOUGHT <span className="text-green">RACISM</span><br />
