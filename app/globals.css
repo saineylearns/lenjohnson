@@ -53,6 +53,7 @@ h3.display-font {
 .hero-content h1.display-font {
   line-height: 1;
   padding-bottom: 0.08em;
+  font-size: clamp(2.5rem, 10vw, 7rem);
 }
 
 .h-massive { font-size: clamp(5rem, 18vw, 18rem); }
