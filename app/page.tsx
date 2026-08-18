@@ -5,37 +5,26 @@ export default function Home() {
     {
       href: '/story',
       label: "Len's Story",
-      description: 'Life, boxing career, activism, and legacy',
+      image: '/images/portrait.webp',
+      color: 'var(--green)',
     },
     {
       href: '/champions',
       label: 'Champions',
-      description: 'Who supports the campaign and why',
+      image: '/images/crowd.webp',
+      color: 'var(--orange)',
     },
     {
       href: '/events',
       label: 'Events',
-      description: 'Music, matches, theatre, and gatherings',
+      image: '/images/breaking-barz.webp',
+      color: 'var(--gold)',
     },
     {
       href: '/gallery',
       label: 'Gallery',
-      description: 'Photos, videos, and press coverage',
-    },
-    {
-      href: '/statue',
-      label: 'The Statue',
-      description: 'The public artwork and campaign',
-    },
-    {
-      href: '/donate',
-      label: 'Donate',
-      description: 'Support the statue fundraiser',
-    },
-    {
-      href: '/more-information',
-      label: 'More Information',
-      description: 'Partners, sponsors, and FAQs',
+      image: '/images/charity-match.webp',
+      color: 'var(--green)',
     },
   ];
 
@@ -103,47 +92,37 @@ export default function Home() {
       {/* EXPLORE SECTION */}
       <section id="explore" className="section bg-cream">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left: Heading + description */}
             <div>
-              <p className="label text-muted mb-6">DISCOVER</p>
-              <h2 className="display-font h-huge text-black mb-8">
-                LEN&apos;S<br />
-                <span className="text-green">LEGACY</span>
+              <p className="label text-muted mb-4">DISCOVER</p>
+              <h2 className="display-font h-huge text-black mb-6">
+                EXPLORE<br />
+                <span className="text-green">LEN&apos;S</span> <span className="text-orange">LEGACY.</span>
               </h2>
-              <p className="body-lg text-black mb-6">
-                Explore his life story, boxing career, anti-racist activism, and the ongoing campaign to honour his memory with a public statue in Manchester city centre.
+              <p className="body-md text-black">
+                Dive into his life story, meet the champions supporting the campaign, discover the events that keep his memory alive, and explore the gallery of moments that define this movement.
               </p>
-              <p className="body-md text-muted mb-8">
-                Discover the events, champions, media coverage, and ways you can support this historic recognition of one of Britain&apos;s greatest uncrowned boxers.
-              </p>
-              <Link href="/story" className="pill pill-gold inline-block">
-                <span>Read the full story</span>
-                <span>→</span>
-              </Link>
             </div>
 
-            {/* Right: Navigation grid */}
-            <div className="grid grid-cols-2 gap-6">
-              {explorerLinks.map((link, idx) => (
+            {/* Right: 2x2 image grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {explorerLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="group relative overflow-hidden rounded-lg aspect-square bg-black hover:shadow-lg transition-all duration-300 flex flex-col justify-end p-4"
-                  style={{
-                    backgroundColor:
-                      idx % 3 === 0
-                        ? 'var(--green)'
-                        : idx % 3 === 1
-                          ? 'var(--orange)'
-                          : 'var(--gold)',
-                  }}
+                  className="group relative overflow-hidden rounded-lg aspect-square hover:shadow-xl transition-all duration-300"
+                  style={{ borderTop: `4px solid ${link.color}` }}
                 >
-                  <div className="relative z-10">
-                    <p className="label text-white mb-1">{link.label.toUpperCase()}</p>
-                    <p className="body-sm text-white opacity-90">{link.description}</p>
+                  <img
+                    src={link.image}
+                    alt={link.label}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
+                  <div className="absolute inset-0 flex flex-col justify-end p-4">
+                    <p className="display-font h-small text-white">{link.label}</p>
                   </div>
-                  <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity" />
                 </Link>
               ))}
             </div>
