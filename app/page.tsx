@@ -105,7 +105,7 @@ export default function Home() {
             </div>
 
             {/* Right: varied size image grid */}
-            <div className="grid gap-3 relative" style={{
+            <div className="grid gap-3" style={{
               gridTemplateColumns: 'repeat(3, 1fr)',
               gridAutoRows: '240px',
             }}>
@@ -133,33 +133,12 @@ export default function Home() {
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                    <div className="absolute inset-0 flex flex-col justify-end p-4">
-                      <p className="display-font h-small text-white">{link.label}</p>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
+                      <p className="display-font text-white" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}>{link.label}</p>
                     </div>
                   </Link>
                 );
               })}
-
-              {/* Boxing Glove with Donate Button */}
-              <div className="absolute bottom-0 right-0 transform translate-x-1/4 translate-y-1/4" style={{ width: '200px', height: '200px' }}>
-                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-                  {/* Glove padding */}
-                  <ellipse cx="100" cy="80" rx="60" ry="65" fill="var(--gold)" opacity="0.9"/>
-                  {/* Thumb */}
-                  <ellipse cx="55" cy="60" rx="25" ry="35" fill="var(--gold)" opacity="0.9"/>
-                  {/* Wrist */}
-                  <rect x="70" y="135" width="60" height="50" fill="var(--green)" opacity="0.9" rx="10"/>
-                  {/* Highlight */}
-                  <ellipse cx="85" cy="60" rx="20" ry="25" fill="var(--white)" opacity="0.3"/>
-                </svg>
-
-                {/* Donate Button */}
-                <a href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue" target="_blank" rel="noopener noreferrer" className="absolute inset-0 flex items-center justify-center">
-                  <button className="pill pill-green font-bold text-sm">
-                    DONATE
-                  </button>
-                </a>
-              </div>
             </div>
           </div>
         </div>
