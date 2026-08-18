@@ -3,7 +3,7 @@ import PageHero from '@/components/PageHero';
 import Section from '@/components/Section';
 
 export const metadata: Metadata = {
-  title: 'Champions for Len',
+  title: "Champions for Len",
 };
 
 export default function ChampionsPage() {

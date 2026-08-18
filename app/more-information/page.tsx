@@ -3,7 +3,7 @@ import PageHero from '@/components/PageHero';
 import Section from '@/components/Section';
 
 export const metadata: Metadata = {
-  title: 'More information',
+  title: "More information",
 };
 
 export default function MoreInformationPage() {

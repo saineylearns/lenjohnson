@@ -3,7 +3,7 @@ import PageHero from '@/components/PageHero';
 import Section from '@/components/Section';
 
 export const metadata: Metadata = {
-  title: 'Len's story',
+  title: "Len\'s story",
 };
 
 export default function StoryPage() {

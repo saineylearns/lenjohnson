@@ -3,7 +3,7 @@ import PageHero from '@/components/PageHero';
 import Section from '@/components/Section';
 
 export const metadata: Metadata = {
-  title: 'The Statue: A public artwork',
+  title: "The Statue: A public artwork",
 };
 
 export default function StatuePage() {
