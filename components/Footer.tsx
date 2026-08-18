@@ -2,31 +2,16 @@ import Link from 'next/link';
 
 export default function Footer() {
   return (
-    <footer id="contact" className="section bg-cream">
-      <div className="container">
-        <h2 className="display-font h-huge text-black mb-12">MENU</h2>
+    <footer className="bg-cream border-t border-gray-300">
+      <div className="container px-4 py-8 md:py-12">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          {/* Copyright on left */}
+          <p className="body-sm text-muted">
+            &copy; {new Date().getFullYear()} Len Johnson Campaign. Manchester deserves justice.
+          </p>
 
-        {/* Horizontal links */}
-        <div className="mb-20">
-          <nav className="flex flex-wrap gap-6 md:gap-8 mb-12">
-            {/* Main navigation */}
-            <Link href="/story" className="body-md link-underline font-bold">
-              Len&apos;s story
-            </Link>
-            <Link href="/champions" className="body-md link-underline font-bold">
-              Champions
-            </Link>
-            <Link href="/events" className="body-md link-underline font-bold">
-              Events
-            </Link>
-            <Link href="/gallery" className="body-md link-underline font-bold">
-              Gallery
-            </Link>
-            <Link href="/statue" className="body-md link-underline font-bold">
-              The statue
-            </Link>
-
-            {/* Social links */}
+          {/* Links on right */}
+          <div className="flex gap-6 flex-wrap">
             <a
               href="https://facebook.com/LenJohnsonCampaign"
               target="_blank"
@@ -43,8 +28,6 @@ export default function Footer() {
             >
               Instagram
             </a>
-
-            {/* Donate CTA */}
             <a
               href="https://www.gofundme.com/f/manchester-needs-a-len-johnson-statue"
               target="_blank"
@@ -53,38 +36,8 @@ export default function Footer() {
             >
               Donate
             </a>
-          </nav>
-
-          {/* Contact info */}
-          <div className="flex flex-wrap gap-6 md:gap-12 text-sm">
-            <div>
-              <p className="label text-muted mb-2">LOCATION</p>
-              <p className="body-md">Manchester, England</p>
-            </div>
-            <div>
-              <p className="label text-muted mb-2">CONTACT</p>
-              <a
-                href="mailto:info@lenjohnsoncampaign.co.uk"
-                className="body-md link-underline font-bold"
-              >
-                info@lenjohnsoncampaign.co.uk
-              </a>
-            </div>
-            <div>
-              <p className="label text-muted mb-2">ORGANIZATION</p>
-              <p className="body-md">Community Interest Company · Est. 2023</p>
-            </div>
           </div>
         </div>
-
-        <div className="display-font h-huge text-black text-center pt-12 pb-4 border-t border-gray-300">
-          HERE.WE.<span className="text-green">GO.</span>
-        </div>
-
-        <p className="body-sm text-muted text-center mt-6">
-          &copy; {new Date().getFullYear()} Len Johnson Campaign. Community Interest Company.
-          Manchester deserves justice.
-        </p>
       </div>
     </footer>
   );
