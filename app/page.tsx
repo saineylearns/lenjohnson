@@ -108,7 +108,7 @@ export default function Home() {
             {/* Right: varied size image grid */}
             <div className="grid gap-4" style={{
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gridAutoRows: '200px',
+              gridAutoRows: '240px',
             }}>
               {explorerLinks.map((link, idx) => {
                 // Vary sizes: Story spans 2 rows + 2 columns (large), Gallery spans 2 columns
