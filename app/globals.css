@@ -4,6 +4,7 @@
   --gold: #d4af37;
   --green: #169B62;
   --green-dark: #0d6b43;
+  --teal: #1b8a7d;
   --orange: #FF883E;
   --blue: #0072C6;
   --cream: #f6f6f6;
@@ -150,6 +151,7 @@ h3.display-font {
 .bg-gold { background: var(--gold); }
 .bg-green { background: var(--green); }
 .bg-green-dark { background: var(--green-dark); }
+.bg-teal { background: var(--teal); }
 .bg-orange { background: var(--orange); }
 .bg-blue { background: var(--blue); }
 .bg-black { background: var(--black); }

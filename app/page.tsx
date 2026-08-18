@@ -90,7 +90,7 @@ export default function Home() {
       </section>
 
       {/* EXPLORE SECTION */}
-      <section id="explore" className="section bg-green-dark">
+      <section id="explore" className="section bg-teal">
         <div className="container">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left: Heading + description */}
