@@ -61,6 +61,7 @@ h3.display-font {
 .h-large { font-size: clamp(3rem, 10vw, 8rem); }
 .h-medium { font-size: clamp(2rem, 6vw, 5rem); }
 .h-small { font-size: clamp(1.5rem, 4vw, 3rem); }
+.h-tiny { font-size: clamp(1.15rem, 2.6vw, 1.75rem); }
 
 .body-lg { font-size: 1.25rem; line-height: 1.7; overflow-wrap: break-word; }
 .body-md { font-size: 1.125rem; line-height: 1.8; overflow-wrap: break-word; }
@@ -1202,5 +1203,337 @@ body.nav-open .scroll-bar {
   .monument-cta-heading,
   .monument-cta-body {
     color: #000 !important;
+  }
+}
+
+/* ==========================================================================
+   Len's Story page
+   ========================================================================== */
+
+/* Generic scroll-reveal: slide up + fade in once a section enters the
+   viewport. useReveal() adds .is-visible; under prefers-reduced-motion the
+   hook sets visible immediately so nothing depends on the transition. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 700ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 700ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 120ms; }
+.reveal-delay-2 { transition-delay: 240ms; }
+.reveal-delay-3 { transition-delay: 360ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Pull-quote — same left-border-gold treatment used throughout this
+   campaign's previous site (hero quote, Rule 24 section, press section);
+   kept as a light-background-safe variant for use inside body copy. */
+.pull-quote {
+  max-width: min(100%, 700px);
+  margin: 2rem 0;
+  padding: 1.25rem 1.75rem;
+  border-left: 4px solid var(--gold);
+}
+
+.pull-quote p {
+  line-height: 1.6;
+}
+
+.pull-quote cite {
+  display: block;
+  margin-top: 0.75rem;
+  font-style: normal;
+  opacity: 0.7;
+}
+
+.pull-quote-dark {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Stat counters — a row of big numbers with labels, used for the boxing
+   record, the colour-bar span, and the Old Abbey protest figures. */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 2rem 1.5rem;
+  text-align: center;
+  padding: 2.5rem 0;
+}
+
+.stat-number {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--gold);
+  line-height: 1;
+}
+
+.stat-label {
+  margin-top: 0.5rem;
+  opacity: 0.75;
+}
+
+/* Career comparison bars (Len / Ali / Pacquiao). */
+.compare-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  margin-top: 1rem;
+}
+
+.compare-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.compare-name { line-height: 1; }
+
+.compare-figures { opacity: 0.7; white-space: nowrap; }
+
+.compare-track {
+  position: relative;
+  height: 14px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.compare-track-bouts,
+.compare-track-wins {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 7px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1000ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.compare-track-bouts { background: rgba(212, 175, 55, 0.25); }
+.compare-track-wins { background: var(--gold); }
+
+.compare-note {
+  margin-top: 0.5rem;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare-track-bouts,
+  .compare-track-wins {
+    transition: none;
+  }
+}
+
+/* Archive placeholder — used for chapters whose photo hasn't arrived yet
+   (Pan-African Congress, New International Society, Old Abbey). Deliberately
+   plain: a dashed frame + short note, not a fake image, so it never reads as
+   a broken photo. */
+.archive-placeholder {
+  aspect-ratio: 3/4;
+  max-height: 420px;
+  border-radius: 13px;
+  border: 2px dashed rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  gap: 0.75rem;
+  color: var(--muted);
+}
+
+.archive-placeholder-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  opacity: 0.6;
+}
+
+.archive-placeholder.on-dark {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Interactive era timeline — vertical spine with expandable event nodes. */
+.story-timeline {
+  position: relative;
+  margin-top: 1rem;
+}
+
+.story-timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 11px;
+  width: 2px;
+  background: rgba(212, 175, 55, 0.35);
+}
+
+.timeline-node {
+  position: relative;
+  padding: 0 0 2.25rem 3rem;
+}
+
+.timeline-node:last-child { padding-bottom: 0; }
+
+.timeline-node-dot {
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid var(--gold);
+  z-index: 1;
+}
+
+.timeline-node.is-open .timeline-node-dot {
+  background: var(--gold);
+}
+
+.timeline-node-trigger {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
+}
+
+.timeline-node-year {
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.timeline-node-title {
+  flex: 1;
+  min-width: 12rem;
+}
+
+.timeline-node-plus {
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--gold);
+}
+
+.timeline-node.is-open .timeline-node-plus {
+  transform: rotate(45deg);
+}
+
+.timeline-node-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timeline-node.is-open .timeline-node-body {
+  grid-template-rows: 1fr;
+}
+
+.timeline-node-body-inner {
+  overflow: hidden;
+}
+
+.timeline-node.is-open .timeline-node-body-inner {
+  padding-top: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-node-plus,
+  .timeline-node-body {
+    transition: none;
+  }
+}
+
+/* Sources accordion (citations at the foot of the page). */
+.sources-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sources-item:first-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.sources-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.25rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font-family: inherit;
+}
+
+.sources-trigger-plus {
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.sources-item.is-open .sources-trigger-plus {
+  transform: rotate(45deg);
+}
+
+.sources-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sources-item.is-open .sources-body {
+  grid-template-rows: 1fr;
+}
+
+.sources-body-inner {
+  overflow: hidden;
+}
+
+.sources-item.is-open .sources-body-inner {
+  padding-bottom: 1.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sources-trigger-plus,
+  .sources-body {
+    transition: none;
   }
 }
