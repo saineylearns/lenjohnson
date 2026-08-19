@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Anton, Archivo_Black, Instrument_Sans } from "next/font/google";
+import {
+  Anton,
+  Archivo_Black,
+  Instrument_Sans,
+  Instrument_Serif,
+} from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -24,6 +29,20 @@ const archivoBlack = Archivo_Black({
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
   variable: "--font-instrument",
+  display: "swap",
+});
+
+// High-contrast display serif for the story page's editorial headlines.
+// Designed as a companion to Instrument Sans, so the two mix cleanly within
+// a single headline — the reference design's signature move.
+const instrumentSerif = Instrument_Serif({
+  weight: "400",
+  // The italic is loaded explicitly — without it the browser synthesises a
+  // slant (or falls back to Georgia), and the story headlines lean on real
+  // italic letterforms rather than a skewed roman.
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-instrument-serif",
   display: "swap",
 });
 
@@ -140,7 +159,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${anton.variable} ${archivoBlack.variable} ${instrumentSans.variable}`}
+      className={`${anton.variable} ${archivoBlack.variable} ${instrumentSans.variable} ${instrumentSerif.variable}`}
     >
       <body>
         <script

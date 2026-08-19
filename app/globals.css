@@ -1537,3 +1537,703 @@ body.nav-open .scroll-bar {
     transition: none;
   }
 }
+
+
+/* ==========================================================================
+   LEN'S STORY — a single-scroll documentary
+   --------------------------------------------------------------------------
+   Everything is scoped under .ls so the rest of the campaign site is
+   untouched. The page is one continuous canvas rather than a stack of bands:
+   each act carries its own palette and bleeds into the next through a
+   gradient at its top edge, so the colour shifts with the narrative instead
+   of chopping it into sections.
+
+   Act palettes trace the emotional arc —
+     I   ORIGINS   warm archival paper, brick red      (intrigue)
+     II  THE RISE  ink black, gold                     (admiration)
+     III BARRED    deep oxblood, rust                  (injustice)
+     IV  ORGANISE  deep green, warm gold               (resolve)
+     V   LEGACY    back to paper, campaign green       (pride)
+   ========================================================================== */
+
+.ls {
+  --paper: #ece3d4;
+  --night: #12100e;
+  position: relative;
+  overflow-x: clip;
+}
+
+/* Film grain over the whole page — the single biggest contributor to the
+   archival feel. Fixed, so it reads as emulsion on the image rather than a
+   texture that scrolls with the content. */
+.ls-grain {
+  position: fixed;
+  inset: 0;
+  /* Above the page content (.ls-wrap sits at 2) so the grain falls across the
+     photographs and type alike, but well under the site nav at 1000. */
+  z-index: 9;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-grain { opacity: 0.3; }
+}
+
+/* --- Opening ------------------------------------------------------------- */
+
+.ls-open {
+  position: relative;
+  min-height: 92svh;
+  display: flex;
+  align-items: flex-end;
+  background: var(--night);
+  overflow: hidden;
+}
+
+.ls-open-media {
+  position: absolute;
+  inset: 0;
+}
+
+.ls-open-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+  filter: grayscale(1) contrast(1.12) brightness(0.92);
+}
+
+/* Warm duotone over the portrait, then a heavy foot so the type sits clean
+   and the whole thing dissolves into the paper of Act I. */
+.ls-open-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(18, 16, 14, 0.55) 0%, rgba(18, 16, 14, 0.1) 38%, rgba(18, 16, 14, 0.92) 100%),
+    linear-gradient(140deg, rgba(158, 59, 43, 0.34) 0%, rgba(212, 175, 55, 0.22) 100%);
+}
+
+.ls-open-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding-block: clamp(3rem, 9vh, 6rem);
+}
+
+.ls-open-title {
+  color: #f4ece0;
+  font-size: clamp(3.4rem, 13vw, 11rem);
+  line-height: 0.88;
+  margin: 0.5rem 0 0;
+}
+
+.ls-open-title em {
+  font-style: normal;
+  color: var(--gold);
+}
+
+.ls-open-dek {
+  margin: clamp(1.5rem, 4vh, 2.5rem) 0 0;
+  max-width: 34ch;
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-size: clamp(1.15rem, 2vw, 1.65rem);
+  line-height: 1.4;
+  color: #ded2c0;
+}
+
+.ls-open-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  margin-top: clamp(2rem, 5vh, 3rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(244, 236, 224, 0.22);
+  color: rgba(244, 236, 224, 0.7);
+}
+
+/* --- Acts ---------------------------------------------------------------- */
+
+.ls-act {
+  position: relative;
+  padding-block: clamp(5rem, 14vh, 10rem);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* The bleed. Each act fades up out of the previous act's colour, so the
+   boundary between them is a dissolve rather than an edge. */
+.ls-act::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(6rem, 18vh, 14rem);
+  background: linear-gradient(to bottom, var(--prev), transparent);
+  pointer-events: none;
+}
+
+.ls-act-i {
+  --bg: #ece3d4;
+  --ink: #191410;
+  --ink-soft: #5d5245;
+  --accent: #9e3b2b;
+  --rule: rgba(25, 20, 16, 0.16);
+  --prev: #12100e;
+}
+
+.ls-act-ii {
+  --bg: #14110d;
+  --ink: #f0e8da;
+  --ink-soft: #a2957f;
+  --accent: #d4af37;
+  --rule: rgba(240, 232, 218, 0.18);
+  --prev: #ece3d4;
+}
+
+.ls-act-iii {
+  --bg: #2a1310;
+  --ink: #f4e6e0;
+  --ink-soft: #b09489;
+  --accent: #e0603a;
+  --rule: rgba(244, 230, 224, 0.18);
+  --prev: #14110d;
+}
+
+.ls-act-iv {
+  --bg: #0c3a2c;
+  --ink: #eef2e6;
+  --ink-soft: #9bb3a3;
+  --accent: #f0c14b;
+  --rule: rgba(238, 242, 230, 0.18);
+  --prev: #2a1310;
+}
+
+.ls-act-v {
+  --bg: #ece3d4;
+  --ink: #191410;
+  --ink-soft: #5d5245;
+  --accent: #0d6b43;
+  --rule: rgba(25, 20, 16, 0.16);
+  --prev: #0c3a2c;
+}
+
+/* --- Grid + the rail ----------------------------------------------------- */
+
+.ls-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.ls-grid {
+  display: grid;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+@media (min-width: 1000px) {
+  .ls-grid {
+    grid-template-columns: 11rem minmax(0, 1fr);
+  }
+}
+
+/* The rail runs the length of every act and stays put as you scroll, so the
+   year and act name are always in view — the thread that holds the page
+   together as one document. */
+.ls-rail {
+  align-self: start;
+  border-top: 2px solid var(--accent);
+  padding-top: 0.9rem;
+}
+
+@media (min-width: 1000px) {
+  .ls-rail {
+    position: sticky;
+    top: 8rem;
+  }
+}
+
+.ls-rail-num {
+  display: block;
+  font-family: var(--font-anton), sans-serif;
+  font-size: clamp(2.75rem, 4vw, 4rem);
+  line-height: 0.85;
+  color: var(--accent);
+}
+
+.ls-rail-year {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--font-anton), sans-serif;
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.ls-rail-name {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* --- Editorial typography ------------------------------------------------ */
+
+.ls-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0 0 1.1rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.ls-kicker::after {
+  content: '';
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--rule);
+}
+
+.ls-h {
+  margin: 0;
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  line-height: 0.92;
+  color: var(--ink);
+  font-size: clamp(2.4rem, 6.4vw, 5.4rem);
+}
+
+.ls-h-sm { font-size: clamp(1.75rem, 4vw, 3.2rem); }
+
+.ls-h em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.ls-prose > * + * { margin-top: 1.35em; }
+
+/* No margin reset here — the global `* { margin: 0 }` already handles it, and
+   setting it again would out-specify the `> * + *` rhythm above. */
+.ls-prose p {
+  font-size: clamp(1.02rem, 1.15vw, 1.16rem);
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+.ls-prose strong { font-weight: 700; }
+
+.ls-prose em {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-style: italic;
+}
+
+/* Opening paragraph of an act — bigger, serif, with an Anton drop cap in the
+   act's accent. Straight out of an exhibition wall panel. */
+.ls-lede {
+  font-family: var(--font-instrument-serif), Georgia, serif !important;
+  font-size: clamp(1.25rem, 2vw, 1.65rem) !important;
+  line-height: 1.45 !important;
+}
+
+/* A block formatting context, so a short lede can't let the floated cap spill
+   into the paragraph below and indent its opening lines. */
+.ls-drop { overflow: hidden; }
+
+.ls-drop::first-letter {
+  float: left;
+  font-family: var(--font-anton), sans-serif;
+  font-size: 3.9em;
+  line-height: 0.76;
+  padding-right: 0.1em;
+  margin-top: 0.06em;
+  color: var(--accent);
+}
+
+.ls-aside {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+.ls-cols {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+}
+
+@media (min-width: 880px) {
+  .ls-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ls-cols-lead { grid-template-columns: 1.15fr 1fr; }
+}
+
+.ls-block + .ls-block { margin-top: clamp(3rem, 8vh, 5.5rem); }
+
+/* --- Plates (images) ----------------------------------------------------- */
+
+.ls-plate {
+  position: relative;
+  margin: 0;
+}
+
+.ls-plate-media {
+  position: relative;
+  overflow: hidden;
+  background: #0b0a09;
+  /* Portrait only once the plate sits in a column beside the prose. Full-width
+     on a phone, 4/5 would be over a thousand pixels tall. */
+  aspect-ratio: 4 / 3;
+}
+
+@media (min-width: 1000px) {
+  .ls-plate-media { aspect-ratio: 4 / 5; }
+}
+
+.ls-plate-wide .ls-plate-media { aspect-ratio: 16 / 10; }
+
+.ls-plate-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(1) contrast(1.18) brightness(0.86);
+  transition: filter 900ms ease, transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Duotone: grayscale underneath, the act's accent laid over in `color` blend
+   mode. Lifts on hover — the archive coming back to life. */
+.ls-plate-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  mix-blend-mode: color;
+  opacity: 0.3;
+  transition: opacity 900ms ease;
+  pointer-events: none;
+}
+
+/* Halftone dot screen, as if the photo came off a newspaper page. */
+.ls-plate-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.13;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.9) 0.9px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+.ls-plate:hover .ls-plate-media img {
+  filter: grayscale(0) contrast(1);
+  transform: scale(1.035);
+}
+
+.ls-plate:hover .ls-plate-media::after { opacity: 0; }
+
+/* Pasted-cutting treatment — a slight rotation and a strip of tape. */
+.ls-cut {
+  rotate: -1.1deg;
+  transition: rotate 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ls-cut-alt { rotate: 1deg; }
+.ls-cut:hover { rotate: 0deg; }
+
+.ls-tape {
+  position: absolute;
+  top: -13px;
+  left: 50%;
+  translate: -50% 0;
+  rotate: -2.5deg;
+  width: clamp(88px, 26%, 130px);
+  height: 26px;
+  z-index: 3;
+  background: rgba(212, 175, 55, 0.3);
+  border-inline: 1px dashed rgba(0, 0, 0, 0.18);
+}
+
+.ls-cap {
+  margin-top: 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* --- The bill (champions defeated) --------------------------------------- */
+
+.ls-bill {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 3px solid var(--accent);
+}
+
+.ls-bill-row {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr);
+  gap: 0.3rem clamp(1rem, 3vw, 2.5rem);
+  align-items: baseline;
+  padding: clamp(1.1rem, 2.6vh, 1.6rem) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (min-width: 880px) {
+  .ls-bill-row {
+    grid-template-columns: 5rem minmax(0, 17rem) minmax(0, 1fr);
+  }
+}
+
+.ls-bill-year {
+  font-family: var(--font-anton), sans-serif;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+
+.ls-bill-name {
+  margin: 0;
+  font-family: var(--font-anton), sans-serif;
+  font-weight: 400;
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.ls-bill-note {
+  margin: 0;
+  grid-column: 2 / -1;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+@media (min-width: 880px) {
+  .ls-bill-note { grid-column: 3; }
+}
+
+/* --- The stamp (BARRED) --------------------------------------------------- */
+
+.ls-stamps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(0.7rem, 2.2vw, 1.8rem);
+  margin-bottom: clamp(2rem, 5vh, 3.25rem);
+}
+
+.ls-stamp {
+  font-family: var(--font-anton), sans-serif;
+  text-transform: uppercase;
+  font-size: clamp(1.9rem, 6.4vw, 4.8rem);
+  line-height: 0.9;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink-soft);
+}
+
+/* The one that landed: an inked rubber stamp on the paperwork. */
+.ls-stamp-inked {
+  color: var(--accent);
+  -webkit-text-stroke: 0;
+  border: 4px solid var(--accent);
+  padding: 0.04em 0.16em;
+  rotate: -3.5deg;
+  opacity: 0.92;
+}
+
+/* --- Component overrides -------------------------------------------------- */
+
+.ls .stat-grid {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding-block: clamp(1.75rem, 4vh, 2.75rem);
+}
+
+.ls .stat-number {
+  color: var(--accent);
+  font-size: clamp(3rem, 7.5vw, 6rem);
+  line-height: 0.9;
+}
+
+.ls .stat-label {
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+}
+
+.ls .pull-quote,
+.ls .pull-quote-dark {
+  background: none;
+  border: 0;
+  border-left: 3px solid var(--accent);
+  border-radius: 0;
+  padding: 0.2rem 0 0.2rem clamp(1.25rem, 3vw, 2.25rem);
+  margin: clamp(2rem, 5vh, 3.25rem) 0;
+}
+
+.ls .pull-quote p {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.3vw, 1.9rem);
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.ls .pull-quote cite {
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+}
+
+/* Sized to match .ls-plate-media so a chapter still awaiting its photograph
+   holds exactly the space the photograph will take. */
+.ls .archive-placeholder,
+.ls .archive-placeholder.on-dark {
+  background: color-mix(in srgb, var(--ink) 6%, transparent);
+  border: 1px dashed var(--rule);
+  color: var(--ink-soft);
+  border-radius: 0;
+  aspect-ratio: 4 / 3;
+  max-height: none;
+}
+
+@media (min-width: 1000px) {
+  .ls .archive-placeholder,
+  .ls .archive-placeholder.on-dark { aspect-ratio: 4 / 5; }
+}
+
+.ls .archive-placeholder-icon { color: var(--accent); }
+
+.ls .story-timeline::before { background: var(--rule); }
+.ls .timeline-node-dot { background: var(--bg); border-color: var(--accent); }
+.ls .timeline-node.is-open .timeline-node-dot { background: var(--accent); }
+.ls .timeline-node-year { color: var(--accent); }
+.ls .timeline-node-title,
+.ls .timeline-node-plus { color: var(--ink); }
+.ls .timeline-node-body-inner { color: var(--ink-soft); }
+
+.ls .sources-item { border-color: var(--rule); }
+.ls .sources-trigger,
+.ls .sources-trigger-plus { color: var(--ink); }
+.ls .sources-body-inner { color: var(--ink-soft); }
+
+.ls .compare-track { background: color-mix(in srgb, var(--ink) 12%, transparent); }
+.ls .compare-track-wins { background: var(--accent); }
+.ls .compare-track-bouts { background: color-mix(in srgb, var(--accent) 32%, transparent); }
+.ls .compare-name,
+.ls .compare-figures { color: var(--ink); }
+.ls .compare-note { color: var(--ink-soft); }
+
+.ls .gallery-item {
+  border-radius: 0;
+  background: color-mix(in srgb, var(--ink) 8%, transparent);
+}
+
+.ls .gallery-item img {
+  filter: grayscale(1) contrast(1.08);
+  transition: filter 700ms ease;
+}
+
+.ls .gallery-item:hover img { filter: grayscale(0) contrast(1); }
+
+.ls .gallery-arrow {
+  border-radius: 0;
+  background: var(--bg);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+/* --- Closing ------------------------------------------------------------- */
+
+.ls-close {
+  --bg: #12100e;
+  --ink: #f2eade;
+  --ink-soft: #a2957f;
+  --accent: #d4af37;
+  --rule: rgba(242, 234, 222, 0.18);
+  --prev: #ece3d4;
+  position: relative;
+  background: var(--bg);
+  color: var(--ink);
+  padding-block: clamp(5rem, 15vh, 9rem);
+}
+
+.ls-close::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(6rem, 18vh, 14rem);
+  background: linear-gradient(to bottom, var(--prev), transparent);
+  pointer-events: none;
+}
+
+.ls-close-inner {
+  max-width: 58ch;
+}
+
+.ls-close-body {
+  margin: clamp(1.5rem, 4vh, 2.25rem) 0 0;
+  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.ls-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: clamp(2rem, 5vh, 3rem);
+}
+
+.ls-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.05rem 2.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid var(--accent);
+  transition: background 320ms ease, color 320ms ease;
+}
+
+.ls-btn-solid { background: var(--accent); color: #12100e; }
+.ls-btn-solid:hover { background: transparent; color: var(--accent); }
+.ls-btn-ghost { background: transparent; color: var(--accent); }
+.ls-btn-ghost:hover { background: var(--accent); color: #12100e; }
+
+.ls-sources {
+  --bg: #12100e;
+  --ink: #f2eade;
+  --ink-soft: #a2957f;
+  --accent: #d4af37;
+  --rule: rgba(242, 234, 222, 0.16);
+  background: var(--bg);
+  color: var(--ink);
+  padding-block: clamp(3rem, 8vh, 5rem);
+  border-top: 1px solid var(--rule);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ls-plate-media img,
+  .ls-cut { transition: none; }
+  .ls-cut { rotate: 0deg; }
+}
