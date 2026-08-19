@@ -31,8 +31,25 @@
 }
 
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+/* Smooth scrolling is switched on only while an in-page anchor is actually
+   being followed, never as a standing property of the document.
+
+   A permanent `html { scroll-behavior: smooth }` breaks the App Router's
+   scroll-to-top: on navigation Next sets `documentElement.scrollTop = 0`
+   after flipping scroll-behavior to auto inline, but it skips the forced
+   reflow that would make that take effect, so the reset is still treated as
+   a smooth scroll and never lands. Tapping Len's Story from halfway down the
+   home page opened the story a third of the way in.
+
+   Excluding #main-content keeps the skip link instant, which is what someone
+   tabbing past the navigation wants. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(:target:not(#main-content)) {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
