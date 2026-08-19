@@ -26,13 +26,13 @@ const EVENTS: TimelineEvent[] = [
   },
   {
     year: '1953',
-    title: 'Refused a drink at the Old Abbey',
-    body: 'The licensee of the Old Abbey pub on the Greenheys Estate refused Len a drink, saying he did not serve ‘coloured’ people. Police were called and, on their advice, Len left.',
+    title: 'Refused a drink at the Old Abbey Taphouse',
+    body: 'The licensee of the Old Abbey Taphouse in Hulme refused Len a drink, saying he did not serve ‘coloured’ people. Police were called and, on their advice, Len left.',
   },
   {
     year: '1953',
     title: '200 protestors return',
-    body: 'Len and his friends returned to the Old Abbey with around 200 protestors, Black and white. Four nights later the ‘colour bar’ was officially revoked, and Len was invited back for a drink.',
+    body: 'Len and his friends returned to the Old Abbey Taphouse with around 200 protestors, Black and white. Four nights later the ‘colour bar’ was officially revoked, and Len was invited back for a drink.',
   },
   {
     year: '1957',

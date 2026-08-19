@@ -167,7 +167,7 @@ export default function StoryPage() {
               <Reveal>
                 <p className="ls-kicker">Early life</p>
                 <h2 className="ls-h ls-h-sm">
-                  Born into <em>two worlds</em>.
+                  A <em>champion</em> is born.
                 </h2>
               </Reveal>
 
@@ -183,13 +183,13 @@ export default function StoryPage() {
                     </p>
                     <p>
                       William entered the boxing booth life. He met and married
-                      Margaret Maher, a Mancunian, &lsquo;Irish and proud of
-                      it&rsquo; as her son recalled. Margaret worked as a
+                      Margaret Maher, a white Mancunian of Irish heritage and,
+                      as her son recalled, proud of it. Margaret worked as a
                       pinafore machinist. The interracial marriage meant the
                       family experienced significant racism — Margaret was
                       attacked in the street because she married a Black man,
-                      suffering permanent disfigurement, and was disowned by her
-                      own family.
+                      suffering permanent facial disfigurement, and was disowned
+                      by her own family.
                     </p>
                     <p>
                       The couple found lodgings with the Connell family — Sal, a
@@ -231,9 +231,9 @@ export default function StoryPage() {
               <Reveal>
                 <p className="ls-kicker">Boxing career</p>
                 <h2 className="ls-h">
-                  The booths to the
+                  The making of the
                   <br />
-                  <em>uncrowned championship.</em>
+                  <em>uncrowned champion.</em>
                 </h2>
               </Reveal>
 
@@ -241,12 +241,11 @@ export default function StoryPage() {
                 <Reveal>
                   <div className="ls-prose">
                     <p className="ls-lede ls-drop">
-                      Growing up, Len was trained by his father as a boxer in
-                      the boxing booths, travelling around fairgrounds. By 1920
-                      Len was fighting professionally as a middleweight boxer.
-                      In the years between the two world wars, he was regarded
-                      as one of the greatest middleweight boxers of his
-                      generation.
+                      Trained by his father in the Boxing Booths, Len travelled
+                      around the fairgrounds. By 1920 Len was fighting
+                      professionally as a middleweight boxer. In the years
+                      between the two world wars, he was regarded as one of the
+                      greatest middleweight boxers of his generation.
                     </p>
                     <p>
                       However, due to then Home Secretary Winston
@@ -287,10 +286,9 @@ export default function StoryPage() {
               <Reveal delay={1}>
                 <div className="ls-prose" style={{ marginTop: 'clamp(1.75rem, 4vh, 2.5rem)', maxWidth: '62ch' }}>
                   <p>
-                    The majority of his bouts went the distance. This record can
-                    be compared with some of the greatest boxers the world has
-                    seen — Muhammad Ali won 56 of his 61 bouts, and Manny
-                    Pacquiao won 62 of his 72.
+                    The majority of his bouts went the distance. Len&apos;s
+                    record rivals that of boxing greats — Muhammad Ali won 56 of
+                    his 61 bouts, and Manny Pacquiao won 62 of his 72.
                   </p>
                 </div>
                 <StatCompare />
@@ -300,8 +298,10 @@ export default function StoryPage() {
             <div className="ls-block">
               <Reveal>
                 <p className="ls-kicker">Champions defeated</p>
-                <h2 className="ls-h ls-h-sm">
-                  Len defeated <em>champions</em>.
+                <h2 className="ls-h">
+                  Len beat champions.
+                  <br />
+                  <em>Still no belt.</em>
                 </h2>
               </Reveal>
 
@@ -322,9 +322,10 @@ export default function StoryPage() {
                   <p>
                     In 1928 the national newspapers described Johnson as
                     Britain&apos;s{' '}
-                    <strong>&lsquo;uncrowned champion&rsquo;</strong>. Still,
-                    the British Boxing Board of Control would not sanction a
-                    championship bout for him.
+                    <strong>&lsquo;uncrowned champion&rsquo;</strong>. Because
+                    of Rule 24 he was denied a British title — the British
+                    Boxing Board of Control would not sanction a championship
+                    bout for him.
                   </p>
                 </div>
               </Reveal>
@@ -375,14 +376,13 @@ export default function StoryPage() {
                 <Reveal delay={1}>
                   <div className="ls-prose">
                     <p>
-                      Racist ideas justifying Empire were prevalent, and
-                      opposition to the fight came most prominently from the
-                      Church, with lobbying from the Archbishop of Canterbury.
-                      Winston Churchill, as Home Secretary at the time, declared
-                      in September 1911 the proposed fight illegal — a decision
-                      that came to act as a precedent in banning any
-                      high-profile fight between white and Black boxers in
-                      Britain.
+                      Racist ideas justifying Empire were prevalent. After
+                      lobbying by the then Archbishop of Canterbury, the Boy
+                      Scouts founder Robert Baden-Powell and various religious
+                      groups, the Home Secretary Winston Churchill used the
+                      courts to prevent the bout in September 1911. This action
+                      was followed by a formal colour bar in British boxing that
+                      was repealed in 1947, finally ending in 1948.
                     </p>
                   </div>
                 </Reveal>
@@ -415,14 +415,18 @@ export default function StoryPage() {
                 <div className="ls-prose" style={{ marginTop: '1.5rem', maxWidth: '58ch' }}>
                   <p>
                     By 1930 Johnson announced his retirement from the ring,
-                    explaining his decision in his own words.
+                    explaining his decision in his own words in The Daily
+                    Dispatch.
                   </p>
                 </div>
               </Reveal>
 
               <Reveal delay={1}>
-                <PullQuote dark attribution="LEN JOHNSON, 1930">
-                  I am fed up with the whole business. I am barred from the
+                <PullQuote
+                  dark
+                  attribution="LEN JOHNSON, THE DAILY DISPATCH, 1930"
+                >
+                  &ldquo;I am fed up with the whole business. I am barred from the
                   Albert Hall, from the National Sporting club and from all
                   fights where this is big money. The prejudice against colour
                   has prevented me from getting a championship bout, although I
@@ -431,7 +435,7 @@ export default function StoryPage() {
                   allowed to take part in a championship bout there would be an
                   overwhelming majority in my favour. I know in my heart that I
                   shall never achieve those ambitions, so I am getting out of
-                  the game.
+                  the game.&rdquo;
                 </PullQuote>
               </Reveal>
             </div>
@@ -567,7 +571,7 @@ export default function StoryPage() {
 
             <div className="ls-block">
               <Reveal>
-                <p className="ls-kicker">1953 — The Old Abbey</p>
+                <p className="ls-kicker">1953 — The Old Abbey Taphouse</p>
                 <h2 className="ls-h">
                   Breaking the
                   <br />
@@ -590,12 +594,13 @@ export default function StoryPage() {
                       In the post-war years Len spent much of his time
                       challenging unwritten &lsquo;colour bars&rsquo; in
                       Manchester — part of a vibrant, dynamic politics led by
-                      Black activists in 1940s and 1950s Manchester. In 1953
-                      Len, who was teetotal, was refused a drink by the licensee
-                      of the Old Abbey pub on the Greenheys Estate, who said he
-                      did not serve &lsquo;coloured&rsquo; people. When Len
-                      objected, the police were brought in and, on their advice,
-                      he left.
+                      Black activists in 1940s and 1950s Manchester. Len, who
+                      was teetotal, organised locally to break the colour bar in
+                      local pubs and hotels. For example, in 1953 Len requested
+                      a drink at the Old Abbey Taphouse in Hulme. The licensee
+                      refused him, saying he did not serve
+                      &lsquo;coloured&rsquo; people. When Len objected, the
+                      police were brought in and, on their advice, he left.
                     </p>
                     <p>
                       The story itself was not unusual in post-war Britain. What
@@ -606,7 +611,7 @@ export default function StoryPage() {
                   </div>
                 </Reveal>
                 <Reveal delay={1}>
-                  <ArchivePlaceholder label="The Old Abbey, Greenheys, 1953" dark />
+                  <ArchivePlaceholder label="The Old Abbey Taphouse, Hulme, 1953" dark />
                 </Reveal>
               </div>
 
