@@ -5,7 +5,7 @@ export default function Home() {
     {
       href: '/story',
       label: "Len's Story",
-      image: '/images/knockout.webp',
+      image: '/images/lenstory.png',
       color: 'var(--green)',
     },
     {
