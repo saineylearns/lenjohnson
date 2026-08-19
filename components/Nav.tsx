@@ -30,9 +30,36 @@ export default function Nav() {
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    // Plain `overflow: hidden` on <body> doesn't reliably block touch/
+    // momentum scrolling on iOS Safari, so the page behind the open menu
+    // can still scroll. Pin the body in place instead, and restore the
+    // scroll position when the menu closes.
+    if (menuOpen) {
+      const scrollY = window.scrollY;
+      document.body.dataset.scrollY = String(scrollY);
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.classList.add('nav-open');
+    } else {
+      const scrollY = document.body.dataset.scrollY;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.classList.remove('nav-open');
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY, 10));
+        delete document.body.dataset.scrollY;
+      }
+    }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.classList.remove('nav-open');
     };
   }, [menuOpen]);
 

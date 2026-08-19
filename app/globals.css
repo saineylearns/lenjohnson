@@ -372,6 +372,14 @@ h3.display-font {
   transition: transform 100ms linear;
 }
 
+/* Hide the scroll progress strip while the mobile menu is open — it sits
+   above the nav's stacking context (z-index 1001) and otherwise stays
+   visible/animating on top of the open menu overlay. */
+body.nav-open .scroll-bar {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* SITE NAVIGATION */
 .site-nav {
   position: fixed;
@@ -392,6 +400,14 @@ h3.display-font {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
+  /* Keep the bar (and burger/close toggle) above the mobile menu overlay,
+     which is a positioned sibling with z-index: 999 and would otherwise
+     paint over this unpositioned, auto-stacked bar when open. Needs its
+     own opaque background too — without one, the black wordmark/burger
+     lines would sit directly on the black menu overlay behind them. */
+  position: relative;
+  z-index: 1000;
+  background: var(--white);
 }
 
 .site-wordmark {
