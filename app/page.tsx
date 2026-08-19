@@ -17,7 +17,7 @@ export default function Home() {
     {
       href: '/events',
       label: 'Events',
-      image: '/images/breaking-barz.webp',
+      image: '/images/lenmatchevents.jpeg',
       color: 'var(--gold)',
     },
     {
