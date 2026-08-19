@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { DONATE_URL, EXTERNAL_LINK_PROPS } from '@/lib/links';
 
 const NAV_LINKS = [
   { href: '/story', label: "Len's story" },
@@ -97,9 +98,13 @@ export default function Nav() {
         </ul>
 
         <div className="site-nav-actions">
-          <Link href="/donate" className="pill pill-gold site-nav-donate">
+          <a
+            href={DONATE_URL}
+            {...EXTERNAL_LINK_PROPS}
+            className="pill pill-gold site-nav-donate"
+          >
             <span>Donate</span>
-          </Link>
+          </a>
           <button
             type="button"
             className="site-nav-toggle"
@@ -135,9 +140,9 @@ export default function Nav() {
             </li>
           ))}
         </ul>
-        <Link href="/donate" className="pill pill-gold mt-8">
+        <a href={DONATE_URL} {...EXTERNAL_LINK_PROPS} className="pill pill-gold mt-8">
           <span>Donate</span>
-        </Link>
+        </a>
       </div>
     </header>
   );

@@ -10,11 +10,26 @@
   --cream: #f6f6f6;
   --white: #ffffff;
   --black: #000000;
-  --muted: #9a928a;
+  --muted: #6b635a;
   --border: #ededed;
+
+  /* Text-safe counterparts. The brand gold and green are display colours —
+     they only reach 2.1:1 and 3.3:1 as text on white or cream, so anything
+     that has to be *read* on a light background uses these instead. Both
+     clear 4.5:1 against #fff and #f6f6f6. */
+  --gold-ink: #806109;
+  --green-ink: #0d6b43;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* One visible focus ring everywhere. The dark story acts and the black
+   sections would otherwise fall back to the UA's near-invisible default. */
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: hidden;
@@ -80,6 +95,46 @@ h3.display-font {
   word-break: break-word;
 }
 
+/* Available to assistive tech, invisible on screen. Used to give split
+   display headings (LEN / JOHNSON.) a readable accessible name — the <br>
+   between the lines is otherwise flattened to "LENJOHNSON." */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* First focusable element on every page, so keyboard users can jump the
+   seven-item nav. Off-canvas until focused. */
+.skip-link {
+  position: fixed;
+  top: 0;
+  left: 1rem;
+  z-index: 1100;
+  transform: translateY(-120%);
+  padding: 0.85rem 1.5rem;
+  background: var(--black);
+  color: var(--white);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
 .label {
   font-size: 0.75rem;
   font-weight: 700;
@@ -104,9 +159,9 @@ h3.display-font {
 }
 
 .pill-primary {
-  background: var(--green);
+  background: var(--green-ink);
   color: var(--white);
-  border-color: var(--green);
+  border-color: var(--green-ink);
 }
 
 .pill-primary:hover {
@@ -167,6 +222,8 @@ h3.display-font {
 .text-white { color: var(--white); }
 .text-black { color: var(--black); }
 .text-muted { color: var(--muted); }
+.text-gold-ink { color: var(--gold-ink); }
+.text-green-ink { color: var(--green-ink); }
 
 .card {
   border-radius: 13px;
@@ -422,7 +479,7 @@ body.nav-open .scroll-bar {
 }
 
 .site-wordmark:hover {
-  color: var(--gold);
+  color: var(--gold-ink);
 }
 
 .site-nav-links {
@@ -434,6 +491,13 @@ body.nav-open .scroll-bar {
 }
 
 .site-nav-link {
+  /* Nav links are standalone targets, not text inside a sentence, so WCAG 2.2
+     wants at least 24px of height. The label alone is 20px; the padding makes
+     up the difference without moving anything on the page. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding-block: 0.15rem;
   color: var(--black);
   text-decoration: none;
   font-size: clamp(0.85rem, 1.25vw, 1rem);
@@ -443,8 +507,19 @@ body.nav-open .scroll-bar {
     opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.site-nav-link:hover { opacity: 1; color: var(--gold); }
-.site-nav-link.is-active { color: var(--gold); opacity: 1; }
+/* The nav bar is white, so the display gold (2.1:1) is unreadable here —
+   these use the darker text gold and back it with an underline so the
+   current page is signalled by more than colour alone. */
+.site-nav-link:hover { opacity: 1; color: var(--gold-ink); }
+
+.site-nav-link.is-active {
+  color: var(--gold-ink);
+  opacity: 1;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
 
 .site-nav-actions {
   display: flex;
@@ -452,12 +527,14 @@ body.nav-open .scroll-bar {
   gap: 1rem;
 }
 
+/* White on the brand green is only 3.56:1. The darker green clears 6.4:1
+   and still reads as the same colour at pill size. */
 .site-nav-donate {
   padding: 0.6rem 1.5rem;
-  font-size: 0.75rem;
-  background: var(--green);
+  font-size: 0.8rem;
+  background: var(--green-ink);
   color: var(--white) !important;
-  border-color: var(--green) !important;
+  border-color: var(--green-ink) !important;
 }
 
 .site-nav-donate:hover {
@@ -534,6 +611,100 @@ body.nav-open .scroll-bar {
   .site-nav-donate { display: none; }
 }
 
+/* Plain text pages (privacy). No hero, so the top padding has to clear the
+   fixed nav on its own. */
+.legal-page {
+  padding-top: clamp(8rem, 16vh, 11rem);
+}
+
+.legal-body {
+  max-width: 68ch;
+}
+
+.legal-body > * + * { margin-top: 1.5rem; }
+.legal-body h2 { margin-top: 3rem; }
+.legal-body h1 { margin-top: 0.75rem; }
+
+/* SITE FOOTER
+   Carries the trust basics on every page: who we are, how to reach us, where
+   the money goes, and the legal line. Every link is padded to clear the 24px
+   minimum target size. */
+.site-footer {
+  background: var(--cream);
+  border-top: 1px solid var(--border);
+  padding: 4rem 2rem 2.5rem;
+}
+
+.site-footer-grid {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 760px) {
+  .site-footer-grid {
+    grid-template-columns: 1.6fr 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.site-footer-mark {
+  font-size: 1.5rem;
+  line-height: 1.05;
+  color: var(--black);
+}
+
+.site-footer-note {
+  margin-top: 1rem;
+  max-width: 42ch;
+  color: var(--muted);
+}
+
+.site-footer-heading {
+  color: var(--black);
+  margin-bottom: 0.75rem;
+}
+
+.site-footer-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding-block: 0.4rem;
+  font-size: 0.95rem;
+  color: var(--black);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease, color 200ms ease;
+}
+
+.site-footer-link:hover,
+.site-footer-link:focus-visible {
+  color: var(--gold-ink);
+  border-bottom-color: currentColor;
+}
+
+.site-footer-link-donate {
+  font-weight: 700;
+  color: var(--green-ink);
+}
+
+.site-footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
 .repeated-heading > span {
   display: block;
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -548,19 +719,56 @@ body.nav-open .scroll-bar {
   to { transform: translateX(-50%); }
 }
 
+/* The fight-record ticker. A marquee that runs hard edge to edge reads as a
+   stock widget, so this one is masked at both ends — the record arrives out
+   of the dark and returns to it — ruled top and bottom like a scoreboard,
+   with the separators set small in gold rather than as full-size punctuation. */
 .marquee {
   overflow: hidden;
   white-space: nowrap;
-  padding: 2rem 0;
+  padding: 1.6rem 0;
+  border-top: 1px solid rgba(212, 175, 55, 0.28);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.28);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
 }
 
 .marquee-track {
   display: inline-flex;
+  align-items: baseline;
   animation: scroll-x 40s linear infinite;
 }
 
 .marquee-track > span {
   padding: 0 2rem;
+}
+
+.marquee-track > .marquee-sep {
+  padding: 0 1.1rem;
+  font-size: 0.55em;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+/* Reduced motion: the ticker settles into the static stat bar it was always
+   describing, rather than freezing mid-scroll with half a word cut off. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    white-space: normal;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .marquee-track {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: none;
+  }
+
+  .marquee-dup {
+    display: none;
+  }
 }
 
 .flag-stripe {
@@ -571,6 +779,48 @@ body.nav-open .scroll-bar {
 
 .flag-stripe > div {
   flex: 1;
+}
+
+/* The one place on the home page where somebody is simply talking to you.
+   Between the hero and the card grid the page is otherwise all components;
+   this is narrow, unanimated, and set in body type on paper. */
+.home-note {
+  background: var(--cream);
+  padding: clamp(3.5rem, 9vh, 6rem) 1.5rem;
+}
+
+.home-note-inner {
+  max-width: 58ch;
+  margin: 0 auto;
+}
+
+.home-note-dateline {
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.home-note-body {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.65;
+  color: var(--black);
+}
+
+.home-note-body + .home-note-body {
+  margin-top: 1.1rem;
+}
+
+.home-note-more {
+  display: inline-block;
+  margin-top: 1.75rem;
+  font-size: 0.95rem;
+  color: var(--gold-ink);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
 }
 
 /* HERO - shows full figure, Len in centre */
@@ -1423,11 +1673,14 @@ body.nav-open .scroll-bar {
   gap: 1rem;
   flex-wrap: wrap;
   width: 100%;
+  /* Comfortably over the 24px minimum target size even when the year and
+     title fit on one short line. */
+  min-height: 44px;
   text-align: left;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 0.35rem 0;
   color: inherit;
   font-family: inherit;
 }
@@ -1736,6 +1989,15 @@ body.nav-open .scroll-bar {
   gap: clamp(2rem, 5vw, 4.5rem);
 }
 
+/* Grid items default to min-width:auto, so anything with an intrinsic width —
+   the 3:4 archive placeholders, the gallery's landscape slides — can push the
+   whole column wider than the viewport and get the right-hand edge of every
+   line of text clipped on a phone. Nothing here needs that floor. */
+.ls-grid > *,
+.ls-cols > * {
+  min-width: 0;
+}
+
 @media (min-width: 1000px) {
   .ls-grid {
     grid-template-columns: 11rem minmax(0, 1fr);
@@ -1878,6 +2140,9 @@ body.nav-open .scroll-bar {
 @media (min-width: 880px) {
   .ls-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ls-cols-lead { grid-template-columns: 1.15fr 1fr; }
+  /* The same proportions mirrored, with the photograph first in the DOM, so
+     a chapter can lead with the image instead of the prose. */
+  .ls-cols-flip { grid-template-columns: 1fr 1.15fr; }
 }
 
 .ls-block + .ls-block { margin-top: clamp(3rem, 8vh, 5.5rem); }
@@ -1967,14 +2232,67 @@ body.nav-open .scroll-bar {
   border-inline: 1px dashed rgba(0, 0, 0, 0.18);
 }
 
+/* Captions are set in the machine's typeface, not the page's — the way a
+   catalogue card or a contact sheet annotation looks next to the print. */
 .ls-cap {
   margin-top: 0.85rem;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-soft);
 }
+
+/* --- The bleed (one full-width photograph between acts) ------------------- */
+
+/* The hinge between Act I's paper and Act II's night. The page stops talking
+   and just looks at him; the photograph itself carries the colour change, so
+   Act II sets --prev to its own background and paints no gradient of its own. */
+.ls-bleed {
+  position: relative;
+  margin: 0;
+  background: #14110d;
+  overflow: hidden;
+}
+
+.ls-bleed-media {
+  position: relative;
+  height: clamp(19rem, 62svh, 38rem);
+}
+
+.ls-bleed-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  display: block;
+  filter: grayscale(1) contrast(1.16) brightness(0.84);
+}
+
+.ls-bleed-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      to bottom,
+      #ece3d4 0%,
+      rgba(236, 227, 212, 0) 24%,
+      rgba(20, 17, 13, 0) 55%,
+      #14110d 100%
+    ),
+    linear-gradient(150deg, rgba(158, 59, 43, 0.3) 0%, rgba(212, 175, 55, 0.16) 100%);
+  pointer-events: none;
+}
+
+.ls-bleed-cap {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding-bottom: clamp(1.25rem, 4vh, 2.25rem);
+  color: #a2957f;
+}
+
+.ls-after-bleed { --prev: #14110d; }
 
 /* --- The bill (champions defeated) --------------------------------------- */
 

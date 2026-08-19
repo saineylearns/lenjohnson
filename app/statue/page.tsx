@@ -3,6 +3,7 @@ import PageHero from '@/components/PageHero';
 import Section from '@/components/Section';
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/statue" },
   title: "The Statue: A public artwork",
 };
 

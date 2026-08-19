@@ -9,6 +9,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollBar from "@/components/ScrollBar";
+import { SITE_URL, CIC_NUMBER, CONTACT_EMAIL } from "@/lib/site";
 
 // Self-hosted via next/font so the bold display fonts always load on the
 // deployed build (Tailwind v4 strips remote @import url() font links).
@@ -46,7 +47,6 @@ const instrumentSerif = Instrument_Serif({
   display: "swap",
 });
 
-const SITE_URL = "https://lenjohnsoncampaign.co.uk";
 const TITLE = "Len Johnson — Uncrowned Champion of Manchester";
 const DESCRIPTION =
   "Len Johnson was a Manchester boxer denied a British title by a racist colour bar, and a pioneering anti-racist activist. Help us build his statue in Manchester city centre.";
@@ -76,9 +76,10 @@ export const metadata: Metadata = {
   creator: "Len Johnson Campaign",
   publisher: "Len Johnson Campaign",
   category: "nonprofit",
-  alternates: {
-    canonical: "/",
-  },
+  // No canonical here. A canonical set on the root layout is inherited by every
+  // route, so /story, /privacy and the rest were all declaring themselves
+  // duplicates of the home page. Each page sets its own; the home page's is in
+  // app/page.tsx.
   openGraph: {
     type: "website",
     locale: "en_GB",
@@ -141,8 +142,16 @@ const jsonLd = {
     {
       "@type": "NGO",
       name: "Len Johnson Campaign",
+      legalName: "Len Johnson Campaign Community Interest Company",
       url: SITE_URL,
-      email: "info@lenjohnsoncampaign.co.uk",
+      email: CONTACT_EMAIL,
+      // The Companies House number, so the organisation in the structured data
+      // is identifiable as the registered company rather than just a name.
+      identifier: {
+        "@type": "PropertyValue",
+        propertyID: "Companies House",
+        value: CIC_NUMBER,
+      },
       foundingDate: "2020",
       areaServed: "Manchester, England",
       description:
@@ -166,9 +175,14 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <ScrollBar />
         <Nav />
-        <main>{children}</main>
+        <main id="main-content" tabIndex={-1}>
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
