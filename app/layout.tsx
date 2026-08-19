@@ -9,6 +9,7 @@ import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollBar from "@/components/ScrollBar";
+import ScrollToTop from "@/components/ScrollToTop";
 import { SITE_URL, CIC_NUMBER, CONTACT_EMAIL } from "@/lib/site";
 
 // Self-hosted via next/font so the bold display fonts always load on the
@@ -179,6 +180,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <ScrollBar />
+        <ScrollToTop />
         <Nav />
         <main id="main-content" tabIndex={-1}>
           {children}

@@ -30,9 +30,20 @@
   outline-offset: 3px;
 }
 
-html {
-  overflow-x: hidden;
-}
+/* No `overflow-x: hidden` on html or body.
+
+   Setting it on the root makes Safari treat <html> as a scroll container of
+   its own, which is the box the App Router writes to when it resets the
+   scroll on navigation (`documentElement.scrollTop = 0`). That box never
+   scrolls, so the reset silently does nothing and the new page opens at
+   whatever offset you left the last one at. Chrome resolves the same CSS
+   differently, which is why this only showed up on a phone.
+
+   The guards were there to stop a horizontal scrollbar. The thing that
+   actually caused one was the story grid's default `min-width: auto`, fixed
+   at .ls-grid below; with that in place no page overflows horizontally at
+   375px, so these rules are only doing harm. If a horizontal scrollbar ever
+   comes back, fix the element that overflows rather than hiding it here. */
 
 /* Smooth scrolling is switched on only while an in-page anchor is actually
    being followed, never as a standing property of the document.
@@ -56,7 +67,6 @@ body {
   font-family: var(--font-instrument), 'Instrument Sans', -apple-system, sans-serif;
   background: var(--cream);
   color: var(--black);
-  overflow-x: hidden;
   width: 100%;
   position: relative;
 }
