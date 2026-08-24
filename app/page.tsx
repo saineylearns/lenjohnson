@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Fragment } from 'react';
 import Link from 'next/link';
 import { DONATE_URL, EXTERNAL_LINK_PROPS } from '@/lib/links';
+import HomeFilm from '@/components/HomeFilm';
 
 // Title and description come from the root layout's defaults; only the
 // canonical is page-specific, now that the layout no longer declares one
@@ -123,6 +124,8 @@ export default function Home() {
           )}
         </div>
       </section>
+
+      <HomeFilm />
 
       {/* A LINE OF WRITING, BEFORE THE GRID */}
       <section className="home-note">
