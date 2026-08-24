@@ -85,8 +85,8 @@ export default function ChampionsPage() {
                 People and businesses who’ve gone above and beyond.
               </h2>
               <p className="body-sm text-muted">
-                Filter by what they’re known for, or select a card to read their full
-                story.
+                Filter by what they’re known for, or open a profile to read their
+                statement in their own words.
               </p>
             </div>
             <ChampionGrid />

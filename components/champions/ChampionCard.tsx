@@ -14,55 +14,98 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-export default function ChampionCard({ champion }: { champion: Champion }) {
+/** The pronouns each prompt needs, keyed by whether the Champion speaks as
+ * an individual ("I") or a business/organisation ("we"). */
+function pronouns(voice: Champion['voice']) {
+  return voice === 'I'
+    ? {
+        whoPrompt: 'Who am I, and what do I do?',
+        imWere: 'I’m',
+        doingPrompt: 'Here’s what I’m going to do',
+      }
+    : {
+        whoPrompt: 'Who are we, and what do we do?',
+        imWere: 'We’re',
+        doingPrompt: 'Here’s what we’re going to do',
+      };
+}
+
+export default function ChampionCard({
+  champion,
+  index,
+}: {
+  champion: Champion;
+  index: number;
+}) {
   const [open, setOpen] = useState(false);
+  const num = String(index + 1).padStart(2, '0');
+  const p = pronouns(champion.voice);
 
   return (
-    <div className={`champ-card ${open ? 'is-open' : ''}`}>
-      <button
-        type="button"
-        className="champ-card-trigger"
-        aria-expanded={open}
-        aria-controls={`champ-body-${champion.id}`}
-        onClick={() => setOpen((v) => !v)}
-      >
-        <div className="champ-card-avatar" aria-hidden="true">
-          {champion.photo ? (
-            <img src={champion.photo} alt="" />
-          ) : (
+    <article className="champ-profile">
+      <div className="champ-profile-media">
+        {champion.photo ? (
+          <img src={champion.photo} alt={champion.name} />
+        ) : (
+          <div className="champ-profile-plate" aria-hidden="true">
             <span>{initials(champion.name)}</span>
-          )}
-        </div>
+          </div>
+        )}
+        <span className="champ-profile-tape" aria-hidden="true" />
+      </div>
 
-        <div className="champ-card-head">
-          <p className="champ-card-type label">{champion.type}</p>
-          <h3 className="champ-card-name display-font h-small">{champion.name}</h3>
-          <p className="champ-card-blurb body-sm">{champion.blurb}</p>
-        </div>
+      <div className={`champ-profile-body ${open ? 'is-open' : ''}`}>
+        <span className="champ-profile-num">{num}</span>
+        <p className="champ-profile-type label">
+          {champion.type} &middot; {champion.categories[0]}
+        </p>
+        <h3 className="champ-profile-name display-font">{champion.name}</h3>
+        <span className="champ-statement-q champ-statement-q-lede">{p.whoPrompt}</span>
+        <p className="champ-profile-lede">{champion.statement.whoAndWhat}</p>
 
-        <span className="champ-card-plus" aria-hidden="true">
-          {open ? '−' : '+'}
-        </span>
-      </button>
+        <button
+          type="button"
+          className="champ-profile-toggle label"
+          aria-expanded={open}
+          aria-controls={`champ-body-${champion.id}`}
+          onClick={() => setOpen((v) => !v)}
+        >
+          {open ? 'Close' : 'Read their statement'}
+          <span aria-hidden="true">{open ? '−' : '+'}</span>
+        </button>
 
-      <div className="champ-card-body" id={`champ-body-${champion.id}`}>
-        <div className="champ-card-body-inner">
-          <p className="champ-card-contribution body-sm">
-            <strong>What they’ve done: </strong>
-            {champion.contribution}
-          </p>
-          <p className="body-sm">{champion.story}</p>
-          {champion.social ? (
-            <a
-              href={champion.social.href}
-              {...EXTERNAL_LINK_PROPS}
-              className="champ-card-social label"
-            >
-              {champion.social.label} &rarr;
-            </a>
-          ) : null}
+        <div className="champ-profile-more" id={`champ-body-${champion.id}`}>
+          <div className="champ-profile-more-inner">
+            <ul className="champ-statement">
+              <li>
+                <span className="champ-statement-q">
+                  Honouring Len Johnson is not just about the past because
+                </span>{' '}
+                {champion.statement.whyLen}
+              </li>
+              <li>
+                <span className="champ-statement-q">
+                  {p.imWere} proud to support the Len Johnson Campaign because
+                </span>{' '}
+                {champion.statement.whySupport}
+              </li>
+              <li>
+                <span className="champ-statement-q">{p.doingPrompt}:</span>{' '}
+                {champion.statement.whatWeWillDo}
+              </li>
+            </ul>
+            {champion.social ? (
+              <a
+                href={champion.social.href}
+                {...EXTERNAL_LINK_PROPS}
+                className="champ-profile-social label"
+              >
+                {champion.social.label} &rarr;
+              </a>
+            ) : null}
+          </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
