@@ -15,21 +15,13 @@ const SOURCES: Source[] = [
     href: 'https://doi.org/10.1177/03063968221139993',
   },
   {
-    title: "Len Johnson's boxing record",
-    detail: 'BoxRec — the full record of professional bouts referenced throughout this page.',
+    title: 'Boxing record: BoxRec: Len Johnson',
+    detail: 'BoxRec.',
     href: 'https://boxrec.com',
   },
   {
-    title: 'Rose, I. (2024). The Rentier City.',
-    detail: 'Repeater Books, London, pp. 85–87.',
-  },
-  {
-    title: "The shameful history of the racist 'colour bar' in Manchester — and how a boxing hero made history by ordering a round in the pub",
-    detail: 'Manchester Evening News.',
-  },
-  {
-    title: "Len Johnson's archive",
-    detail: "Working Class Movement Library, Salford — holds a scrapbook of newspaper cuttings documenting Len's boxing life.",
+    title: 'The Rentier City, Isaac Rose, Repeater Books (London: 2024) pp. 85-87.',
+    detail: 'Repeater Books.',
   },
 ];
 
