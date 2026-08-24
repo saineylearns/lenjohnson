@@ -2317,7 +2317,7 @@ body.nav-open .scroll-bar {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 30%;
+  object-position: 50% 12%;
   display: block;
   filter: grayscale(1) contrast(1.16) brightness(0.84);
 }
@@ -2370,7 +2370,9 @@ body.nav-open .scroll-bar {
 .ls .pull-quote,
 .ls .pull-quote-dark {
   position: relative;
-  background: var(--ink);
+  /* A deeper, more saturated green than the page accent — pure white text
+     needs that extra depth to clear 4.5:1 at every size the quote is set. */
+  background: #0d5c3c;
   border: 0;
   border-radius: 0;
   padding: clamp(2.5rem, 6vw, 4rem) clamp(1.75rem, 5vw, 3.25rem) clamp(2rem, 5vw, 3rem);
@@ -2386,8 +2388,8 @@ body.nav-open .scroll-bar {
   font-family: var(--font-anton), sans-serif;
   font-size: clamp(5rem, 12vw, 9rem);
   line-height: 1;
-  color: var(--accent);
-  opacity: 0.55;
+  color: var(--gold);
+  opacity: 0.5;
 }
 
 .ls .pull-quote p {
@@ -2396,14 +2398,14 @@ body.nav-open .scroll-bar {
   font-style: italic;
   font-size: clamp(1.3rem, 2.6vw, 2.1rem);
   line-height: 1.4;
-  color: var(--bg);
+  color: #ffffff;
 }
 
 .ls .pull-quote cite {
   position: relative;
   display: block;
   margin-top: 1.1rem;
-  color: color-mix(in srgb, var(--bg) 65%, transparent);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.68rem;
   letter-spacing: 0.16em;
 }

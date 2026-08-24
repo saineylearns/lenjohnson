@@ -238,7 +238,7 @@ export default function StoryPage() {
                 </figure>
 
                 <div>
-                  <div className="stat-grid" style={{ paddingTop: 0 }}>
+                  <div className="stat-grid">
                     <StatCounter to={95} label="WINS" />
                     <StatCounter to={134} label="BOUTS FOUGHT" />
                     <StatCounter staticValue="1920" label="TURNED PROFESSIONAL" />
@@ -508,14 +508,14 @@ export default function StoryPage() {
               </div>
               <div className="ls-prose">
                 <p>
-                  &bull; campaigning against separate racial lines at the
+                  &bull; Campaigning against separate racial lines at the
                   Labour Exchange with a queue for &lsquo;coloured
                   men&rsquo; opposed by the Society
                 </p>
               </div>
               <div className="ls-prose">
                 <p>
-                  &bull; organising against Manchester Liners Ltd, who
+                  &bull; Organising against Manchester Liners Ltd, who
                   intended to rid its liners of all &lsquo;coloured
                   seamen.&rsquo; some of whom had served the company through
                   two world war. The work of the New International Society
