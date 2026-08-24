@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import Reveal from '@/components/story/Reveal';
 import StatCounter from '@/components/story/StatCounter';
 import StatCompare from '@/components/story/StatCompare';
@@ -8,7 +7,6 @@ import ArchivePlaceholder from '@/components/story/ArchivePlaceholder';
 import StoryTimeline from '@/components/story/StoryTimeline';
 import ArchiveGallery from '@/components/story/ArchiveGallery';
 import SourcesAccordion from '@/components/story/SourcesAccordion';
-import { DONATE_URL, EXTERNAL_LINK_PROPS } from '@/lib/links';
 
 export const metadata: Metadata = {
   alternates: { canonical: "/story" },
@@ -687,42 +685,6 @@ export default function StoryPage() {
               </div>
             </Reveal>
           </div>
-        </div>
-      </section>
-
-      {/* ================================================================= */}
-      {/* CLOSING — back into the campaign                                  */}
-      {/* ================================================================= */}
-      <section className="ls-close">
-        <div className="ls-wrap">
-          <Reveal>
-            <div className="ls-close-inner">
-              <p className="ls-kicker">The campaign</p>
-              <h2 className="ls-h">
-                Help bring
-                <br />
-                <em>Len home.</em>
-              </h2>
-              <p className="ls-close-body">
-                A petition first launched in 2020 is now a campaign for a
-                permanent statue of Len Johnson in Manchester — honouring a
-                boxer who was never allowed to win the title he deserved, and a
-                man who spent the rest of his life fighting for others.
-              </p>
-              <div className="ls-actions">
-                <Link href="/statue" className="ls-btn ls-btn-solid">
-                  See the statue
-                </Link>
-                <a
-                  href={DONATE_URL}
-                  {...EXTERNAL_LINK_PROPS}
-                  className="ls-btn ls-btn-ghost"
-                >
-                  Support the campaign
-                </a>
-              </div>
-            </div>
-          </Reveal>
         </div>
       </section>
 

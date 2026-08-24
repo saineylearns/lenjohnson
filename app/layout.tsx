@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import DonateCTA from "@/components/DonateCTA";
 import Footer from "@/components/Footer";
 import ScrollBar from "@/components/ScrollBar";
 import ScrollToTop from "@/components/ScrollToTop";
@@ -185,6 +186,7 @@ export default function RootLayout({
         <main id="main-content" tabIndex={-1}>
           {children}
         </main>
+        <DonateCTA />
         <Footer />
       </body>
     </html>
