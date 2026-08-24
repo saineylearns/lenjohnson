@@ -230,6 +230,7 @@ export default function StoryPage() {
                     <img
                       src="/images/boxing.webp"
                       alt="Len Johnson in a boxing stance, gloved and on guard"
+                      style={{ objectPosition: '50% 5%' }}
                     />
                   </div>
                   <figcaption className="ls-cap">
