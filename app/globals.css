@@ -1823,18 +1823,17 @@ body.nav-open .scroll-bar {
    LEN'S STORY — a single-scroll documentary
    --------------------------------------------------------------------------
    Everything is scoped under .ls so the rest of the campaign site is
-   untouched. The page is one continuous canvas rather than a stack of bands:
-   each act carries its own palette and bleeds into the next through a
-   gradient at its top edge, so the colour shifts with the narrative instead
-   of chopping it into sections.
+   untouched. The page is one continuous canvas rather than a stack of bands.
 
-   Act palettes trace the emotional arc —
-     I   ORIGINS   warm archival paper, brick red      (intrigue)
-     II  THE RISE  ink black, gold                     (admiration)
-     III BARRED    deep oxblood, rust                  (injustice)
-     IV  ORGANISE  deep green, warm gold               (resolve)
-     V   LEGACY    back to paper, campaign green       (pride)
-   ========================================================================== */
+   Acts I–V previously stepped through five different palettes to trace the
+   story's emotional arc (paper → night → oxblood → deep green → paper). At
+   the client's request all five acts now share Act I's Origins palette —
+   warm archival paper, near-black ink, brick red — so the page reads as one
+   continuous tone rather than shifting with the narrative. Each act still
+   bleeds into the next through a gradient at its top edge; with a flat
+   palette that gradient is a no-op in the middle of the page, but it is left
+   in place because it still does real work at the opening (night into paper)
+   and at Act V's own inset. */
 
 .ls {
   --paper: #ece3d4;
@@ -1964,40 +1963,47 @@ body.nav-open .scroll-bar {
   --prev: #12100e;
 }
 
+/* Acts II–V previously stepped through their own palettes (night/gold,
+   oxblood/rust, deep green/gold) to trace the story's emotional arc. Now
+   flattened to Act I's Origins palette (warm paper, near-black ink, brick
+   red) at the client's request, so the whole page reads as one continuous
+   tone rather than shifting per act. --prev still points at the true
+   previous background so the bleed-in gradient at the top of each act stays
+   correct. */
 .ls-act-ii {
-  --bg: #14110d;
-  --ink: #f0e8da;
-  --ink-soft: #a2957f;
-  --accent: #d4af37;
-  --rule: rgba(240, 232, 218, 0.18);
+  --bg: #ece3d4;
+  --ink: #191410;
+  --ink-soft: #5d5245;
+  --accent: #9e3b2b;
+  --rule: rgba(25, 20, 16, 0.16);
   --prev: #ece3d4;
 }
 
 .ls-act-iii {
-  --bg: #2a1310;
-  --ink: #f4e6e0;
-  --ink-soft: #b09489;
-  --accent: #e0603a;
-  --rule: rgba(244, 230, 224, 0.18);
-  --prev: #14110d;
+  --bg: #ece3d4;
+  --ink: #191410;
+  --ink-soft: #5d5245;
+  --accent: #9e3b2b;
+  --rule: rgba(25, 20, 16, 0.16);
+  --prev: #ece3d4;
 }
 
 .ls-act-iv {
-  --bg: #0c3a2c;
-  --ink: #eef2e6;
-  --ink-soft: #9bb3a3;
-  --accent: #f0c14b;
-  --rule: rgba(238, 242, 230, 0.18);
-  --prev: #2a1310;
+  --bg: #ece3d4;
+  --ink: #191410;
+  --ink-soft: #5d5245;
+  --accent: #9e3b2b;
+  --rule: rgba(25, 20, 16, 0.16);
+  --prev: #ece3d4;
 }
 
 .ls-act-v {
   --bg: #ece3d4;
   --ink: #191410;
   --ink-soft: #5d5245;
-  --accent: #0d6b43;
+  --accent: #9e3b2b;
   --rule: rgba(25, 20, 16, 0.16);
-  --prev: #0c3a2c;
+  --prev: #ece3d4;
 }
 
 /* --- Grid + the rail ----------------------------------------------------- */
