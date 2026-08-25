@@ -2400,6 +2400,10 @@ body.nav-open .scroll-bar {
   font-size: clamp(3.4rem, 13vw, 11rem);
   line-height: 0.88;
   margin: 0.5rem 0 0;
+  /* A hair off true, the way a slug of hand-set type never quite sat square
+     in the forme. Subtle enough to register as analog, not as a mistake. */
+  transform: rotate(-0.5deg);
+  transform-origin: left bottom;
 }
 
 .ls-open-title em {
@@ -3001,10 +3005,19 @@ body.nav-open .scroll-bar {
 
 .ls .gallery-item img {
   filter: grayscale(1) contrast(1.08);
-  transition: filter 700ms ease;
+  /* Same ink-on-paper treatment as the chapter plates, so the strip of
+     thumbnails reads as more prints from the same file, not a web gallery
+     bolted on the end of it. */
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+  transition: filter 700ms ease, opacity 700ms ease;
 }
 
-.ls .gallery-item:hover img { filter: grayscale(0) contrast(1); }
+.ls .gallery-item:hover img {
+  filter: grayscale(0) contrast(1);
+  mix-blend-mode: normal;
+  opacity: 1;
+}
 
 .ls .gallery-arrow {
   border-radius: 0;
@@ -3115,6 +3128,13 @@ body.nav-open .scroll-bar {
 .ls-broadsheet p {
   text-align: justify;
   hyphens: auto;
+  /* Tighter than the site's normal reading line (1.75) — a paper column
+     was set dense to save newsprint, and the tighter measure is what makes
+     the block read as authoritative type rather than a web paragraph.
+     Stops short of 1.2: at this size, justified and hyphenated, anything
+     tighter starts letting descenders and ascenders from adjacent lines
+     brush against each other. */
+  line-height: 1.4;
 }
 
 @media (min-width: 880px) {
