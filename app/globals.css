@@ -13,6 +13,56 @@
   --muted: #6b635a;
   --border: #ededed;
 
+  /* --- The archive palette ------------------------------------------------
+     Paper, ink and brick. Every surface on the site is one of three sheets of
+     the same stock; every rule, border and shadow is the same ink. The brand
+     green/orange/gold stay, but only where they're doing a job — the flag
+     stripe, the record tape — never as general chrome. Pure white is not a
+     background anywhere. */
+
+  /* PAPER */
+  --paper: #E8E0D1;
+  --paper-dark: #D8CEBC;
+  --paper-light: #F2EBDD;
+
+  /* INK */
+  --ink: #191815;
+  --ink-soft: #48443D;
+
+  /* ACCENT */
+  --brick: #8F3028;
+  --brick-dark: #6E241F;
+
+  /* SECONDARY */
+  --newsprint: #B9AF9C;
+  --aged-yellow: #C7AD63;
+
+  /* BORDERS — hard rules, never hairline greys */
+  --line: 1px solid var(--ink);
+  --line-heavy: 2px solid var(--ink);
+
+  /* HARD SHADOWS — offset, never blurred. These are the only three. */
+  --shadow-sm: 2px 2px 0 var(--ink);
+  --shadow-md: 4px 4px 0 var(--ink);
+  --shadow-lg: 7px 7px 0 var(--ink);
+
+  /* TYPOGRAPHY — two voices. Slab serif is the historical/public voice;
+     typewriter mono is the archive/document voice. `--font-slab` and
+     `--font-mono` are set by next/font on <html>; these are the names the
+     rest of the sheet uses. */
+  --font-display: var(--font-slab), 'Roboto Slab', Georgia, serif;
+  --font-meta: var(--font-mono), 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* LAYOUT */
+  --max-width: 1400px;
+  --gutter: clamp(1rem, 3vw, 4rem);
+
+  /* Aliases kept so the older rules that still name these resolve onto the
+     archive palette rather than the retired one. */
+  --charcoal: var(--ink);
+  --oxblood: var(--brick);
+  --cardboard: var(--paper-dark);
+
   /* Text-safe counterparts. The brand gold and green are display colours —
      they only reach 2.1:1 and 3.3:1 as text on white or cream, so anything
      that has to be *read* on a light background uses these instead. Both
@@ -45,39 +95,90 @@
    375px, so these rules are only doing harm. If a horizontal scrollbar ever
    comes back, fix the element that overflows rather than hiding it here. */
 
-/* Smooth scrolling is switched on only while an in-page anchor is actually
-   being followed, never as a standing property of the document.
-
-   A permanent `html { scroll-behavior: smooth }` breaks the App Router's
-   scroll-to-top: on navigation Next sets `documentElement.scrollTop = 0`
-   after flipping scroll-behavior to auto inline, but it skips the forced
-   reflow that would make that take effect, so the reset is still treated as
-   a smooth scroll and never lands. Tapping Len's Story from halfway down the
-   home page opened the story a third of the way in.
-
-   Excluding #main-content keeps the skip link instant, which is what someone
-   tabbing past the navigation wants. */
-@media (prefers-reduced-motion: no-preference) {
-  html:has(:target:not(#main-content)) {
-    scroll-behavior: smooth;
-  }
-}
+/* Smooth scrolling deliberately left off. In-page anchors (the hero's
+   "Discover more") jump rather than glide — a page that jumps reads as
+   mechanical and honest rather than the "sliding on ice" feel smooth-scroll
+   gives a site, and it sidesteps the App Router scroll-to-top conflict this
+   block used to carve an exception around. */
 
 body {
   font-family: var(--font-instrument), 'Instrument Sans', -apple-system, sans-serif;
-  background: var(--cream);
-  color: var(--black);
+  /* Two offset dot grids over the paper tone — the tooth of the stock, at a
+     scale you read as texture rather than as pattern. */
+  background:
+    radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.025) 0 1px, transparent 1px),
+    radial-gradient(circle at 80% 70%, rgba(0, 0, 0, 0.018) 0 1px, transparent 1px),
+    var(--paper);
+  background-size: 5px 5px, 7px 7px, auto;
+  color: var(--ink);
   width: 100%;
   position: relative;
 }
 
+/* GLOBAL GRAIN — the one texture layer that tells every section it's on the
+   same sheet of paper. Fine monochrome noise generated in CSS
+   (feTurbulence), not a shipped PNG, so there's no asset to fetch and no
+   large photographic texture to fight the type. Fixed to the viewport rather
+   than the document so it doesn't tile visibly at section seams, and kept
+   very low — this is the tooth of the stock, not a grunge overlay. It is
+   static, so there is nothing here for reduced-motion to switch off. */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Running prose reads as a warm, editorial serif rather than the UI sans —
+   set text in a newspaper, not body copy in an app. */
+.body-lg,
+.body-md,
+.body-sm,
+.home-note-body {
+  font-family: var(--font-lora), Georgia, 'Times New Roman', serif;
+}
+
+/* --- The archive/document voice -----------------------------------------
+   Dates, captions, source lines, small labels, statistics, technical
+   metadata. If it reads as something typed onto a catalogue card rather
+   than set for print, it belongs here. */
+.meta,
+.date,
+.caption,
+.archive-note,
+.marginalia {
+  font-family: var(--font-meta);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* The historical/public voice. A heavy slab serif is what a fight bill, a
+   union handbill or a paper's masthead was actually set in — it carries
+   weight without the condensed-grotesque "modern campaign" accent Anton
+   gives. Anton stays in the sheet, but only where a genuinely condensed
+   face does a job: the record ticker (.condensed-font below). */
 .display-font {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: 0.88;
+}
+
+/* The mechanical strip voice — a real condensed face, for the record ticker
+   and the fight-programme labels that need to run narrow. */
+.condensed-font {
   font-family: var(--font-anton), var(--font-archivo), 'Anton', 'Archivo Black', sans-serif;
   font-weight: 400;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
-  /* Loose enough that Anton's tall caps and descenders never collide between
-     stacked lines, while still reading as tight, bold condensed type. */
+  letter-spacing: 0.06em;
   line-height: 0.95;
 }
 
@@ -163,26 +264,129 @@ h3.display-font {
 }
 
 .label {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-family: var(--font-meta);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
+/* --- ARCHIVAL IMAGE TREATMENT -------------------------------------------
+   Modern photographs have to sit beside 1920s press material without either
+   looking out of place. Desaturate and push the contrast so both read as
+   the same kind of object, then lay a thin warm wash over the top — the
+   yellowing of paper, not a sepia filter. The image must still read as a
+   photograph. */
+.archive-image-wrap {
+  position: relative;
+  overflow: hidden;
+  border: var(--line);
+  background: var(--paper-dark);
+}
+
+.archive-image-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(rgba(80, 65, 45, 0.08), rgba(80, 65, 45, 0.08));
+  mix-blend-mode: multiply;
+}
+
+.archive-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: grayscale(1) contrast(1.3) brightness(0.95) sepia(0.1);
+}
+
+/* Catalogue labels, ruled off from the image the way a card is ruled off
+   from the print above it. */
+.archive-caption {
+  font-family: var(--font-meta);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: 0.035em;
+  color: var(--ink-soft);
+  border-top: var(--line);
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* --- THE PRESSED BUTTON --------------------------------------------------
+   A key pressed into paper, not a card floating on a surface. Resting
+   state sits on a hard offset shadow; hover drives it into the page and
+   the shadow shrinks to match; active bottoms it out. Linear timing over
+   80ms so it reads as a mechanism, not an ease-out flourish. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  padding: 0.85rem 1.2rem;
+  background: var(--brick);
+  color: var(--paper-light);
+  border: var(--line-heavy);
+  border-radius: 0;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-meta);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 80ms linear, box-shadow 80ms linear;
+}
+
+.button:hover {
+  transform: translate(3px, 3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.button:active {
+  transform: translate(5px, 5px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+/* The secondary of a pair — same mechanism, printed rather than inked in. */
+.button-quiet {
+  background: var(--paper-light);
+  color: var(--ink);
+}
+
+/* Stamped, not rounded: a small radius reads as a printed ticket or a rubber
+   stamp, where the old 51px pill read as an app's default button. The hard,
+   un-blurred shadow is the same idea — it sits like an object resting on the
+   page rather than glowing above it — and pressing the button in on
+   hover/press (shadow shrinks, button moves toward the page) mimics an
+   actual stamp meeting paper instead of just recolouring. */
 .pill {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem 2rem;
-  border-radius: 51px;
+  border-radius: 4px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-size: 0.875rem;
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease, color 150ms ease, border-color 150ms ease;
   border: 2px solid transparent;
   cursor: pointer;
   text-decoration: none;
+  box-shadow: 4px 4px 0 var(--charcoal);
+}
+
+.pill:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--charcoal);
+}
+
+.pill:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
 }
 
 .pill-primary {
@@ -224,11 +428,19 @@ h3.display-font {
   background: transparent;
   color: var(--white);
   border-color: var(--white);
+  /* On dark photography a charcoal shadow disappears; white reads instead. */
+  box-shadow: 4px 4px 0 var(--white);
 }
 
 .pill-outline-light:hover {
   background: var(--white);
   color: var(--black);
+  box-shadow: 2px 2px 0 var(--white);
+}
+
+.pill-gold,
+.pill-primary {
+  box-shadow: 4px 4px 0 var(--charcoal);
 }
 
 .bg-cream { background: var(--cream); }
@@ -472,9 +684,10 @@ body.nav-open .scroll-bar {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: var(--white);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--paper);
+  border-bottom: 2px solid var(--charcoal);
+  box-shadow: none;
+  transition: background 300ms ease;
 }
 
 .site-nav-inner {
@@ -492,21 +705,27 @@ body.nav-open .scroll-bar {
      lines would sit directly on the black menu overlay behind them. */
   position: relative;
   z-index: 1000;
-  background: var(--white);
+  background: var(--paper);
 }
 
+/* A masthead, set square. The slab face carries the weight on its own — the
+   earlier double-strike ghost read as a rendering fault against these
+   letterforms rather than as ink, so the imperfection lives in the paper and
+   the plate offsets instead. */
 .site-wordmark {
-  color: var(--black);
+  position: relative;
+  display: inline-block;
+  color: var(--ink);
   text-decoration: none;
-  font-size: clamp(1.5rem, 4vw, 2.2rem);
-  line-height: 1.1;
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  transition: color 80ms linear;
 }
 
 .site-wordmark:hover {
-  color: var(--gold-ink);
+  color: var(--brick);
 }
 
 .site-nav-links {
@@ -525,22 +744,25 @@ body.nav-open .scroll-bar {
   align-items: center;
   min-height: 24px;
   padding-block: 0.15rem;
-  color: var(--black);
+  color: var(--ink);
   text-decoration: none;
-  font-size: clamp(0.85rem, 1.25vw, 1rem);
+  /* Index tabs on a file, not app navigation — set in the archive voice. */
+  font-family: var(--font-meta);
+  font-size: clamp(0.7rem, 1vw, 0.78rem);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   opacity: 0.75;
   white-space: nowrap;
-  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 80ms linear, opacity 80ms linear;
 }
 
-/* The nav bar is white, so the display gold (2.1:1) is unreadable here —
-   these use the darker text gold and back it with an underline so the
-   current page is signalled by more than colour alone. */
-.site-nav-link:hover { opacity: 1; color: var(--gold-ink); }
+.site-nav-link:hover { opacity: 1; color: var(--brick); }
 
+/* The current page is signalled by more than colour: a heavy rule under the
+   label, the way a tab is marked on a file divider. */
 .site-nav-link.is-active {
-  color: var(--gold-ink);
+  color: var(--brick);
   opacity: 1;
   font-weight: 700;
   text-decoration: underline;
@@ -657,9 +879,46 @@ body.nav-open .scroll-bar {
    the money goes, and the legal line. Every link is padded to clear the 24px
    minimum target size. */
 .site-footer {
-  background: var(--cream);
-  border-top: 1px solid var(--border);
-  padding: 4rem 2rem 2.5rem;
+  background: var(--paper);
+  border-top: none;
+  padding: 0 0 2.5rem;
+}
+
+/* The broadside banner every page ends its footer on: loud, condensed, and
+   the one place on the page that behaves like a printed poster rather than
+   a web component. Pressed like the other buttons — it darkens and shifts
+   toward the shadow on hover instead of just changing colour. */
+.site-footer-broadside {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  background: var(--charcoal);
+  color: var(--paper);
+  text-decoration: none;
+  padding: clamp(2rem, 7vh, 3.5rem) 1.5rem;
+  border-bottom: 2px solid var(--charcoal);
+  transition: background 200ms ease, color 200ms ease;
+}
+
+.site-footer-broadside span:first-child {
+  font-size: clamp(2.25rem, 8vw, 5rem);
+  line-height: 0.95;
+  text-align: center;
+}
+
+.site-footer-broadside-arrow {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  transition: transform 200ms ease;
+}
+
+.site-footer-broadside:hover {
+  background: var(--oxblood);
+  color: var(--white);
+}
+
+.site-footer-broadside:hover .site-footer-broadside-arrow {
+  transform: translateX(6px);
 }
 
 .site-footer-grid {
@@ -741,63 +1000,6 @@ body.nav-open .scroll-bar {
   transform: translateX(20px);
 }
 
-@keyframes scroll-x {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-/* The fight-record ticker. A marquee that runs hard edge to edge reads as a
-   stock widget, so this one is masked at both ends — the record arrives out
-   of the dark and returns to it — ruled top and bottom like a scoreboard,
-   with the separators set small in gold rather than as full-size punctuation. */
-.marquee {
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 1.6rem 0;
-  border-top: 1px solid rgba(212, 175, 55, 0.28);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.28);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, #000 14%, #000 86%, transparent 100%);
-}
-
-.marquee-track {
-  display: inline-flex;
-  align-items: baseline;
-  animation: scroll-x 40s linear infinite;
-}
-
-.marquee-track > span {
-  padding: 0 2rem;
-}
-
-.marquee-track > .marquee-sep {
-  padding: 0 1.1rem;
-  font-size: 0.55em;
-  color: var(--gold);
-  opacity: 0.7;
-}
-
-/* Reduced motion: the ticker settles into the static stat bar it was always
-   describing, rather than freezing mid-scroll with half a word cut off. */
-@media (prefers-reduced-motion: reduce) {
-  .marquee {
-    white-space: normal;
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-
-  .marquee-track {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    animation: none;
-  }
-
-  .marquee-dup {
-    display: none;
-  }
-}
-
 .flag-stripe {
   display: flex;
   height: 8px;
@@ -811,90 +1013,434 @@ body.nav-open .scroll-bar {
 /* The one place on the home page where somebody is simply talking to you.
    Between the hero and the card grid the page is otherwise all components;
    this is narrow, unanimated, and set in body type on paper. */
+/* A leader column, set the way a paper sets one: ruled off top and bottom,
+   the dateline typed above it, and the measure held to the left of the sheet
+   rather than centred in it. Centring this block was the last symmetrical
+   thing on the page. */
 .home-note {
-  background: var(--cream);
-  padding: clamp(3.5rem, 9vh, 6rem) 1.5rem;
+  background: var(--paper-dark);
+  border-block: var(--line-heavy);
+  padding: clamp(3.5rem, 9vh, 6rem) var(--gutter);
 }
 
 .home-note-inner {
-  max-width: 58ch;
-  margin: 0 auto;
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+@media (min-width: 900px) {
+  .home-note-inner {
+    display: grid;
+    grid-template-columns: 14rem minmax(0, 58ch);
+    column-gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  /* The dateline sits out in its own column, as a filed heading would. */
+  .home-note-dateline {
+    grid-column: 1;
+    margin-bottom: 0;
+    border-top: 2px solid var(--ink);
+    padding-top: 0.75rem;
+  }
+
+  .home-note-body,
+  .home-note-more { grid-column: 2; }
 }
 
 .home-note-dateline {
-  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  font-family: var(--font-meta);
   font-size: 0.7rem;
-  letter-spacing: 0.06em;
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--ink-soft);
   margin-bottom: 1.5rem;
 }
 
 .home-note-body {
   font-size: clamp(1.05rem, 1.6vw, 1.25rem);
   line-height: 1.65;
-  color: var(--black);
+  color: var(--ink);
 }
 
 .home-note-body + .home-note-body {
   margin-top: 1.1rem;
 }
 
+/* --- THE ARCHIVE ---------------------------------------------------------
+   Four destinations built as four different printed objects. They share the
+   design system — same paper, same ink rules, same hard shadows, same two
+   type voices — but no two share a composition. That is what makes this
+   read as a collection of material rather than a card component rendered
+   four times. */
+
+.archive-section {
+  padding: clamp(4rem, 10vh, 7rem) var(--gutter) clamp(5rem, 12vh, 9rem);
+  border-top: var(--line-heavy);
+}
+
+.archive-head {
+  max-width: var(--max-width);
+  margin: 0 auto clamp(2.5rem, 6vh, 4rem);
+}
+
+.archive-head-kicker {
+  color: var(--brick);
+  margin-bottom: 0.9rem;
+}
+
+.archive-head-h {
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+}
+
+.archive-head-note {
+  max-width: 62ch;
+  color: var(--ink-soft);
+}
+
+.legacy-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  grid-template-rows: 340px 240px;
+  /* The row gap has to clear the two deliberate offsets below (-18px and
+     +28px) or the handbill rides up into the front page. */
+  gap: clamp(2.5rem, 5vh, 3.5rem) clamp(1.5rem, 3vw, 2.75rem);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.legacy-story   { grid-column: 1; grid-row: 1; }
+.legacy-champions { grid-column: 2; grid-row: 1; }
+.legacy-events  { grid-column: 1; grid-row: 2; width: 70%; }
+.legacy-gallery { grid-column: 2; grid-row: 2; }
+
+/* Deliberate, fixed offsets — the objects were laid down by hand and never
+   quite squared up. Not random, and never animated into place. */
+.legacy-gallery { transform: translateY(28px); }
+.legacy-events  { transform: translateY(-18px); }
+
+/* Shared physics: every object rests on the page on a hard shadow and is
+   pressed into it when you reach for it. */
+.legacy-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
+  border: var(--line);
+  border-radius: 0;
+  box-shadow: var(--shadow-md);
+  background: var(--paper-light);
+  transition: transform 80ms linear, box-shadow 80ms linear;
+}
+
+.legacy-item:hover,
+.legacy-item:focus-visible {
+  transform: translate(3px, 3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.legacy-gallery:hover,
+.legacy-gallery:focus-visible { transform: translateY(28px) translate(3px, 3px); }
+
+.legacy-events:hover,
+.legacy-events:focus-visible { transform: translateY(-18px) translate(3px, 3px); }
+
+.legacy-media {
+  flex: 1 1 auto;
+  min-height: 0;
+  border: 0;
+  border-top: var(--line);
+}
+
+.legacy-media .archive-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.legacy-title {
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  letter-spacing: -0.03em;
+  padding: 0.7rem 1rem;
+}
+
+.legacy-title-lead {
+  font-size: clamp(1.9rem, 4vw, 3.2rem);
+  padding: 0.5rem 1.1rem 0.9rem;
+}
+
+.legacy-meta {
+  font-family: var(--font-meta);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.legacy-meta-invert { color: rgba(242, 235, 221, 0.85); }
+
+/* 01 — FRONT PAGE. A masthead rule, then the headline, then the plate. */
+.legacy-masthead {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 1.1rem;
+  border-bottom: var(--line-heavy);
+  font-family: var(--font-meta);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* 02 — PROGRAMME. A printed band across the head, plate, then the title
+   set underneath where a programme carries its bill. */
+.legacy-band {
+  padding: 0.6rem 1rem;
+  background: var(--ink);
+  color: var(--paper-light);
+  font-family: var(--font-meta);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.legacy-champions .legacy-title {
+  border-top: var(--line);
+}
+
+/* 03 — HANDBILL. Printed in brick, rules top and bottom, set centred the way
+   a fight bill is — with the bill for the match pasted onto the left of it. */
+.legacy-events {
+  flex-direction: row;
+  align-items: stretch;
+  padding: 0;
+  background: var(--brick);
+  color: var(--paper-light);
+  border-color: var(--ink);
+  text-align: center;
+}
+
+/* The pasted-on bill. Ruled off from the type rather than framed, so it reads
+   as part of the same printed sheet and not as a thumbnail in a card. */
+.legacy-events-plate {
+  flex: 0 0 38%;
+  min-width: 0;
+  overflow: hidden;
+  border-right: 2px solid var(--ink);
+}
+
+.legacy-events-plate .archive-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Colour, like the poster it is — the archive grade belongs to the
+     photographs, not to something printed this decade. */
+  filter: none;
+}
+
+.legacy-events-bill {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 1.25rem 1rem;
+}
+
+.legacy-bill-title {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  letter-spacing: 0.04em;
+  border-block: 2px solid rgba(242, 235, 221, 0.6);
+  padding: 0.35rem 1.25rem;
+}
+
+/* 04 — PLATES ON A BOARD. Clipped at the top edge, caption ruled below. */
+.legacy-gallery {
+  background: var(--paper-dark);
+  padding-top: 0.9rem;
+}
+
+/* The clip holding the print to the board. */
+.legacy-clip {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  translate: -50% 0;
+  width: 74px;
+  height: 18px;
+  background: var(--newsprint);
+  border: var(--line);
+  z-index: 2;
+}
+
+.legacy-gallery .legacy-media {
+  margin-inline: 0.9rem;
+  border: var(--line);
+}
+
+.legacy-gallery-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-right: 1rem;
+}
+
+/* Mobile: keep the hierarchy — the story stays the lead object and the
+   handbill stays a handbill. Only the offsets and the fixed row heights go,
+   so nothing collapses into a stack of identical full-width cards. */
+@media (max-width: 768px) {
+  .legacy-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .legacy-story,
+  .legacy-gallery,
+  .legacy-events,
+  .legacy-champions {
+    width: 100%;
+    transform: none;
+  }
+
+  /* Fixed heights, not minimums — the plates are tall enough to fill any
+     height they are given, so a minimum lets the front page run to a
+     thousand pixels and flattens the difference between the four objects. */
+  .legacy-story { height: 21rem; }
+  .legacy-champions { height: 15rem; }
+  .legacy-gallery { height: 15rem; }
+  /* Still the shortest of the four, but tall enough that the pasted-on bill
+     reads as a poster rather than a sliver. */
+  .legacy-events { height: 11rem; }
+
+  .legacy-gallery:hover,
+  .legacy-gallery:focus-visible,
+  .legacy-events:hover,
+  .legacy-events:focus-visible {
+    transform: translate(3px, 3px);
+  }
+}
+
 .home-note-more {
+  justify-self: start;
   display: inline-block;
   margin-top: 1.75rem;
-  font-size: 0.95rem;
-  color: var(--gold-ink);
+  font-family: var(--font-meta);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brick);
   text-decoration: none;
-  border-bottom: 1px solid currentColor;
+  border-bottom: 2px solid currentColor;
   padding-bottom: 2px;
 }
 
 /* HERO - shows full figure, Len in centre */
+/* --- THE BILL (homepage hero) -------------------------------------------
+   A printed sheet: paper stock, heavy rules top and bottom, the name and
+   dates set as a masthead rail, the headline filling the measure, and the
+   photograph pasted on slightly out of true. */
 .hero {
   position: relative;
-  min-height: 100vh;
   width: 100%;
-  overflow: hidden;
+  padding: 0 var(--gutter) clamp(3rem, 7vh, 5.5rem);
+  border-bottom: var(--line-heavy);
+  background: transparent;
+}
+
+/* The masthead rail. Interface metadata — who, where, when, and the issue
+   number of the sheet you're holding. */
+.hero-rail {
   display: flex;
-  align-items: flex-end;
-  background: var(--black);
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
-  filter: grayscale(0.15) contrast(1.05);
-  z-index: 0;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg,
-    rgba(0,0,0,0.2) 0%,
-    rgba(0,0,0,0.1) 40%,
-    rgba(0,0,0,0.7) 75%,
-    rgba(0,0,0,0.95) 100%);
-  z-index: 1;
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  max-width: 1280px;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+  align-items: baseline;
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding: 8rem 2rem 10rem;
-  width: 100%;
+  padding: clamp(6rem, 12vh, 8rem) 0 0.7rem;
+  border-bottom: var(--line-heavy);
+  font-family: var(--font-meta);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
 
-@media (max-width: 768px) {
-  .hero-content {
-    padding: 6rem 2rem 7rem;
+.hero-rail-issue { color: var(--brick); }
+
+.hero-bill {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: start;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-top: clamp(2rem, 5vh, 3.5rem);
+}
+
+.hero-h {
+  font-size: clamp(2.9rem, 8.6vw, 8rem);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+}
+
+/* The letterpress slip. A single plate that didn't quite register, held
+   static — an imperfection in the printing, not an animation. */
+.hero-accent {
+  color: var(--brick);
+  display: inline-block;
+  transform: translate(3px, 2px);
+}
+
+.hero-accent-green {
+  color: var(--green-ink);
+  display: inline-block;
+  transform: translate(-2px, 1px);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: clamp(2rem, 5vh, 3rem);
+}
+
+/* Pasted on, pushed out past the text column's right edge and dropped below
+   the headline's baseline so the two blocks never line up. */
+.hero-plate {
+  margin: clamp(1rem, 4vh, 3.5rem) calc(var(--gutter) * -0.5) 0 0;
+  transform: translateY(28px) rotate(-0.5deg);
+}
+
+.hero-plate .archive-caption {
+  max-width: 34ch;
+}
+
+@media (max-width: 900px) {
+  .hero-bill {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-plate {
+    margin-right: 0;
+    transform: none;
+    max-width: 32rem;
   }
 }
 
@@ -1416,8 +1962,7 @@ body.nav-open .scroll-bar {
   }
 
   /* Hide decorative elements */
-  .flag-stripe,
-  .marquee {
+  .flag-stripe {
     display: none !important;
   }
 }
@@ -1560,63 +2105,6 @@ body.nav-open .scroll-bar {
   opacity: 0.75;
 }
 
-/* Career comparison bars (Len / Ali / Pacquiao). */
-.compare-bars {
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
-  margin-top: 1rem;
-}
-
-.compare-row-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 0.5rem;
-}
-
-.compare-name { line-height: 1; }
-
-.compare-figures { opacity: 0.7; white-space: nowrap; }
-
-.compare-track {
-  position: relative;
-  height: 14px;
-  border-radius: 7px;
-  background: rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-}
-
-.compare-track-bouts,
-.compare-track-wins {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 7px;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 1000ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.compare-track-bouts { background: rgba(212, 175, 55, 0.25); }
-.compare-track-wins { background: var(--gold); }
-
-.compare-note {
-  margin-top: 0.5rem;
-  opacity: 0.7;
-  font-style: italic;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .compare-track-bouts,
-  .compare-track-wins {
-    transition: none;
-  }
-}
-
 /* Archive placeholder — used for chapters whose photo hasn't arrived yet
    (Pan-African Congress, New International Society, Old Abbey). Deliberately
    plain: a dashed frame + short note, not a fake image, so it never reads as
@@ -1635,18 +2123,6 @@ body.nav-open .scroll-bar {
   padding: 2rem 1.5rem;
   gap: 0.75rem;
   color: var(--muted);
-}
-
-.archive-placeholder-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 2px solid currentColor;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.25rem;
-  opacity: 0.6;
 }
 
 .archive-placeholder.on-dark {
@@ -1932,6 +2408,10 @@ body.nav-open .scroll-bar {
   padding-top: 1.25rem;
   border-top: 1px solid rgba(244, 236, 224, 0.22);
   color: rgba(244, 236, 224, 0.7);
+  /* A typed-up file header, not a byline — the dates and role tags read like
+     they were struck out on a machine, not set by a designer. */
+  font-family: var(--font-meta);
+  letter-spacing: 0.02em;
 }
 
 /* --- Acts ---------------------------------------------------------------- */
@@ -2076,7 +2556,8 @@ body.nav-open .scroll-bar {
 
 .ls-rail-num {
   display: block;
-  font-family: var(--font-anton), sans-serif;
+  font-family: var(--font-display);
+  font-weight: 800;
   font-size: clamp(2.75rem, 4vw, 4rem);
   line-height: 0.85;
   color: var(--accent);
@@ -2105,9 +2586,10 @@ body.nav-open .scroll-bar {
   align-items: center;
   gap: 0.85rem;
   margin: 0 0 1.1rem;
+  font-family: var(--font-meta);
   font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
+  font-weight: 400;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--accent);
 }
@@ -2121,11 +2603,11 @@ body.nav-open .scroll-bar {
 
 .ls-h {
   margin: 0;
-  font-family: var(--font-anton), sans-serif;
-  font-weight: 400;
+  font-family: var(--font-display);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: -0.015em;
-  line-height: 0.92;
+  letter-spacing: -0.045em;
+  line-height: 0.84;
   color: var(--ink);
   font-size: clamp(2.4rem, 6.4vw, 5.4rem);
 }
@@ -2141,7 +2623,12 @@ body.nav-open .scroll-bar {
 
 /* No margin reset here — the global `* { margin: 0 }` already handles it, and
    setting it again would out-specify the `> * + *` rhythm above. */
+/* Set text, not app copy. The chapters ran in the UI sans, which is the
+   single loudest template tell on the page — a printed file has one reading
+   face throughout, and the lede below is now the same face at a larger size
+   rather than a second serif. */
 .ls-prose p {
+  font-family: var(--font-lora), Georgia, 'Times New Roman', serif;
   font-size: clamp(1.02rem, 1.15vw, 1.16rem);
   line-height: 1.75;
   color: var(--ink);
@@ -2154,12 +2641,13 @@ body.nav-open .scroll-bar {
   font-style: italic;
 }
 
-/* Opening paragraph of an act — bigger, serif, with an Anton drop cap in the
-   act's accent. Straight out of an exhibition wall panel. */
+/* Opening paragraph of an act — the same reading face as the rest of the
+   chapter, set larger and tighter, with a slab drop cap in the act's accent.
+   Straight out of an exhibition wall panel. */
 .ls-lede {
-  font-family: var(--font-instrument-serif), Georgia, serif !important;
-  font-size: clamp(1.25rem, 2vw, 1.65rem) !important;
-  line-height: 1.45 !important;
+  font-family: var(--font-lora), Georgia, 'Times New Roman', serif !important;
+  font-size: clamp(1.2rem, 1.8vw, 1.5rem) !important;
+  line-height: 1.55 !important;
 }
 
 /* A block formatting context, so a short lede can't let the floated cap spill
@@ -2168,7 +2656,8 @@ body.nav-open .scroll-bar {
 
 .ls-drop::first-letter {
   float: left;
-  font-family: var(--font-anton), sans-serif;
+  font-family: var(--font-display);
+  font-weight: 800;
   font-size: 3.9em;
   line-height: 0.76;
   padding-right: 0.1em;
@@ -2272,6 +2761,16 @@ body.nav-open .scroll-bar {
 .ls-cut-alt { rotate: 1deg; }
 .ls-cut:hover { rotate: 0deg; }
 
+/* Staggered off the column edge as well as rotated, so the cuttings sit
+   outside the text block the way a photograph laid on a page overhangs the
+   typed sheet under it. Fixed values, in opposite directions — laid down by
+   hand once, not animated and not random. Only where there is margin to
+   overhang into. */
+@media (min-width: 1000px) {
+  .ls-cut { translate: -18px 0; }
+  .ls-cut-alt { translate: 18px 0; }
+}
+
 .ls-tape {
   position: absolute;
   top: -13px;
@@ -2289,9 +2788,9 @@ body.nav-open .scroll-bar {
    catalogue card or a contact sheet annotation looks next to the print. */
 .ls-cap {
   margin-top: 0.85rem;
-  font-family: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
+  font-family: var(--font-meta);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ink-soft);
 }
@@ -2385,7 +2884,8 @@ body.nav-open .scroll-bar {
   position: absolute;
   top: -0.5rem;
   left: clamp(1rem, 3vw, 1.5rem);
-  font-family: var(--font-anton), sans-serif;
+  font-family: var(--font-display);
+  font-weight: 800;
   font-size: clamp(5rem, 12vw, 9rem);
   line-height: 1;
   color: var(--gold);
@@ -2412,22 +2912,58 @@ body.nav-open .scroll-bar {
 
 /* Sized to match .ls-plate-media so a chapter still awaiting its photograph
    holds exactly the space the photograph will take. */
+/* An empty sleeve in the file, not an unfinished component. A hard border
+   and a ruled cross are how an archivist marks a plate that is catalogued
+   but not held — the space is reserved deliberately, and reads that way. */
 .ls .archive-placeholder,
 .ls .archive-placeholder.on-dark {
-  background: color-mix(in srgb, var(--ink) 6%, transparent);
-  border: 1px dashed var(--rule);
+  position: relative;
+  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  border: 2px solid var(--rule);
   color: var(--ink-soft);
   border-radius: 0;
   aspect-ratio: 4 / 3;
   max-height: none;
+  overflow: hidden;
+}
+
+.ls .archive-placeholder::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      to bottom right,
+      transparent calc(50% - 1px), var(--rule) 50%, transparent calc(50% + 1px)
+    ),
+    linear-gradient(
+      to bottom left,
+      transparent calc(50% - 1px), var(--rule) 50%, transparent calc(50% + 1px)
+    );
+}
+
+.ls .archive-placeholder > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* The wording is the page's own; only its setting changes — mono, spaced,
+   on a paper chip, so it reads as a note filed in the gap. */
+.ls .archive-placeholder .body-sm {
+  font-family: var(--font-meta);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--bg);
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--rule);
 }
 
 @media (min-width: 1000px) {
   .ls .archive-placeholder,
   .ls .archive-placeholder.on-dark { aspect-ratio: 4 / 5; }
 }
-
-.ls .archive-placeholder-icon { color: var(--accent); }
 
 .ls .story-timeline::before { background: var(--rule); }
 .ls .timeline-node-dot { background: var(--bg); border-color: var(--accent); }
@@ -2441,13 +2977,6 @@ body.nav-open .scroll-bar {
 .ls .sources-trigger,
 .ls .sources-trigger-plus { color: var(--ink); }
 .ls .sources-body-inner { color: var(--ink-soft); }
-
-.ls .compare-track { background: color-mix(in srgb, var(--ink) 12%, transparent); }
-.ls .compare-track-wins { background: var(--accent); }
-.ls .compare-track-bouts { background: color-mix(in srgb, var(--accent) 32%, transparent); }
-.ls .compare-name,
-.ls .compare-figures { color: var(--ink); }
-.ls .compare-note { color: var(--ink-soft); }
 
 .ls .gallery-item {
   border-radius: 0;
@@ -2818,12 +3347,19 @@ body.nav-open .scroll-bar {
    page, so this reads as one consistent, site-wide fixture rather than
    something themed per-section — a plain gold rule stands in for the flag
    stripe a tricolour version used to carry. */
+/* ===========================================================================
+   THE ASK — the closing broadside every page ends on. Printed on the same
+   stock as the rest of the sheet, ruled heavily off from the page above it,
+   and carrying the same brick button as everything else. It used to be white
+   and gold, which is the one colour pair the archive palette doesn't
+   contain — it read as a widget dropped onto the paper. */
 .donate-cta {
   position: relative;
-  background: var(--white);
+  background: var(--paper-dark);
   padding-block: clamp(4rem, 11vh, 6.5rem);
   text-align: center;
-  border-top: 3px solid var(--gold);
+  border-top: var(--line-heavy);
+  border-bottom: var(--line-heavy);
 }
 
 .donate-cta-inner {
@@ -2837,134 +3373,324 @@ body.nav-open .scroll-bar {
 }
 
 .donate-cta-kicker {
-  color: var(--gold-ink);
+  font-family: var(--font-meta);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--ink-soft);
 }
 
 .donate-cta-h {
-  color: var(--black);
+  color: var(--ink);
   font-size: clamp(2.5rem, 7vw, 4.5rem);
-  line-height: 0.98;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
 }
 
+/* Same physics and the same ink as every other button on the site. */
 .donate-cta-btn {
   display: inline-flex;
   align-items: center;
   padding: 1.15rem 3rem;
   margin-top: 0.5rem;
-  background: var(--gold);
-  color: var(--black);
+  background: var(--brick);
+  color: var(--paper-light);
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  font-family: var(--font-meta);
   font-weight: 700;
-  font-size: 1rem;
-  letter-spacing: 0.04em;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   text-decoration: none;
-  border-radius: 51px;
-  transition: background 250ms ease, transform 250ms ease;
+  box-shadow: var(--shadow-lg);
+  transition: transform 80ms linear, box-shadow 80ms linear, background 80ms linear;
 }
 
-.donate-cta-btn:hover {
-  background: var(--black);
-  color: var(--gold);
-  transform: translateY(-2px);
+.donate-cta-btn:hover,
+.donate-cta-btn:focus-visible {
+  background: var(--brick-dark);
+  transform: translate(3px, 3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.donate-cta-btn:active {
+  transform: translate(5px, 5px);
+  box-shadow: none;
+}
+
+
+/* ===========================================================================
+   THE PLATE HEAD — the hero every page except the home page opens on.
+   These rules had no definitions left after the redesign: .hero was rebuilt
+   as the home page's letterpress bill, and PageHero's own classes went with
+   the old sheet, so six pages were rendering an unstyled image at its
+   natural size with the headline running off underneath it. Rebuilt here in
+   the archive idiom — one full-bleed plate, ruled off hard top and bottom,
+   with the page's existing headline set into the foot of it. */
+.page-hero {
+  /* The site header is fixed and painted in solid paper, so anything drawn at
+     the very top of this section is simply hidden behind it. The plate starts
+     below that line instead of under it — which is why the crown of a head or
+     the top line of a poster survives the crop. */
+  --plate-top: clamp(4rem, 12vh, 7rem);
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(24rem, 68svh, 40rem);
+  padding: var(--plate-top) var(--gutter) clamp(2.5rem, 6vh, 4rem);
+  border-top: var(--line-heavy);
+  border-bottom: var(--line-heavy);
+  overflow: hidden;
+  /* Only ever visible in the strip above the plate, where it meets the
+     header — so it is paper, not ink. */
+  background: var(--paper);
+}
+
+/* The plate itself. Same grade as every other photograph in the archive so a
+   hero and a chapter plate read as prints from one file, not two sources. */
+.hero-bg {
+  position: absolute;
+  top: var(--plate-top);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% - var(--plate-top));
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.14) brightness(0.82);
+}
+
+/* Ink laid over the foot of the plate so the type has something to sit on.
+   A gradient, not a flat wash — the photograph stays a photograph at the top
+   of the frame, which is where the faces are. */
+.hero-overlay {
+  position: absolute;
+  top: var(--plate-top);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(25, 24, 21, 0.15) 0%,
+    rgba(25, 24, 21, 0.35) 45%,
+    rgba(25, 24, 21, 0.88) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  color: var(--paper-light);
+}
+
+.hero-content .label {
+  font-family: var(--font-meta);
+  letter-spacing: 0.18em;
+}
+
+@media (max-width: 768px) {
+  .page-hero {
+    min-height: clamp(20rem, 60svh, 28rem);
+  }
 }
 
 /* ===========================================================================
-   HOME FILM — a poster-and-play-button for the short film, sitting between
-   the record ticker and the explore grid. Black, like the ticker section
-   above it, so the two read as one dark pause in an otherwise light page. */
-.home-film {
-  background: var(--black);
-  padding-block: clamp(4rem, 11vh, 7rem);
-}
-
-.home-film-inner {
-  max-width: 56rem;
+   THE EVENTS PLATE — one bill, pinned up. Sized to a poster rather than to
+   the column, and set slightly off true so it reads as something pasted onto
+   the sheet rather than laid out on it. */
+.events-plate {
+  max-width: 34rem;
   margin: 0 auto;
-  padding-inline: 1.5rem;
+  transform: rotate(-0.6deg);
+}
+
+/* Every other plate on the site is graded down to match a 1920s print. This
+   one is a poster printed this decade, in colour, and the colour is the
+   point of it — so it keeps only the paper wash the wrap lays over the top. */
+.events-plate-img {
+  filter: none;
+  width: 100%;
+  height: auto;
+}
+
+/* ===========================================================================
+   THE CLIPPING — the boxing record, cut out of a paper and marked up by hand.
+   Two voices only: the printed one (mono masthead, slab figures, hard rules)
+   and the hand that went over it afterwards (a red stroke down the margin, a
+   box drawn round the last line). Everything is set square and centred the
+   way a results column is; the only thing off true is the cutting itself,
+   because nobody cuts straight. */
+.clipping {
+  position: relative;
+  max-width: 30rem;
+  margin: 3rem auto 0;
+  padding: 1.5rem 1.75rem 1.75rem;
+  background: var(--paper-light);
+  border: var(--line-heavy);
+  color: var(--ink);
   text-align: center;
+  /* Pinned a shade off square. A static angle, not motion — nothing here
+     animates, so there is nothing for reduced-motion to switch off. */
+  transform: rotate(-0.7deg);
 }
 
-.home-film-kicker {
-  color: var(--gold);
-  margin-bottom: 0.75rem;
+/* The head of the column: what the cutting is, and its dateline. Ruled off
+   hard underneath the way a paper rules its section heads. */
+.clipping-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--ink);
+  font-family: var(--font-meta);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: left;
 }
 
-.home-film-h {
-  margin-bottom: clamp(2rem, 5vh, 3rem);
-}
-
-.home-film-frame {
+/* The lead. The red mark runs down the left of this block — beside the name
+   and the figures, which is the pair of lines the marking is about. */
+.clipping-lead {
   position: relative;
-  aspect-ratio: 16 / 9;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 4px;
-  background: #000;
+  padding: 1.5rem 0 1.25rem 1.25rem;
 }
 
-.home-film-poster {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  border: 0;
-  cursor: pointer;
-}
-
-.home-film-poster img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.home-film-poster::after {
+/* The editorial mark. Drawn, not printed: slightly off vertical, slightly
+   short of the block it marks at both ends, the way a stroke down a margin
+   sits. Hidden from the accessible tree by being pure decoration. */
+.clipping-lead::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.25);
-  transition: background 250ms ease;
+  top: 1.1rem;
+  bottom: 1.6rem;
+  left: 0;
+  width: 4px;
+  background: var(--brick);
+  transform: rotate(1.4deg);
 }
 
-.home-film-poster:hover::after,
-.home-film-poster:focus-visible::after {
-  background: rgba(0, 0, 0, 0.4);
+.clipping-name {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
 }
 
-.home-film-play {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: grid;
-  place-items: center;
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  background: var(--gold);
-  color: var(--black);
-  transition: transform 250ms ease;
+.clipping-figures {
+  margin-top: 0.5rem;
+  font-size: clamp(1.125rem, 3.2vw, 1.5rem);
+  line-height: 1.15;
+  text-transform: uppercase;
 }
 
-.home-film-poster:hover .home-film-play,
-.home-film-poster:focus-visible .home-film-play {
-  transform: translate(-50%, -50%) scale(1.08);
+.clipping-uncrowned {
+  margin-top: 0.875rem;
+  font-family: var(--font-meta);
+  font-size: 0.8125rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
 }
 
-.home-film-play svg {
-  margin-left: 4px;
+/* The rule the mock draws across the middle. A printed rule, so it is flat
+   and full width — it belongs to the paper, not to the hand. */
+.clipping-rule {
+  height: 0;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--ink);
 }
 
-.home-film-video {
-  width: 100%;
-  height: 100%;
-  display: block;
-  background: #000;
+/* The two comparisons, set as a results column: name on one line, figures
+   under it, nothing between them but space. */
+.clipping-compare {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 1.5rem 0 1.75rem;
 }
 
-.home-film-credit {
-  margin-top: 1.25rem;
-  color: rgba(255, 255, 255, 0.55);
+.clipping-compare-row dt {
+  font-size: 1.125rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
+
+.clipping-compare-row dd {
+  margin: 0.375rem 0 0;
+  font-family: var(--font-meta);
+  font-size: 0.9375rem;
+  letter-spacing: 0.1em;
+  /* Same reading as Len's own line above the rule — the figures for all three
+     men are set the same way, which is the whole point of putting them under
+     one another. Set smaller and in mono, not slab, so the comparison stays
+     the footnote and his record stays the headline. */
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* The box round the last line. Drawn by the same hand as the red stroke, so
+   it leans the other way and doesn't quite line up with the column. */
+.clipping-mark {
+  display: inline-block;
+  padding: 0.5rem 0.875rem;
+  border: 2px solid var(--ink);
+  font-family: var(--font-meta);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  transform: rotate(-0.9deg);
+}
+
+@media (max-width: 600px) {
+  .clipping {
+    padding: 1.25rem 1.125rem 1.5rem;
+  }
+
+  .clipping-masthead {
+    /* At this width the title and the dateline collide, so the dateline
+       drops under it rather than being squeezed onto the same line. */
+    display: block;
+  }
+
+  .clipping-masthead span + span {
+    display: block;
+    margin-top: 0.25rem;
+    color: var(--ink-soft);
+  }
+}
+
+/* ===========================================================================
+   FACE-SAFE CROPS — keyed to the photograph, not to the component, so the
+   same picture is framed the same way wherever it is used. Each value is the
+   point in the image the crop has to keep: it was read off the file itself,
+   not guessed from the layout. Last in the sheet on purpose — these are the
+   final word over any per-component framing.
+   ---------------------------------------------------------------------------
+   Only applies where the image is actually being cropped (object-fit: cover).
+   An uncropped image ignores object-position entirely, so the rule is inert
+   there and costs nothing. */
+img[src*="lenstory"]       { object-position: 50% 20%; }
+img[src*="hero.webp"]      { object-position: 50% 14%; }
+img[src*="crowd"]          { object-position: 52% 34%; }
+img[src*="charity-match"]  { object-position: 52% 40%; }
+img[src*="press/men"]      { object-position: 43% 38%; }
+img[src*="press/archives"] { object-position: 50% 28%; }
+img[src*="boxing"]         { object-position: 68% 14%; }
+img[src*="portrait"]       { object-position: 50% 18%; }
+/* The bronze stands with barely 2% of clear sky above its head, so this one
+   can only be anchored hard to the top of the frame — anything lower shears
+   the crown off in a wide crop. */
+img[src*="statue"]         { object-position: 62% 0%; }
+/* A poster, not a photograph — the artwork reads from the top down, so keep
+   the head of the bill rather than any one face inside it. */
+img[src*="breaking-barz"]  { object-position: 50% 0%; }

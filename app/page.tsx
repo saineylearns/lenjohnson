@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
-import { Fragment } from 'react';
 import Link from 'next/link';
 import { DONATE_URL, EXTERNAL_LINK_PROPS } from '@/lib/links';
-import HomeFilm from '@/components/HomeFilm';
 
 // Title and description come from the root layout's defaults; only the
 // canonical is page-specific, now that the layout no longer declares one
@@ -11,81 +9,64 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 };
 
-// The ticker reads as a boxing record rather than a slogan loop, so the
-// figures come first and the colours stay fixed from one pass to the next.
-const RECORD_TICKER = [
-  { text: '95 WINS', tone: 'text-gold' },
-  { text: '134 BOUTS', tone: 'text-white' },
-  { text: '0 TITLES', tone: 'text-orange' },
-  { text: 'UNCROWNED', tone: 'text-white' },
-  { text: 'UNDEFEATED IN SPIRIT', tone: 'text-white' },
-];
-
 export default function Home() {
-  const explorerLinks = [
-    {
-      href: '/story',
-      label: "Len's Story",
-      image: '/images/lenstory.png',
-      color: 'var(--green)',
-    },
-    {
-      href: '/champions',
-      label: 'Champions',
-      image: '/images/crowd.webp',
-      color: 'var(--orange)',
-    },
-    {
-      href: '/events',
-      label: 'Events',
-      image: '/images/lenmatchevents.jpeg',
-      color: 'var(--gold)',
-    },
-    {
-      href: '/gallery',
-      label: 'Gallery',
-      image: '/images/charity-match.webp',
-      color: 'var(--green)',
-    },
-  ];
-
   return (
     <>
       {/* CINEMATIC HERO */}
+      {/* THE BILL — a letterpress fight poster, not a landing page. The
+          headline copy is the site's existing hero line, unchanged; only the
+          line breaks, scale and placement are set here. The rail above it is
+          interface metadata, not content. */}
       <section id="top" className="hero">
-        <img
-          src="/images/hero.webp"
-          alt="Len Johnson with friends, Manchester"
-          className="hero-bg"
-        />
-        <div className="hero-overlay"></div>
-        <div className="hero-content">
-          <h1 className="display-font h-huge text-white slide-up delay-1">
-            {/* Line breaks collapse without a space in the accessible name,
-                so the sentence is carried once in readable form. */}
-            <span className="visually-hidden">
-              A boxer who fought racism in the ring and on the streets.
-            </span>
-            <span aria-hidden="true">
-              A BOXER WHO<br />
-              FOUGHT <span className="text-green">RACISM</span><br />
-              IN THE RING<br />
-              AND ON THE <span className="text-orange">STREETS.</span>
-            </span>
-          </h1>
-          <div className="flex gap-3 flex-wrap mt-12 slide-up delay-2">
-            <a href="#explore" className="pill pill-gold">
-              <span>Discover more</span>
-              <span>↓</span>
-            </a>
-            <a
-              href={DONATE_URL}
-              {...EXTERNAL_LINK_PROPS}
-              className="pill pill-outline-light"
-            >
-              <span>Support the statue</span>
-            </a>
+        <div className="hero-rail">
+          <span>Len Johnson &mdash; Manchester &mdash; 1902&ndash;1974</span>
+          <span className="hero-rail-issue">Issue 01</span>
+        </div>
+
+        <div className="hero-bill">
+          <div className="hero-copy">
+            <h1 className="display-font hero-h">
+              {/* Line breaks collapse without a space in the accessible name,
+                  so the sentence is carried once in readable form. */}
+              <span className="visually-hidden">
+                A boxer who fought racism in the ring and on the streets.
+              </span>
+              <span aria-hidden="true">
+                A BOXER WHO<br />
+                FOUGHT <span className="hero-accent-green">RACISM</span><br />
+                IN THE RING<br />
+                AND ON THE <span className="hero-accent">STREETS.</span>
+              </span>
+            </h1>
+
+            <div className="hero-actions">
+              <a href="#explore" className="button">
+                Discover more <span aria-hidden="true">&darr;</span>
+              </a>
+              <a
+                href={DONATE_URL}
+                {...EXTERNAL_LINK_PROPS}
+                className="button button-quiet"
+              >
+                Support the statue
+              </a>
+            </div>
           </div>
+
+          {/* Pushed out of the nominal column so it sits on the page like a
+              print pasted onto the sheet rather than a grid cell. */}
+          <figure className="hero-plate">
+            <div className="archive-image-wrap">
+              <img
+                src="/images/hero.webp"
+                alt="Len Johnson with friends, Manchester"
+                className="archive-image"
+              />
+            </div>
+            <figcaption className="archive-caption">
+              Len Johnson with friends, Manchester
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -97,35 +78,6 @@ export default function Home() {
         <div className="bg-green"></div>
         <div className="bg-blue"></div>
       </div>
-
-      {/* THE RECORD, ON A LOOP */}
-      <section className="bg-black marquee">
-        <div className="marquee-track">
-          {/* Two passes so the loop is seamless. The second is a duplicate:
-              hidden from screen readers, and dropped entirely when the
-              animation is switched off. */}
-          {[0, 1].map((pass) =>
-            RECORD_TICKER.map((item) => (
-              <Fragment key={`${pass}-${item.text}`}>
-                <span
-                  className={`display-font h-medium ${item.tone} ${pass ? 'marquee-dup' : ''}`}
-                  aria-hidden={pass === 1 || undefined}
-                >
-                  {item.text}
-                </span>
-                <span
-                  className={`marquee-sep display-font h-medium ${pass ? 'marquee-dup' : ''}`}
-                  aria-hidden="true"
-                >
-                  &mdash;
-                </span>
-              </Fragment>
-            )),
-          )}
-        </div>
-      </section>
-
-      <HomeFilm />
 
       {/* A LINE OF WRITING, BEFORE THE GRID */}
       <section className="home-note">
@@ -149,66 +101,77 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EXPLORE SECTION */}
-      <section id="explore" className="section bg-teal relative overflow-hidden">
-        <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center relative z-10">
-            {/* Left: Heading + description */}
-            <div>
-              <p className="label text-white opacity-80 mb-4">DISCOVER</p>
-              <h2 className="display-font h-huge text-white mb-6">
-                EXPLORE<br />
-                <span className="text-gold">LEN&apos;S</span> <span className="text-orange">LEGACY</span>
-              </h2>
-              <p className="body-md text-white opacity-90 mb-8">
-                Dive into his life story, meet the champions supporting the campaign, discover the events that keep his memory alive, and explore the gallery of moments that define this movement.
-              </p>
-            </div>
+      {/* THE ARCHIVE — four destinations, deliberately built as four
+          different printed objects rather than four instances of one card:
+          a front page, a programme, a handbill and a board of plates. The
+          section's descriptive paragraph is the site's existing copy,
+          untouched; the headings and the small mono labels are interface. */}
+      <section id="explore" className="archive-section">
+        <div className="archive-head">
+          <p className="label archive-head-kicker">Contents</p>
+          <h2 className="display-font archive-head-h">The Archive</h2>
+          <p className="body-md archive-head-note">
+            Dive into his life story, meet the champions supporting the campaign, discover the events that keep his memory alive, and explore the gallery of moments that define this movement.
+          </p>
+        </div>
 
-            {/* Right: varied size image grid */}
-            <div className="grid gap-3" style={{
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gridAutoRows: '240px',
-            }}>
-              {explorerLinks.map((link, idx) => {
-                // Vary sizes: Story spans 1.7 columns + 2 rows, Gallery spans 2 columns
-                const isStory = idx === 0;
-                const isGallery = idx === 3;
-                const spanRows = isStory ? 2 : 1;
-                const spanCols = isStory ? 1.7 : isGallery ? 2 : 1;
-
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="group relative overflow-hidden rounded-lg hover:shadow-xl transition-all duration-300"
-                    style={{
-                      gridColumn: `span ${spanCols}`,
-                      gridRow: `span ${spanRows}`,
-                    }}
-                  >
-                    <img
-                      src={link.image}
-                      alt={link.label}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
-                    {/* The card's colour comes up out of the photograph rather
-                        than sitting on top of it as a coloured tab. */}
-                    <div
-                      className="absolute inset-0 pointer-events-none"
-                      style={{
-                        background: `linear-gradient(to top, color-mix(in srgb, ${link.color} 60%, transparent) 0%, transparent 55%)`,
-                      }}
-                    />
-                    <div className="absolute inset-0 flex flex-col items-center justify-end p-4 pb-6">
-                      <p className="display-font text-white text-center" style={{ fontSize: 'clamp(1rem, 2vw, 1.5rem)' }}>{link.label}</p>
-                    </div>
-                  </Link>
-                );
-              })}
+        <div className="legacy-grid">
+          {/* 01 — Front page. The lead object: masthead rule, headline, plate. */}
+          <Link href="/story" className="legacy-item legacy-story">
+            <div className="legacy-masthead">
+              <span>File 01</span>
+              <span>1902&ndash;1974</span>
             </div>
-          </div>
+            <h3 className="display-font legacy-title legacy-title-lead">
+              Len&apos;s Story
+            </h3>
+            <div className="archive-image-wrap legacy-media">
+              <img src="/images/lenstory.png" alt="" className="archive-image" />
+            </div>
+          </Link>
+
+          {/* 02 — Programme. Banded head, portrait plate, name set below. */}
+          <Link href="/champions" className="legacy-item legacy-champions">
+            <div className="legacy-band">Programme</div>
+            <div className="archive-image-wrap legacy-media">
+              <img src="/images/crowd.webp" alt="" className="archive-image" />
+            </div>
+            <h3 className="display-font legacy-title">Champions</h3>
+          </Link>
+
+          {/* 03 — Handbill. Printed in brick, with the bill for the match
+              pasted onto the left of it — the way a poster goes up with the
+              picture on one side and the type set beside it. */}
+          <Link href="/events" className="legacy-item legacy-events">
+            <div className="legacy-events-plate">
+              <img
+                src="/images/lenmatchevents.jpeg"
+                alt=""
+                className="archive-image"
+              />
+            </div>
+            <div className="legacy-events-bill">
+              <span className="legacy-meta legacy-meta-invert">Handbill</span>
+              <h3 className="condensed-font legacy-bill-title">Events</h3>
+              <span className="legacy-meta legacy-meta-invert">Manchester</span>
+            </div>
+          </Link>
+
+          {/* 04 — Plates, clipped to a board. */}
+          <Link href="/gallery" className="legacy-item legacy-gallery">
+            <span className="legacy-clip" aria-hidden="true" />
+            <div className="archive-image-wrap legacy-media">
+              <img
+                src="/images/charity-match.webp"
+                alt=""
+                className="archive-image"
+              />
+            </div>
+            <div className="legacy-gallery-foot">
+              <h3 className="display-font legacy-title">Gallery</h3>
+              <span className="legacy-meta">Plates</span>
+            </div>
+          </Link>
         </div>
       </section>
     </>

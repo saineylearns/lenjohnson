@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Reveal from '@/components/story/Reveal';
 import StatCounter from '@/components/story/StatCounter';
-import StatCompare from '@/components/story/StatCompare';
+import BoxingRecord from '@/components/story/BoxingRecord';
 import PullQuote from '@/components/story/PullQuote';
 import ArchivePlaceholder from '@/components/story/ArchivePlaceholder';
 import StoryTimeline from '@/components/story/StoryTimeline';
@@ -123,8 +123,7 @@ export default function StoryPage() {
       <section className="ls-act ls-act-i">
         <div className="ls-wrap ls-grid">
           <Rail num="I" />
-
-          <div className="ls-block">
+          <div className="ls-block ls-body">
             <Reveal>
               <h2 className="ls-h ls-h-sm">Early Life</h2>
             </Reveal>
@@ -190,8 +189,7 @@ export default function StoryPage() {
       <section className="ls-act ls-act-ii ls-after-bleed">
         <div className="ls-wrap ls-grid">
           <Rail num="II" />
-
-          <div>
+          <div className="ls-body">
             <div className="ls-block">
               <Reveal>
                 <h2 className="ls-h">Boxing career</h2>
@@ -228,7 +226,6 @@ export default function StoryPage() {
                     <img
                       src="/images/boxing.webp"
                       alt="Len Johnson in a boxing stance, gloved and on guard"
-                      style={{ objectPosition: '50% 5%' }}
                     />
                   </div>
                   <figcaption className="ls-cap">
@@ -236,26 +233,22 @@ export default function StoryPage() {
                   </figcaption>
                 </figure>
 
-                <div>
-                  <div className="stat-grid">
-                    <StatCounter to={95} label="WINS" />
-                    <StatCounter to={134} label="BOUTS FOUGHT" />
-                    <StatCounter staticValue="1920" label="TURNED PROFESSIONAL" />
-                  </div>
-
-                  <div className="ls-prose" style={{ marginTop: 'clamp(1.25rem, 3vh, 2rem)' }}>
-                    <p>
-                      Despite this Len, had an incredible career winning 95
-                      bouts of his 134 bouts. The majority going the distance.
-                      This record can be compared with some of the greatest
-                      boxers the world has seen. For example, Muhammad Ali won
-                      56 out of his 61 bouts and Manny Pacquiao who won 62 of
-                      his 72 bouts.
-                    </p>
-                  </div>
-                  <StatCompare />
+                <div className="ls-prose">
+                  <p>
+                    Despite this Len, had an incredible career winning 95
+                    bouts of his 134 bouts. The majority going the distance.
+                    This record can be compared with some of the greatest
+                    boxers the world has seen. For example, Muhammad Ali won
+                    56 out of his 61 bouts and Manny Pacquiao who won 62 of
+                    his 72 bouts.
+                  </p>
                 </div>
               </div>
+
+              {/* The same figures again, cut out and marked up. Given its own
+                  width rather than squeezed beside the plate — a clipping
+                  pinned to the page is an object, not a sidebar. */}
+              <BoxingRecord />
             </div>
 
             <div className="ls-block">
@@ -302,8 +295,7 @@ export default function StoryPage() {
       <section className="ls-act ls-act-iii">
         <div className="ls-wrap ls-grid">
           <Rail num="III" />
-
-          <div className="ls-block">
+          <div className="ls-block ls-body">
             <Reveal>
               <h2 className="ls-h">
                 Boxing&apos;s
@@ -371,8 +363,7 @@ export default function StoryPage() {
       <section className="ls-act ls-act-iv">
         <div className="ls-wrap ls-grid">
           <Rail num="IV" />
-
-          <div className="ls-block">
+          <div className="ls-block ls-body">
             <Reveal>
               <h2 className="ls-h ls-h-sm">Retirement from Boxing</h2>
             </Reveal>
@@ -406,8 +397,7 @@ export default function StoryPage() {
       <section className="ls-act ls-act-v">
         <div className="ls-wrap ls-grid">
           <Rail num="V" />
-
-          <div className="ls-block">
+          <div className="ls-block ls-body">
             <Reveal>
               <h2 className="ls-h">
                 Pan-African Congress
@@ -447,8 +437,7 @@ export default function StoryPage() {
       <section className="ls-act ls-act-vi">
         <div className="ls-wrap ls-grid">
           <Rail num="VI" />
-
-          <div className="ls-block">
+          <div className="ls-block ls-body">
             <Reveal>
               <h2 className="ls-h ls-h-sm">
                 New International <em>Society</em>
@@ -537,8 +526,7 @@ export default function StoryPage() {
       <section className="ls-act ls-act-vii">
         <div className="ls-wrap ls-grid">
           <Rail num="VII" />
-
-          <div className="ls-block">
+          <div className="ls-block ls-body">
             <Reveal>
               <h2 className="ls-h ls-h-sm">Community activism</h2>
             </Reveal>
@@ -565,8 +553,7 @@ export default function StoryPage() {
       <section className="ls-act ls-act-viii">
         <div className="ls-wrap ls-grid">
           <Rail num="VIII" />
-
-          <div className="ls-block">
+          <div className="ls-block ls-body">
             <Reveal>
               <h2 className="ls-h">
                 Breaking the
@@ -628,8 +615,7 @@ export default function StoryPage() {
       <section className="ls-act ls-act-ix">
         <div className="ls-wrap ls-grid">
           <Rail num="IX" />
-
-          <div className="ls-block">
+          <div className="ls-block ls-body">
             <Reveal>
               <h2 className="ls-h">
                 Inspiring future

@@ -2,8 +2,11 @@ import type { Metadata, Viewport } from "next";
 import {
   Anton,
   Archivo_Black,
+  IBM_Plex_Mono,
   Instrument_Sans,
   Instrument_Serif,
+  Lora,
+  Roboto_Slab,
 } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
@@ -46,6 +49,34 @@ const instrumentSerif = Instrument_Serif({
   style: ["normal", "italic"],
   subsets: ["latin"],
   variable: "--font-instrument-serif",
+  display: "swap",
+});
+
+// Warm editorial serif for running body copy — replaces the sans-serif's
+// "SaaS default" feel with something closer to a broadsheet's set text.
+const lora = Lora({
+  subsets: ["latin"],
+  variable: "--font-lora",
+  display: "swap",
+});
+
+// The two voices the archive is built from.
+//
+// Roboto Slab is the historical/public voice — the slab serif of a printed
+// poster or a paper's masthead. It carries every headline and pull quote.
+const robotoSlab = Roboto_Slab({
+  subsets: ["latin"],
+  variable: "--font-slab",
+  display: "swap",
+});
+
+// IBM Plex Mono is the archive/document voice — dates, captions, source
+// lines, marginalia, catalogue labels. Anything a person would have typed
+// onto a card and filed, rather than set for print.
+const plexMono = IBM_Plex_Mono({
+  weight: ["400", "500", "700"],
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -120,7 +151,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  // The browser chrome should meet the paper stock, not a black bar the site
+  // never uses. Matches --ink's companion --paper in globals.css.
+  themeColor: "#E8E0D1",
   width: "device-width",
   initialScale: 1,
 };
@@ -170,7 +203,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${anton.variable} ${archivoBlack.variable} ${instrumentSans.variable} ${instrumentSerif.variable}`}
+      className={`${anton.variable} ${archivoBlack.variable} ${instrumentSans.variable} ${instrumentSerif.variable} ${lora.variable} ${robotoSlab.variable} ${plexMono.variable}`}
     >
       <body>
         <script
