@@ -679,14 +679,25 @@ body.nav-open .scroll-bar {
 
 /* SITE NAVIGATION */
 .site-nav {
-  position: fixed;
+  /* `sticky`, not `fixed`. iOS Safari can visibly detach a `fixed` bar from
+     the top edge during momentum scroll and address-bar hide/show — it
+     drifts down and "floats" mid-page before snapping back. `sticky` is
+     pinned by layout rather than the visual viewport, so it doesn't have
+     that failure mode. */
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
   background: var(--paper);
-  border-bottom: 2px solid var(--charcoal);
-  box-shadow: none;
+  /* The double rule a 1930s broadsheet ran under its masthead — one thick
+     line and one thin, not a single border. Drawn as a gradient so the two
+     weights are exact rather than an approximation via `border-style:
+     double`, which gives two equal lines and reads as a frame, not a rule. */
+  border-bottom: 0;
+  box-shadow:
+    inset 0 -4px 0 -1px var(--charcoal),
+    inset 0 -6px 0 -5px var(--charcoal);
   transition: background 300ms ease;
 }
 
@@ -708,24 +719,27 @@ body.nav-open .scroll-bar {
   background: var(--paper);
 }
 
-/* A masthead, set square. The slab face carries the weight on its own — the
-   earlier double-strike ghost read as a rendering fault against these
-   letterforms rather than as ink, so the imperfection lives in the paper and
-   the plate offsets instead. */
+/* A masthead, not a logo lockup. Set as its own printed block — ink ground,
+   paper type — the way a paper's name runs boxed at the top of page one,
+   rather than as a wordmark quietly sharing the bar with the nav links. */
 .site-wordmark {
   position: relative;
-  display: inline-block;
-  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  background: var(--ink);
+  color: var(--paper);
   text-decoration: none;
-  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  padding: 0.5rem 0.85rem;
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
   line-height: 1.05;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  transition: color 80ms linear;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  transition: background 80ms linear, color 80ms linear;
 }
 
 .site-wordmark:hover {
-  color: var(--brick);
+  background: var(--brick);
+  color: var(--paper);
 }
 
 .site-nav-links {
@@ -860,10 +874,10 @@ body.nav-open .scroll-bar {
   .site-nav-donate { display: none; }
 }
 
-/* Plain text pages (privacy). No hero, so the top padding has to clear the
-   fixed nav on its own. */
+/* Plain text pages (privacy). No hero — the nav is `sticky` and already
+   reserves its own space above this, so this is just a normal section gap. */
 .legal-page {
-  padding-top: clamp(8rem, 16vh, 11rem);
+  padding-top: clamp(2rem, 5vh, 3rem);
 }
 
 .legal-body {
@@ -1371,7 +1385,9 @@ body.nav-open .scroll-bar {
   align-items: baseline;
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: clamp(6rem, 12vh, 8rem) 0 0.7rem;
+  /* The nav is `sticky` now, not `fixed` — it already reserves its own
+     space in the flow, so this no longer needs to clear it on top of that. */
+  padding: clamp(1.5rem, 4vh, 2.5rem) 0 0.7rem;
   border-bottom: var(--line-heavy);
   font-family: var(--font-meta);
   font-size: 0.7rem;
@@ -3066,14 +3082,18 @@ body.nav-open .scroll-bar {
 .ls-h {
   font-family: var(--font-anton), 'Anton', 'Arial Narrow', sans-serif;
   font-weight: 400;
-  letter-spacing: -0.02em;
-  transform: rotate(-1deg);
+  letter-spacing: -0.04em;
+  /* Rotation plus a shallow skew, not rotation alone — a press running
+     slightly out of true skews the letterforms as well as tilting the line,
+     which a pure rotate doesn't reproduce. */
+  transform: rotate(-1deg) skewX(-2deg);
   transform-origin: left bottom;
 }
 
-/* The smaller chapter heads lean less — at this size a full degree starts to
-   look like a mistake rather than a hand. */
+/* The smaller chapter heads lean less, and lose the skew entirely — at this
+   size the letterform distortion reads as a hinting bug rather than ink. */
 .ls-h-sm {
+  letter-spacing: -0.02em;
   transform: rotate(-0.6deg);
 }
 
@@ -3085,6 +3105,16 @@ body.nav-open .scroll-bar {
    mistake, so this is applied per block rather than to .ls-prose at large. */
 .ls-broadsheet {
   max-width: none;
+}
+
+/* Justified with hyphenation, in the columns only. A ragged right edge
+   reads as a web page; a paper sets its columns flush both sides, and it
+   can only do that because it's willing to break a word mid-line. Left
+   ragged everywhere else on the page — a single wide column of justified
+   prose gets rivers of its own, for the opposite reason a narrow one does. */
+.ls-broadsheet p {
+  text-align: justify;
+  hyphens: auto;
 }
 
 @media (min-width: 880px) {
@@ -3118,12 +3148,45 @@ body.nav-open .scroll-bar {
     82% 99.7%, 64% 98.3%, 46% 99.6%, 28% 98.2%, 11% 99.5%, 0.8% 98.6%,
     1.4% 80%, 0.3% 62%, 1.6% 44%, 0.4% 26%
   );
+  /* A soft, dark smudge under the tear rather than a clean box-shadow — the
+     shadow follows the clip-path's own edge (a filter, not a box property),
+     so it reads as the paper lifting off the page along the same ragged line
+     it was torn on, not as a card floating in a straight-edged box. */
+  filter: drop-shadow(3px 5px 5px rgba(26, 26, 27, 0.35));
 }
 
 /* The dot screen carries more of the image now that the page is meant to look
    printed rather than photographed. */
 .ls-plate-media::before {
   opacity: 0.2;
+}
+
+/* --- Ink on paper, not pixels on screen ----------------------------------- */
+
+/* The plate's own ground goes from near-black to the page's paper colour, so
+   there is paper for the ink to sit on. Multiplying a photograph over a dark
+   ground would just crush it to black — the whole point of the blend is that
+   it reads *through* something light. Only the ground under the image
+   changes; the caption strip, the tape and the torn clip-path are unaffected. */
+.ls .ls-plate-media {
+  background: var(--bg);
+}
+
+/* Ink, not a file. Multiply lets the paper's own tone bleed through the
+   photograph the way a halftone plate is printed onto stock rather than
+   pasted over it. Held to 0.92, not the 0.85 a flat mock calls for — Len's
+   face is the reason every plate on this page exists, and a photograph
+   printed this dark starts to cost the sitter his features rather than his
+   digital sheen. Suspended entirely on hover, where the plate already goes
+   to full colour to reward a closer look. */
+.ls-plate-media img {
+  mix-blend-mode: multiply;
+  opacity: 0.92;
+}
+
+.ls-plate:hover .ls-plate-media img {
+  mix-blend-mode: normal;
+  opacity: 1;
 }
 
 /* --- Breaking the box ---------------------------------------------------- */
@@ -3539,8 +3602,28 @@ body.nav-open .scroll-bar {
   background: var(--paper-dark);
   padding-block: clamp(4rem, 11vh, 6.5rem);
   text-align: center;
-  border-top: var(--line-heavy);
-  border-bottom: var(--line-heavy);
+  /* The double rule from the masthead, repeated here — the notice at the
+     foot of every page is ruled off the same way the one at the top is. */
+  border-top: 0;
+  border-bottom: 0;
+  box-shadow:
+    inset 0 4px 0 -1px var(--ink), inset 0 6px 0 -5px var(--ink),
+    inset 0 -4px 0 -1px var(--ink), inset 0 -6px 0 -5px var(--ink);
+}
+
+/* A public notice pinned to a board, not a card — a faint mottling under the
+   type rather than the flat paper-dark fill alone. Two radial washes, fixed
+   and irregular rather than a repeating tile, so it doesn't read as a
+   pattern. */
+.donate-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background:
+    radial-gradient(ellipse 60% 40% at 18% 24%, rgba(26, 26, 27, 0.05), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 82% 78%, rgba(26, 26, 27, 0.05), transparent 70%);
 }
 
 .donate-cta-inner {
@@ -3568,7 +3651,11 @@ body.nav-open .scroll-bar {
   text-transform: uppercase;
 }
 
-/* Same physics and the same ink as every other button on the site. */
+/* A rubber stamp rather than a button — set fractionally off true, the way a
+   stamp lands slightly rotated no matter how careful the hand behind it. The
+   press-physics translate on hover/active is layered onto that same tilt
+   rather than replacing it, so the stamp still reads as struck at rest and
+   pressed flatter on contact, never as perfectly square. */
 .donate-cta-btn {
   display: inline-flex;
   align-items: center;
@@ -3576,7 +3663,7 @@ body.nav-open .scroll-bar {
   margin-top: 0.5rem;
   background: var(--brick);
   color: var(--paper-light);
-  border: 2px solid var(--ink);
+  border: 3px solid var(--ink);
   border-radius: 0;
   font-family: var(--font-meta);
   font-weight: 700;
@@ -3585,18 +3672,20 @@ body.nav-open .scroll-bar {
   text-transform: uppercase;
   text-decoration: none;
   box-shadow: var(--shadow-lg);
+  transform: rotate(-2deg);
   transition: transform 80ms linear, box-shadow 80ms linear, background 80ms linear;
 }
 
 .donate-cta-btn:hover,
 .donate-cta-btn:focus-visible {
   background: var(--brick-dark);
-  transform: translate(3px, 3px);
+  transform: rotate(-2deg) translate(3px, 3px);
   box-shadow: var(--shadow-sm);
 }
 
 .donate-cta-btn:active {
-  transform: translate(5px, 5px);
+  /* The stamp lands flat on contact. */
+  transform: rotate(0deg) translate(5px, 5px);
   box-shadow: none;
 }
 
@@ -3610,11 +3699,11 @@ body.nav-open .scroll-bar {
    the archive idiom — one full-bleed plate, ruled off hard top and bottom,
    with the page's existing headline set into the foot of it. */
 .page-hero {
-  /* The site header is fixed and painted in solid paper, so anything drawn at
-     the very top of this section is simply hidden behind it. The plate starts
-     below that line instead of under it — which is why the crown of a head or
-     the top line of a poster survives the crop. */
-  --plate-top: clamp(4rem, 12vh, 7rem);
+  /* The nav is `sticky`, not `fixed` — it already reserves its own space
+     above this section, so the plate can start right at the top of it. Kept
+     as a small crop margin rather than 0 so the very top pixel row of the
+     plate (often a hard photo edge) isn't flush against the nav's rule. */
+  --plate-top: clamp(0.5rem, 2vh, 1.25rem);
   position: relative;
   display: flex;
   align-items: flex-end;

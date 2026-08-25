@@ -89,9 +89,9 @@ export default function Footer() {
               trades, and the number is also what lets a donor check the campaign
               on the Companies House register before giving. */}
           <p className="body-sm text-muted">
-            &copy; {new Date().getFullYear()} Len Johnson Campaign Community
+            &copy; {new Date().getFullYear()}{' '}Len Johnson Campaign Community
             Interest Company. Registered in England &amp; Wales, company no.{' '}
-            {CIC_NUMBER}. Manchester deserves justice.
+            {CIC_NUMBER}.
           </p>
           <Link href="/privacy" className="site-footer-link body-sm">
             Privacy

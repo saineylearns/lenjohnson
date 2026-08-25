@@ -64,12 +64,6 @@ export default function StoryPage() {
             The greatest middleweight of his generation — and the man British
             boxing refused to crown.
           </p>
-          <p className="ls-open-foot label">
-            <span>1902 &ndash; 1974</span>
-            <span>Boxer</span>
-            <span>Socialist organiser</span>
-            <span>Community activist</span>
-          </p>
         </div>
       </header>
 
