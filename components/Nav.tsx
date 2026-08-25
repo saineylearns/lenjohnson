@@ -77,6 +77,7 @@ export default function Nav() {
     pathname === href || pathname.startsWith(`${href}/`);
 
   return (
+    <>
     <header className={`site-nav ${scrolled ? 'is-scrolled' : ''}`}>
       <nav className="site-nav-inner" aria-label="Main">
         <Link href="/" className="site-wordmark display-font text-sm">
@@ -121,29 +122,36 @@ export default function Nav() {
           </button>
         </div>
       </nav>
-
-      <div
-        id="mobile-menu"
-        className={`mobile-menu ${menuOpen ? 'is-open' : ''}`}
-        hidden={!menuOpen}
-      >
-        <ul className="mobile-menu-links">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <Link
-                href={link.href}
-                className="display-font h-small text-white"
-                aria-current={isActive(link.href) ? 'page' : undefined}
-              >
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <a href={DONATE_URL} {...EXTERNAL_LINK_PROPS} className="pill pill-gold mt-8">
-          <span>Donate</span>
-        </a>
-      </div>
     </header>
+
+    {/* Rendered as a sibling of the header, not a child of it. `.site-nav`
+        carries a `transform` (the iOS Safari sticky-repaint fix below) and a
+        transformed ancestor becomes the containing block for any
+        `position: fixed` descendant — this menu's `inset: 0` would then
+        resolve against the header's own small box instead of the viewport,
+        collapsing the overlay down to a sliver behind the burger icon. */}
+    <div
+      id="mobile-menu"
+      className={`mobile-menu ${menuOpen ? 'is-open' : ''}`}
+      hidden={!menuOpen}
+    >
+      <ul className="mobile-menu-links">
+        {NAV_LINKS.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className="display-font h-small text-white"
+              aria-current={isActive(link.href) ? 'page' : undefined}
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <a href={DONATE_URL} {...EXTERNAL_LINK_PROPS} className="pill pill-gold mt-8">
+        <span>Donate</span>
+      </a>
+    </div>
+    </>
   );
 }
