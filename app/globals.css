@@ -705,6 +705,17 @@ body.nav-open .scroll-bar {
     inset 0 -4px 0 -1px var(--charcoal),
     inset 0 -6px 0 -5px var(--charcoal);
   transition: background 300ms ease;
+  /* iOS Safari has a known repaint bug with `position: sticky`: the strip of
+     page content that scrolls in behind the bar can fail to repaint at its
+     new offset, so stale pixels are left showing through/under the nav and
+     it reads as the bar "overlapping" content as you scroll. Promoting the
+     bar to its own compositing layer sidesteps WebKit's buggy repaint path
+     for the sticky element entirely. */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  will-change: transform;
 }
 
 .site-nav-inner {
