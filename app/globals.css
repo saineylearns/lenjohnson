@@ -2312,7 +2312,7 @@ body.nav-open .scroll-bar {
    and at Act V's own inset. */
 
 .ls {
-  --paper: #ece3d4;
+  --paper: #E2DED0;
   --night: #12100e;
   position: relative;
   overflow-x: clip;
@@ -2442,11 +2442,11 @@ body.nav-open .scroll-bar {
 }
 
 .ls-act-i {
-  --bg: #ece3d4;
-  --ink: #191410;
-  --ink-soft: #5d5245;
-  --accent: #169B62;
-  --rule: rgba(25, 20, 16, 0.16);
+  --bg: #E2DED0;
+  --ink: #1A1A1B;
+  --ink-soft: #4A4740;
+  --accent: #8B0000;
+  --rule: rgba(26, 26, 27, 0.22);
   --prev: #12100e;
 }
 
@@ -2458,39 +2458,39 @@ body.nav-open .scroll-bar {
    previous background so the bleed-in gradient at the top of each act stays
    correct. */
 .ls-act-ii {
-  --bg: #ece3d4;
-  --ink: #191410;
-  --ink-soft: #5d5245;
-  --accent: #169B62;
-  --rule: rgba(25, 20, 16, 0.16);
-  --prev: #ece3d4;
+  --bg: #E2DED0;
+  --ink: #1A1A1B;
+  --ink-soft: #4A4740;
+  --accent: #8B0000;
+  --rule: rgba(26, 26, 27, 0.22);
+  --prev: #E2DED0;
 }
 
 .ls-act-iii {
-  --bg: #ece3d4;
-  --ink: #191410;
-  --ink-soft: #5d5245;
-  --accent: #169B62;
-  --rule: rgba(25, 20, 16, 0.16);
-  --prev: #ece3d4;
+  --bg: #E2DED0;
+  --ink: #1A1A1B;
+  --ink-soft: #4A4740;
+  --accent: #8B0000;
+  --rule: rgba(26, 26, 27, 0.22);
+  --prev: #E2DED0;
 }
 
 .ls-act-iv {
-  --bg: #ece3d4;
-  --ink: #191410;
-  --ink-soft: #5d5245;
-  --accent: #169B62;
-  --rule: rgba(25, 20, 16, 0.16);
-  --prev: #ece3d4;
+  --bg: #E2DED0;
+  --ink: #1A1A1B;
+  --ink-soft: #4A4740;
+  --accent: #8B0000;
+  --rule: rgba(26, 26, 27, 0.22);
+  --prev: #E2DED0;
 }
 
 .ls-act-v {
-  --bg: #ece3d4;
-  --ink: #191410;
-  --ink-soft: #5d5245;
-  --accent: #169B62;
-  --rule: rgba(25, 20, 16, 0.16);
-  --prev: #ece3d4;
+  --bg: #E2DED0;
+  --ink: #1A1A1B;
+  --ink-soft: #4A4740;
+  --accent: #8B0000;
+  --rule: rgba(26, 26, 27, 0.22);
+  --prev: #E2DED0;
 }
 
 /* Chapters VI–IX: added when the page moved from five multi-chapter acts to
@@ -2499,12 +2499,12 @@ body.nav-open .scroll-bar {
 .ls-act-vii,
 .ls-act-viii,
 .ls-act-ix {
-  --bg: #ece3d4;
-  --ink: #191410;
-  --ink-soft: #5d5245;
-  --accent: #169B62;
-  --rule: rgba(25, 20, 16, 0.16);
-  --prev: #ece3d4;
+  --bg: #E2DED0;
+  --ink: #1A1A1B;
+  --ink-soft: #4A4740;
+  --accent: #8B0000;
+  --rule: rgba(26, 26, 27, 0.22);
+  --prev: #E2DED0;
 }
 
 /* --- Grid + the rail ----------------------------------------------------- */
@@ -2567,11 +2567,11 @@ body.nav-open .scroll-bar {
 /* No rail, no chapter number: this is the page's own preamble, set apart
    from the numbered chapters that follow it. */
 .ls-intro {
-  --bg: #ece3d4;
-  --ink: #191410;
-  --ink-soft: #5d5245;
-  --accent: #169B62;
-  --rule: rgba(25, 20, 16, 0.16);
+  --bg: #E2DED0;
+  --ink: #1A1A1B;
+  --ink-soft: #4A4740;
+  --accent: #8B0000;
+  --rule: rgba(26, 26, 27, 0.22);
   position: relative;
   padding-block: clamp(3rem, 8vh, 5.5rem);
   background: var(--bg);
@@ -2828,8 +2828,8 @@ body.nav-open .scroll-bar {
   background:
     linear-gradient(
       to bottom,
-      #ece3d4 0%,
-      rgba(236, 227, 212, 0) 24%,
+      #E2DED0 0%,
+      rgba(226, 222, 208, 0) 24%,
       rgba(20, 17, 13, 0) 55%,
       #14110d 100%
     ),
@@ -3009,7 +3009,7 @@ body.nav-open .scroll-bar {
   --ink-soft: #a2957f;
   --accent: #d4af37;
   --rule: rgba(242, 234, 222, 0.16);
-  --prev: #ece3d4;
+  --prev: #E2DED0;
   position: relative;
   background: var(--bg);
   color: var(--ink);
@@ -3029,6 +3029,187 @@ body.nav-open .scroll-bar {
   .ls-plate-media img,
   .ls-cut { transition: none; }
   .ls-cut { rotate: 0deg; }
+}
+
+/* ===========================================================================
+   THE BROADSHEET PASS — soot, blood and newsprint.
+   Everything below is scoped to .ls, so it changes Len's story and nothing
+   else. The home page keeps the palette it has; the champions page carries
+   its own copy of the old one and is deliberately left alone.
+   ======================================================================== */
+
+/* Mechanical motion. Every transition on this page moves in four discrete
+   steps rather than gliding — the stutter of a projector rather than the
+   ease-out of an interface. Applied at the page level so nothing has to
+   opt in, and dropped entirely when the reader has asked for less motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .ls *,
+  .ls *::before,
+  .ls *::after {
+    transition-timing-function: steps(4, end);
+  }
+}
+
+/* The page ran generous, symmetrical air top and bottom of every chapter,
+   which is most of what made it read as a template. Tightened so the
+   chapters press against one another the way columns on a sheet do. */
+.ls-act {
+  padding-block: clamp(3.5rem, 9vh, 6.5rem);
+}
+
+/* --- Headlines ----------------------------------------------------------- */
+
+/* Off the slab and onto the condensed poster sans, set fractionally off
+   true. The rotation is the point: a headline that is exactly level is the
+   single clearest sign that a machine set it. Origin at the left baseline so
+   the line pivots from where it starts rather than drifting sideways. */
+.ls-h {
+  font-family: var(--font-anton), 'Anton', 'Arial Narrow', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  transform: rotate(-1deg);
+  transform-origin: left bottom;
+}
+
+/* The smaller chapter heads lean less — at this size a full degree starts to
+   look like a mistake rather than a hand. */
+.ls-h-sm {
+  transform: rotate(-0.6deg);
+}
+
+/* --- Broadsheet columns -------------------------------------------------- */
+
+/* Long-form passages set in two columns with a hairline rule between them,
+   the way a paper sets a feature. Only where the passage is long enough to
+   fill both — a two-column block that runs out after four lines reads as a
+   mistake, so this is applied per block rather than to .ls-prose at large. */
+.ls-broadsheet {
+  max-width: none;
+}
+
+@media (min-width: 880px) {
+  .ls-broadsheet {
+    column-count: 2;
+    column-gap: clamp(1.75rem, 3.5vw, 3rem);
+    column-rule: 1px solid var(--rule);
+  }
+
+  /* Paragraph rhythm inside a column is tighter than between stacked blocks,
+     and no paragraph should be left hanging alone at the top of column two. */
+  .ls-broadsheet > * + * { margin-top: 1.1em; }
+  .ls-broadsheet p { orphans: 2; widows: 2; }
+
+  /* A drop cap can't straddle a column break, so the opening paragraph of a
+     broadsheet block stays whole in column one. */
+  .ls-broadsheet .ls-drop { break-inside: avoid; }
+}
+
+/* --- Torn edges ---------------------------------------------------------- */
+
+/* Cuttings are torn out, not trimmed. The polygon is hand-set rather than
+   generated — a shallow, irregular tear down all four sides, deepest where a
+   thumb would have pulled. It sits on the media rather than the figure so the
+   tape and the caption stay square, which is what makes the tear read as an
+   edge of the paper rather than a shaped div. */
+.ls-cut .ls-plate-media {
+  clip-path: polygon(
+    0.6% 1.2%, 18% 0.2%, 34% 1.6%, 52% 0.3%, 71% 1.9%, 88% 0.4%, 99.4% 1.4%,
+    98.6% 19%, 99.7% 37%, 98.4% 55%, 99.6% 73%, 98.5% 91%, 99.2% 98.8%,
+    82% 99.7%, 64% 98.3%, 46% 99.6%, 28% 98.2%, 11% 99.5%, 0.8% 98.6%,
+    1.4% 80%, 0.3% 62%, 1.6% 44%, 0.4% 26%
+  );
+}
+
+/* The dot screen carries more of the image now that the page is meant to look
+   printed rather than photographed. */
+.ls-plate-media::before {
+  opacity: 0.2;
+}
+
+/* --- Breaking the box ---------------------------------------------------- */
+
+/* Plates stop sitting inside their column. The outer edge runs off the sheet
+   and the inner edge crosses into the gutter, so the picture overlaps the
+   text block instead of being parked beside it. Only above 1000px, where
+   there is margin to run into — on a phone this would just clip. */
+@media (min-width: 1000px) {
+  .ls-cols-lead > .ls-plate,
+  .ls-cols-flip > .ls-plate {
+    position: relative;
+    z-index: 3;
+    /* The old ±18px nudge compounded with the margins below and pushed the
+       plate over the first letter of every line. Position is set here, in
+       one place, rather than by two rules pulling against each other. */
+    translate: none;
+  }
+
+  /* Photograph on the right: it eats most of the gutter on the inside and
+     runs off the edge of the sheet on the outside, so neither edge lines up
+     with the column it nominally sits in. The inside stops about 20px short
+     of the text — a picture that crashes into the words is a picture you
+     can't read past, and the copy has to survive the layout. */
+  .ls-cols-lead > .ls-plate {
+    margin-left: -1.75rem;
+    margin-right: -3rem;
+  }
+
+  /* Mirrored, for the chapters that lead with the image. */
+  .ls-cols-flip > .ls-plate {
+    margin-right: -1.75rem;
+    margin-left: -3rem;
+  }
+}
+
+/* --- Double rules -------------------------------------------------------- */
+
+/* A thick line and a thin one, the divider every paper of the period used.
+   Drawn as a gradient rather than as `border-style: double`, which gives two
+   lines of equal weight and reads as a border, not a rule. */
+.ls-intro {
+  border-bottom: 0;
+}
+
+.ls-intro::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 6px;
+  background: linear-gradient(
+    to bottom,
+    var(--ink) 0 3px,
+    transparent 3px 5px,
+    var(--ink) 5px 6px
+  );
+}
+
+/* The kicker's trailing rule doubles up to match. */
+.ls-kicker::after {
+  height: 4px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent) 0 2px,
+    transparent 2px 3px,
+    var(--accent) 3px 4px
+  );
+}
+
+/* The rail's head rule, likewise. */
+.ls-rail {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.ls-rail::before {
+  content: '';
+  display: block;
+  height: 5px;
+  margin-bottom: 0.9rem;
+  background: linear-gradient(
+    to bottom,
+    var(--accent) 0 3px,
+    transparent 3px 4px,
+    var(--accent) 4px 5px
+  );
 }
 
 /* ------------------------------------------------------------------ */

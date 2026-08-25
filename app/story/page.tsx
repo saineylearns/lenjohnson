@@ -195,7 +195,7 @@ export default function StoryPage() {
                 <h2 className="ls-h">Boxing career</h2>
               </Reveal>
 
-              <div className="ls-prose" style={{ marginTop: 'clamp(2rem, 5vh, 3rem)', maxWidth: '62ch' }}>
+              <div className="ls-prose ls-broadsheet" style={{ marginTop: 'clamp(2rem, 5vh, 3rem)' }}>
                 <p className="ls-lede ls-drop">
                   Growing up Len was trained by his father as a boxer in the
                   boxing booths, travelling around fairgrounds. By 1920 Len
@@ -260,7 +260,7 @@ export default function StoryPage() {
                 </h2>
               </Reveal>
 
-              <div className="ls-prose" style={{ marginTop: 'clamp(1.75rem, 4vh, 2.5rem)', maxWidth: '62ch' }}>
+              <div className="ls-prose ls-broadsheet" style={{ marginTop: 'clamp(1.75rem, 4vh, 2.5rem)' }}>
                 <p>Len defeated champions.</p>
                 <p>
                   &bull; Harry Collins in Australia for the middleweight
@@ -531,7 +531,7 @@ export default function StoryPage() {
               <h2 className="ls-h ls-h-sm">Community activism</h2>
             </Reveal>
 
-            <div className="ls-prose" style={{ marginTop: 'clamp(1.5rem, 4vh, 2rem)', maxWidth: '62ch' }}>
+            <div className="ls-prose ls-broadsheet" style={{ marginTop: 'clamp(1.5rem, 4vh, 2rem)' }}>
               <p>
                 Len, however, remained politically active and continued to
                 challenge existing &lsquo;colour bars&rsquo; in Manchester.
