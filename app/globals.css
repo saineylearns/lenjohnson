@@ -103,13 +103,18 @@
 
 body {
   font-family: var(--font-instrument), 'Instrument Sans', -apple-system, sans-serif;
-  /* Two offset dot grids over the paper tone — the tooth of the stock, at a
-     scale you read as texture rather than as pattern. */
+  /* Two offset dot grids plus a fine directional fibre streak, layered over
+     the paper tone — the tooth of the stock, at a scale you read as texture
+     rather than as pattern. The fibre layer gives the multiply-blended
+     photographs something underneath them to actually grab: a flat colour
+     multiplies to a flat, slightly darker colour, but a mottled one breaks
+     up unevenly the way ink sits on real stock. */
   background:
     radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.025) 0 1px, transparent 1px),
     radial-gradient(circle at 80% 70%, rgba(0, 0, 0, 0.018) 0 1px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.24' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
     var(--paper);
-  background-size: 5px 5px, 7px 7px, auto;
+  background-size: 5px 5px, 7px 7px, 120px 120px, auto;
   color: var(--ink);
   width: 100%;
   position: relative;
@@ -120,15 +125,16 @@ body {
    (feTurbulence), not a shipped PNG, so there's no asset to fetch and no
    large photographic texture to fight the type. Fixed to the viewport rather
    than the document so it doesn't tile visibly at section seams, and kept
-   very low — this is the tooth of the stock, not a grunge overlay. It is
-   static, so there is nothing here for reduced-motion to switch off. */
+   low, though pushed past the stock's own tooth here — this is closer to
+   soot than paper grain. It is static, so there is nothing here for
+   reduced-motion to switch off. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.045;
+  opacity: 0.09;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
@@ -3130,11 +3136,10 @@ body.nav-open .scroll-bar {
   hyphens: auto;
   /* Tighter than the site's normal reading line (1.75) — a paper column
      was set dense to save newsprint, and the tighter measure is what makes
-     the block read as authoritative type rather than a web paragraph.
-     Stops short of 1.2: at this size, justified and hyphenated, anything
-     tighter starts letting descenders and ascenders from adjacent lines
-     brush against each other. */
-  line-height: 1.4;
+     the block read as authoritative type rather than a web paragraph. Set
+     dense enough that ascenders and descenders from adjacent lines nearly
+     touch — hyphenation and justification are carrying the legibility. */
+  line-height: 1.15;
 }
 
 @media (min-width: 880px) {
@@ -3232,14 +3237,14 @@ body.nav-open .scroll-bar {
      of the text — a picture that crashes into the words is a picture you
      can't read past, and the copy has to survive the layout. */
   .ls-cols-lead > .ls-plate {
-    margin-left: -1.75rem;
-    margin-right: -3rem;
+    margin-left: -3.25rem;
+    margin-right: -5rem;
   }
 
   /* Mirrored, for the chapters that lead with the image. */
   .ls-cols-flip > .ls-plate {
-    margin-right: -1.75rem;
-    margin-left: -3rem;
+    margin-right: -3.25rem;
+    margin-left: -5rem;
   }
 }
 
@@ -3692,14 +3697,14 @@ body.nav-open .scroll-bar {
   text-transform: uppercase;
   text-decoration: none;
   box-shadow: var(--shadow-lg);
-  transform: rotate(-2deg);
+  transform: rotate(-4deg);
   transition: transform 80ms linear, box-shadow 80ms linear, background 80ms linear;
 }
 
 .donate-cta-btn:hover,
 .donate-cta-btn:focus-visible {
   background: var(--brick-dark);
-  transform: rotate(-2deg) translate(3px, 3px);
+  transform: rotate(-4deg) translate(3px, 3px);
   box-shadow: var(--shadow-sm);
 }
 
