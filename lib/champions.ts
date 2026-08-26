@@ -63,29 +63,29 @@ export type Champion = {
   };
 };
 
-// A single prototype entry — Jane Doe — to show the shape and tone the real
-// Champion statements will take. Replace with real submissions as they come
-// in; each new Champion is just another object in this array.
-export const CHAMPIONS: Champion[] = [
-  {
-    id: 'jane-doe',
-    name: 'Jane Doe',
-    type: 'Individual',
-    categories: ['Fundraising', 'Anti-racism'],
-    voice: 'I',
-    statement: {
-      whoAndWhat:
-        'I’m a Manchester campaigner who first heard Len’s story through the statue appeal, and now spend my spare time fundraising and talking to schools about it.',
-      whyLen:
-        'young people in this city still don’t know his name, and the same arguments about who gets to belong here haven’t gone away.',
-      whySupport:
-        'it’s honest about Manchester’s history — the good and the shameful — and is led by people who actually knew Len’s story, not an institution telling it for them.',
-      whatWeWillDo:
-        'keep sharing the crowdfunder with my networks, and take the story into two more schools before the statue is unveiled.',
-    },
-    social: { label: '@janedoe', href: 'https://twitter.com' },
-  },
-];
+/**
+ * No Champions announced yet. While this array is empty the page holds open
+ * CHAMPION_SLOTS vacant entries instead — the prompts every Champion will
+ * answer, each one reading "Coming soon" — so the section shows the shape of
+ * what's coming rather than a placeholder name pretending to be real.
+ *
+ * Adding the first real Champion is one object in this array; the vacant
+ * slots disappear on their own the moment there is anything to show. Shape:
+ *
+ *   {
+ *     id: 'jane-doe',
+ *     name: 'Jane Doe',
+ *     type: 'Individual',
+ *     categories: ['Fundraising', 'Anti-racism'],
+ *     voice: 'I',
+ *     statement: { whoAndWhat: '…', whyLen: '…', whySupport: '…', whatWeWillDo: '…' },
+ *     social: { label: '@janedoe', href: 'https://…' },
+ *   }
+ */
+export const CHAMPIONS: Champion[] = [];
+
+/** How many vacant entries to hold open until real Champions land. */
+export const CHAMPION_SLOTS = 6;
 
 export const ALL_CATEGORIES: ChampionCategory[] = [
   'Anti-racism',

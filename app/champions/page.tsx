@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import Section from '@/components/Section';
 import ChampionGrid from '@/components/champions/ChampionGrid';
-import { OTHERS } from '@/lib/champions';
+import { CHAMPIONS, OTHERS } from '@/lib/champions';
 import { CONTACT_EMAIL } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -80,25 +80,24 @@ export default function ChampionsPage() {
             <div className="champ-notices">
               {WHAT_IS_A_CHAMPION.map((item) => (
                 <div className="champ-notice" key={item}>
-                  <span className="champ-manicule--notice" aria-hidden="true">☞</span>
                   <p className="body-sm">{item}</p>
                 </div>
               ))}
             </div>
 
             <h3 className="display-font champ-subhead champ-how-h">How Champions help</h3>
-            <p className="champ-kicker label champ-tape-kicker">Tale of the tape</p>
 
-            {/* THE TALE OF THE TAPE — a boxing stat grid stood in for a plain
-                list: four quadrants behind heavy 4px rules, each one
-                "redacted" to a black government-file block on hover. */}
-            <div className="champ-tape">
+            {/* THE STUBS — each way of helping torn off as its own ticket:
+                a die-cut perforation down the left, the count on the stub
+                side, and the copy on the body. Blacks out to a redacted
+                government-file block on hover, as before. */}
+            <div className="champ-stubs">
               {HOW_TO_HELP.map((item, i) => (
-                <div className="champ-tape-cell" key={item}>
-                  <span className="champ-tape-num label">{String(i + 1).padStart(2, '0')}</span>
-                  <p className="champ-tape-text body-sm">{item}</p>
-                  <div className="champ-tape-redact" aria-hidden="true">
-                    <p className="champ-tape-redact-text">{item}</p>
+                <div className="champ-stub" key={item}>
+                  <span className="champ-stub-num label">{String(i + 1).padStart(2, '0')}</span>
+                  <p className="champ-stub-text body-sm">{item}</p>
+                  <div className="champ-stub-redact" aria-hidden="true">
+                    <p className="champ-stub-redact-text">{item}</p>
                   </div>
                 </div>
               ))}
@@ -115,6 +114,38 @@ export default function ChampionsPage() {
         </Section>
 
         <Section bg="cream">
+          {/* THE REAL BILL — the page has been talking in the language of a
+              1930s fight poster, so here is the actual one. Len is billed as
+              the challenger on a championship the Board's colour bar would
+              not let him hold, which is the whole argument of this page in a
+              single sheet of paper. */}
+          <figure className="champ-bill">
+            <img
+              src="/images/fight-bill-1932.jpg"
+              alt="Fight bill for the Royal Albert Hall, Wednesday 11 May 1932: an
+                   Unofficial Middle-Weight Championship over fifteen rounds between
+                   Len Harvey, billed as Middle-Weight Champion of Great Britain, and
+                   Len Johnson, billed as Outstanding Contender and Challenger."
+              className="champ-bill-img"
+              loading="lazy"
+            />
+            <figcaption className="champ-bill-cap">
+              <p className="champ-kicker label">Royal Albert Hall &middot; 11 May 1932</p>
+              <p className="body-sm">
+                Len Harvey is the Middle-Weight Champion of Great Britain. Len
+                Johnson is the “Outstanding Contender and Challenger”. The bill
+                calls the fight an <em>Unofficial</em> championship, because the
+                colour bar meant Len was never allowed to fight for the real
+                thing — however good he was, the title was closed to him.
+              </p>
+              <p className="champ-bill-credit label">
+                Courtesy of the Working Class Movement Library
+              </p>
+            </figcaption>
+          </figure>
+        </Section>
+
+        <Section bg="cream">
           <div className="stack-loose">
             <div className="stack champ-grid-head">
               <p className="champ-kicker label">Meet the Champions</p>
@@ -122,8 +153,9 @@ export default function ChampionsPage() {
                 People and organisations who’ve gone above and beyond.
               </h2>
               <p className="body-sm text-muted">
-                Filter by what they’re known for, or open a profile to read their
-                statement in their own words.
+                {CHAMPIONS.length
+                  ? 'Filter by what they’re known for, or open a profile to read their statement in their own words.'
+                  : 'Our first Champions are signing on now. Each will answer the same four questions in their own words — watch this space.'}
               </p>
             </div>
             <ChampionGrid />
