@@ -114,38 +114,6 @@ export default function ChampionsPage() {
         </Section>
 
         <Section bg="cream">
-          {/* THE REAL BILL — the page has been talking in the language of a
-              1930s fight poster, so here is the actual one. Len is billed as
-              the challenger on a championship the Board's colour bar would
-              not let him hold, which is the whole argument of this page in a
-              single sheet of paper. */}
-          <figure className="champ-bill">
-            <img
-              src="/images/fight-bill-1932.jpg"
-              alt="Fight bill for the Royal Albert Hall, Wednesday 11 May 1932: an
-                   Unofficial Middle-Weight Championship over fifteen rounds between
-                   Len Harvey, billed as Middle-Weight Champion of Great Britain, and
-                   Len Johnson, billed as Outstanding Contender and Challenger."
-              className="champ-bill-img"
-              loading="lazy"
-            />
-            <figcaption className="champ-bill-cap">
-              <p className="champ-kicker label">Royal Albert Hall &middot; 11 May 1932</p>
-              <p className="body-sm">
-                Len Harvey is the Middle-Weight Champion of Great Britain. Len
-                Johnson is the “Outstanding Contender and Challenger”. The bill
-                calls the fight an <em>Unofficial</em> championship, because the
-                colour bar meant Len was never allowed to fight for the real
-                thing — however good he was, the title was closed to him.
-              </p>
-              <p className="champ-bill-credit label">
-                Courtesy of the Working Class Movement Library
-              </p>
-            </figcaption>
-          </figure>
-        </Section>
-
-        <Section bg="cream">
           <div className="stack-loose">
             <div className="stack champ-grid-head">
               <p className="champ-kicker label">Meet the Champions</p>
