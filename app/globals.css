@@ -829,6 +829,15 @@ body.nav-open .scroll-bar {
   cursor: pointer;
   padding: 0.5rem;
   line-height: 0;
+  transition: background 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Once the menu is open the toggle is sitting in front of the black overlay
+   it just opened — it switches to match it, black square and white lines,
+   rather than staying a paper-coloured button floating on top of its own
+   backdrop. */
+.site-nav-toggle.is-open {
+  background: var(--black);
 }
 
 .burger {
@@ -845,8 +854,21 @@ body.nav-open .scroll-bar {
   height: 2px;
   width: 100%;
   background: var(--black);
-  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
+  transition: background 200ms linear, transform 250ms cubic-bezier(0.4, 0, 0.2, 1),
     opacity 200ms linear;
+}
+
+.site-nav-toggle.is-open .burger i {
+  background: var(--paper);
+}
+
+/* Gold is the site's accent for interaction against a black surface (the
+   mobile menu's own links, the Donate pill's reversed state) — the toggle
+   picks it up on hover/focus once it's black itself, the same moment it
+   joins that surface. */
+.site-nav-toggle:hover .burger.is-open i,
+.site-nav-toggle:focus-visible .burger.is-open i {
+  background: var(--gold);
 }
 
 .burger.is-open i:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -4509,6 +4531,310 @@ body.nav-open .scroll-bar {
     display: block;
     margin-top: 0.25rem;
     color: var(--ink-soft);
+  }
+}
+
+/* ===========================================================================
+   THE STATUE — a public art commission dossier, not a charity landing page.
+   Scoped `.st-*`, same pattern as the Events register (`.ev-*`): bespoke
+   markup rather than Section/PageHero, sections left background-transparent
+   so the body's own paper texture shows through, no rounded corners or
+   pill/card treatments anywhere. Where the Story page reads as biography,
+   this page reads as a civic project moving toward a physical object — the
+   maquette is the hinge the whole page turns on. */
+
+.st-wide {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* The reading column every long-form paragraph sits in — deliberately far
+   short of the site's 1280px container so prose reads as a printed essay,
+   not a full-width web page. */
+.st-reading {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* THE MASTHEAD — a dossier cover sheet: a catalogue reference top-right, one
+   enormous headline, an identifying block underneath it. No photo behind
+   the type, no centring. */
+.st-masthead {
+  padding-top: clamp(2rem, 6vh, 4rem);
+  padding-bottom: clamp(2rem, 5vh, 3.5rem);
+  border-bottom: var(--line-heavy);
+}
+
+.st-masthead-top {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-soft);
+}
+
+.st-masthead-h {
+  margin-top: 1rem;
+  font-size: clamp(4.5rem, 17vw, 13rem);
+}
+
+.st-masthead-meta {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  color: var(--ink-soft);
+}
+
+/* A LARGE VISUAL — the person, encountered before the argument. Full-bleed,
+   cropped tall, no caption competing with it beyond a plain identification
+   line underneath. */
+.st-figure-bleed {
+  border-bottom: var(--line-heavy);
+}
+
+.st-figure-bleed img {
+  display: block;
+  width: 100%;
+  height: clamp(22rem, 62vh, 38rem);
+  object-fit: cover;
+}
+
+.st-figure-bleed figcaption {
+  padding: 0.75rem var(--gutter);
+}
+
+/* TEXT + IMAGE — the asymmetric grid the brief specifies: a fixed reading
+   column and a narrower image column beside it, not an even two-up split.
+   `.st-pair--reverse` swaps which side the image sits on so the page doesn't
+   repeat the same layout every time it pairs text with a photograph. */
+.st-pair {
+  display: grid;
+  grid-template-columns: minmax(40px, 1fr) minmax(0, 680px) minmax(280px, 420px) minmax(40px, 1fr);
+  column-gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.st-pair-text {
+  grid-column: 2;
+}
+
+.st-pair-image {
+  grid-column: 3;
+  align-self: start;
+}
+
+.st-pair--reverse {
+  /* Same two column widths, mirrored — the image keeps its narrower
+     measure and the text keeps its 680px reading width, they just swap
+     sides, rather than the text shrinking to fit the image's old slot. */
+  grid-template-columns: minmax(40px, 1fr) minmax(280px, 420px) minmax(0, 680px) minmax(40px, 1fr);
+}
+
+.st-pair--reverse .st-pair-image {
+  grid-column: 2;
+}
+
+.st-pair--reverse .st-pair-text {
+  grid-column: 3;
+}
+
+/* A CATALOGUE NUMBER — the small marker labelling each numbered beat of the
+   story. Decorative/navigational only; it never stands in for supplied
+   copy. */
+.st-num {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--brick);
+}
+
+.st-h {
+  font-size: clamp(2rem, 5.5vw, 3.5rem);
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+/* Long-form copy reads as an editorial essay: generous leading, generous
+   space between paragraphs, no bolding-for-emphasis. */
+.st-copy p {
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
+}
+
+.st-copy p:last-child {
+  margin-bottom: 0;
+}
+
+/* A single phrase can carry more weight without being lifted out of the
+   paragraph and turned into a slogan — it just prints larger, in place. */
+.st-emphasis {
+  display: inline-block;
+  font-size: 1.35em;
+  line-height: 1;
+}
+
+/* THE MAQUETTE — the page's visual centre. Room around the photograph,
+   nothing printed over it, no card. */
+.st-maquette {
+  padding: clamp(2.5rem, 7vh, 5rem) 0;
+  border-top: var(--line);
+  border-bottom: var(--line);
+}
+
+.st-maquette-mark {
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.st-maquette-frame {
+  margin: 1.5rem auto 0;
+  max-width: 640px;
+}
+
+.st-maquette-frame .archive-image-wrap {
+  border: var(--line-heavy);
+}
+
+.st-maquette-cap {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* THE SIX SCULPTORS — a fact already in the supplied paragraph, visualised
+   as a catalogue label rather than restated as new copy. Three plain
+   numbers on one rule, not three cards. */
+.st-tally {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  padding: clamp(2rem, 5vh, 3.5rem) 0;
+  text-align: center;
+}
+
+.st-tally-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.st-tally-num {
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  line-height: 0.85;
+}
+
+.st-tally-label {
+  color: var(--ink-soft);
+  max-width: 12ch;
+}
+
+/* TASLIM MARTIN — the dossier turns briefly gallery-like: an identifying
+   line in the subject's own words from the supplied copy, then the
+   credentials paragraph with the named institutions picked out as
+   marginalia beside it rather than as portfolio badges. */
+.st-artist-id {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.25rem;
+  justify-content: center;
+  color: var(--ink-soft);
+  margin-top: 1rem;
+}
+
+.st-marginalia {
+  display: grid;
+  grid-template-columns: minmax(40px, 1fr) minmax(0, 680px) minmax(280px, 420px) minmax(40px, 1fr);
+  column-gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.st-marginalia-text {
+  grid-column: 2;
+}
+
+.st-marginalia-notes {
+  grid-column: 3;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 0.4rem;
+}
+
+.st-marginalia-note {
+  padding-left: 1rem;
+  border-left: var(--line);
+  color: var(--ink-soft);
+}
+
+/* THE YOUNGER LEN — the pivot from artist/commission to Len himself. An
+   oversized line and a boxing photograph, then straight back into the
+   supplied copy. */
+.st-pivot {
+  padding: clamp(2rem, 6vh, 4rem) 0;
+}
+
+.st-pivot-img {
+  max-width: 26rem;
+  margin: 0 auto;
+}
+
+.st-pivot-h {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  text-align: center;
+  font-size: clamp(3.5rem, 12vw, 8rem);
+}
+
+/* THE FINAL SECTION — the page slows down rather than pitching a donation.
+   Two bare typographic markers, thin rules, then the closing paragraph. */
+.st-close-marks {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: clamp(1.5rem, 4vw, 2.5rem) 0;
+  border-top: var(--line-heavy);
+  border-bottom: var(--line-heavy);
+}
+
+.st-close-marks span {
+  font-size: clamp(2rem, 7vw, 5rem);
+}
+
+.st-close-copy {
+  padding-top: clamp(2rem, 5vh, 3.5rem);
+}
+
+@media (max-width: 900px) {
+  .st-pair,
+  .st-marginalia {
+    display: block;
+  }
+
+  .st-pair-image {
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .st-pair--reverse .st-pair-image {
+    margin-top: 0;
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .st-marginalia-notes {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: clamp(1.5rem, 4vw, 2.5rem);
+    padding-top: 0;
+  }
+
+  .st-marginalia-note {
+    border-left: none;
+    border-top: var(--line);
+    padding-left: 0;
+    padding-top: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .st-masthead-top {
+    font-size: 0.68rem;
   }
 }
 

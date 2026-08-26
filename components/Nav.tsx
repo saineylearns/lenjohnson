@@ -108,7 +108,7 @@ export default function Nav() {
           </a>
           <button
             type="button"
-            className="site-nav-toggle"
+            className={`site-nav-toggle ${menuOpen ? 'is-open' : ''}`}
             onClick={() => setMenuOpen((open) => !open)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
