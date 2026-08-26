@@ -3320,7 +3320,10 @@ body.nav-open .scroll-bar {
   --bg: #ece3d4;
   --ink: #191410;
   --ink-soft: #5d5245;
-  --accent: #169B62;
+  /* Was a standalone green — the one accent on the whole site that didn't
+     come from the archive palette. Brick brings this page back in line
+     with every other page's accent colour. */
+  --accent: var(--brick);
   --rule: rgba(25, 20, 16, 0.16);
   background: var(--bg);
   color: var(--ink);
@@ -3334,42 +3337,229 @@ body.nav-open .scroll-bar {
   display: inline-block;
 }
 
-.champ-two-col {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(2rem, 5vw, 3.5rem);
-  padding-top: clamp(1.5rem, 4vh, 2.5rem);
-  border-top: 1px solid var(--rule);
-}
-
-@media (max-width: 720px) {
-  .champ-two-col { grid-template-columns: 1fr; }
-}
-
-.champ-subhead {
-  font-size: clamp(1.05rem, 2vw, 1.35rem);
-}
-
-.champ-bullets {
-  list-style: none;
-  display: grid;
-  gap: 0.6rem;
-}
-
-.champ-bullets li {
+/* ===========================================================================
+   THE CALL TO ARMS — a recruitment poster stood in for what used to be a
+   plain "about" section. A thick inverted band overhead, like the top strip
+   of a union handbill, then one shouted headline set dead centre — nothing
+   here is trying to read as a paragraph, it's trying to read as a wall. */
+.champ-recruit {
   position: relative;
-  padding-left: 1.3rem;
+  margin: 0 calc(var(--gutter) * -1) clamp(2.5rem, 6vh, 4rem);
+  padding: 0 var(--gutter) clamp(2rem, 5vh, 3rem);
+}
+
+.champ-recruit-band {
+  background: var(--ink);
+  color: var(--paper-light);
+  margin: 0 calc(var(--gutter) * -1) clamp(1.5rem, 4vh, 2.5rem);
+  padding: 0.6rem var(--gutter);
+  text-align: center;
+}
+
+.champ-recruit-band .label {
+  color: var(--paper-light);
+  letter-spacing: 0.24em;
+}
+
+/* The headline itself as a broadside plate — a heavy inked block with the
+   type knocked out of it in the paper's own colour, the way a woodblock or
+   letterpress poster reverses its boldest line rather than just printing it
+   dark-on-light like the copy around it. */
+.champ-recruit-h {
+  display: block;
+  width: fit-content;
+  max-width: 92%;
+  margin: 0 auto clamp(1.25rem, 3vh, 1.75rem);
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-size: clamp(2rem, 6.5vw, 4.5rem);
+  background: var(--ink);
+  color: var(--paper-light);
+  padding: clamp(0.9rem, 2.5vw, 1.5rem) clamp(1.25rem, 4vw, 2.5rem);
+  box-shadow: var(--shadow-lg);
+  filter: url(#champ-ink);
+}
+
+.champ-recruit-sub {
+  max-width: 42rem;
+  margin: 0 auto clamp(2rem, 5vh, 3rem);
+  text-align: center;
+}
+
+/* WHAT IS A CHAMPION — a full-bleed inverted banner, the same knockout
+   treatment as the "WANTED" headline above, but a plain edge-to-edge strip
+   rather than a centred plate, so it reads as the next fold of the same
+   poster rather than a second headline competing with the first. */
+.champ-what-banner {
+  background: var(--ink);
+  margin: clamp(2rem, 5vh, 3rem) calc(var(--gutter) * -1) 0;
+  padding: clamp(1.25rem, 3.5vh, 2rem) var(--gutter);
+  text-align: center;
+}
+
+.champ-what-banner-h {
+  color: var(--paper-light);
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  font-size: clamp(1.5rem, 4.5vw, 2.75rem);
+  filter: url(#champ-ink);
+}
+
+/* THE PASTED NOTICES — three separate scraps of paper rather than a bulleted
+   list, each with its own border weight and its own lean, as if handbills
+   had gone up on a board one at a time rather than printed as a set. */
+.champ-notices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.75rem, 4vw, 2.75rem);
+  padding: clamp(2rem, 5vh, 3rem) clamp(0.5rem, 2vw, 1rem) clamp(1rem, 3vh, 1.5rem);
+}
+
+@media (max-width: 820px) {
+  .champ-notices { grid-template-columns: 1fr; }
+}
+
+.champ-notice {
+  position: relative;
+  background: var(--paper-light);
+  padding: 1.5rem 1.5rem 1.75rem;
+  filter: drop-shadow(var(--shadow-sm));
   color: var(--ink-soft);
 }
 
-.champ-bullets li::before {
-  content: '';
+/* Three different weights of pasted-up paper — a fine hairline, a heavy
+   ruled border, and a thick double rule — so no two notices look cut from
+   the same stock. */
+.champ-notice:nth-child(1) { border: 1px solid var(--ink); transform: rotate(-1.5deg); }
+.champ-notice:nth-child(2) { border: 3px solid var(--ink); transform: rotate(1deg); }
+.champ-notice:nth-child(3) { border: 4px double var(--ink); transform: rotate(-0.75deg); }
+
+.champ-manicule--notice {
   position: absolute;
-  left: 0;
-  top: 0.6em;
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
+  left: -0.5rem;
+  top: -1.9rem;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  color: var(--accent);
+  transform: rotate(8deg);
+  line-height: 1;
+}
+
+.champ-notice:nth-child(2) .champ-manicule--notice { transform: rotate(-6deg); left: auto; right: -0.5rem; }
+.champ-notice:nth-child(3) .champ-manicule--notice { transform: rotate(4deg); }
+
+.champ-how-h { margin-top: clamp(1rem, 3vh, 1.5rem); }
+
+.champ-tape-kicker { margin-top: -0.4rem; margin-bottom: 1.25rem; }
+
+/* TALE OF THE TAPE — a boxing stat grid standing in for a plain list: four
+   quadrants inside one heavy 4px frame, ruled off from each other the same
+   weight as the frame itself. */
+.champ-tape {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  border: 4px solid var(--ink);
+}
+
+.champ-tape-cell {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  border-right: 4px solid var(--ink);
+  border-bottom: 4px solid var(--ink);
+}
+
+.champ-tape-cell:nth-child(2n) { border-right: none; }
+.champ-tape-cell:nth-child(n + 3) { border-bottom: none; }
+
+.champ-tape-num {
+  display: block;
+  color: var(--accent);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+}
+
+.champ-tape-text { color: var(--ink-soft); }
+
+/* The redaction — a government-file block that slides down over the
+   quadrant on hover, standing in for a file being opened and blacked out
+   rather than simply highlighted. Hidden from the accessible tree since it
+   repeats the same copy already read from .champ-tape-text. */
+.champ-tape-redact {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 2.25rem);
+  background: var(--ink);
+  color: var(--paper-light);
+  opacity: 0;
+  transform: scaleY(0.06);
+  transform-origin: top;
+  transition: transform 220ms ease, opacity 150ms ease;
+  pointer-events: none;
+}
+
+.champ-tape-redact-text {
+  font-family: var(--font-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+.champ-tape-cell:hover .champ-tape-redact,
+.champ-tape-cell:focus-within .champ-tape-redact {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+@media (max-width: 640px) {
+  .champ-tape { grid-template-columns: 1fr; }
+  .champ-tape-cell { border-right: none !important; border-bottom: 4px solid var(--ink) !important; }
+  .champ-tape-cell:last-child { border-bottom: none !important; }
+}
+
+/* THE SIGNATURE LINE — a faux sign-off beneath the ledger, as if the reader
+   has just countersigned it. */
+.champ-signature {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: clamp(2rem, 5vh, 3rem);
+  padding-top: clamp(1.25rem, 3vh, 1.75rem);
+  border-top: 1px solid var(--rule);
+}
+
+.champ-signature-mark {
+  font-family: var(--font-meta);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+  transform: rotate(-6deg);
+  filter: url(#champ-ink);
+}
+
+.champ-signature-rule {
+  flex: 1;
+  max-width: 16rem;
+  border-bottom: 2px dashed var(--ink);
+  height: 0;
+}
+
+.champ-signature-label {
+  color: var(--ink-soft);
+  font-style: italic;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .champ-signature { flex-wrap: wrap; }
+  .champ-signature-rule { order: 1; flex-basis: 100%; max-width: none; }
 }
 
 .champ-grid-head { margin-bottom: clamp(1.5rem, 4vh, 2.25rem); }
@@ -3400,139 +3590,121 @@ body.nav-open .scroll-bar {
 
 .champ-empty { color: var(--ink-soft); }
 
-/* Editorial profile rows — a photograph plate beside the copy, alternating
-   sides down the page like a magazine feature spread, rather than a grid of
-   uniform cards. Deliberately reuses the Story page's plate/halftone/tape
-   treatment so a Champion's write-up reads like the next chapter of the
-   same publication. */
-.champ-profiles {
-  display: grid;
-  gap: clamp(3.5rem, 9vh, 6rem);
+/* ===========================================================================
+   THE BROADSIDE WALL — every Champion as a small ad pasted up rather than a
+   card in a grid. A plain multi-column masonry (no JS) so entries settle at
+   whatever height their own content gives them, and a handful of nth-child
+   rotations so the sheet reads as pinned up by hand, not printed straight. */
+.champ-wall {
+  columns: 3 320px;
+  column-gap: clamp(1.5rem, 3vw, 2.5rem);
 }
 
-.champ-profile {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: clamp(1.75rem, 4vw, 3.5rem);
-  align-items: center;
-}
-
-.champ-profile:nth-child(even) { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
-.champ-profile:nth-child(even) .champ-profile-media { order: 2; }
-.champ-profile:nth-child(even) .champ-profile-body { order: 1; }
-.champ-profile:nth-child(even) .champ-profile-tape { rotate: 2.5deg; }
-
-@media (max-width: 860px) {
-  .champ-profile,
-  .champ-profile:nth-child(even) {
-    grid-template-columns: 1fr;
-  }
-  .champ-profile:nth-child(even) .champ-profile-media,
-  .champ-profile:nth-child(even) .champ-profile-body {
-    order: initial;
-  }
-}
-
-.champ-profile-media {
+.champ-ad {
   position: relative;
-  overflow: hidden;
-  background: #0b0a09;
-  aspect-ratio: 5 / 4;
-  rotate: -0.6deg;
+  display: inline-block;
+  width: 100%;
+  break-inside: avoid;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  background: var(--paper-light);
+  /* A drop-shadow, not a box-shadow — box-shadow is drawn on the border box
+     and then clipped away along with everything else once clip-path cuts
+     the torn edge below, leaving no shadow at all. drop-shadow follows the
+     element's actual (torn) silhouette instead. */
+  filter: drop-shadow(var(--shadow-sm));
+  padding: 1.5rem 1.5rem 1.75rem;
+  transition: transform 200ms ease, filter 200ms ease;
 }
 
-.champ-profile:nth-child(even) .champ-profile-media { rotate: 0.6deg; }
+/* No straight edges — every card is cut along an irregular, torn-paper
+   silhouette rather than a rectangle. Three different tears, cycling by
+   position, so the wall doesn't repeat one cutout over and over. */
+.champ-ad:nth-child(3n) {
+  transform: rotate(-0.7deg);
+  clip-path: polygon(
+    0% 2%, 6% 0%, 13% 2.4%, 20% 0.3%, 28% 2%, 36% 0%, 44% 1.8%, 52% 0.2%,
+    60% 2.3%, 68% 0%, 76% 1.6%, 84% 0.4%, 92% 2%, 100% 0.5%,
+    99% 12%, 100% 24%, 98.5% 36%, 100% 48%, 99% 60%, 100% 72%, 98.5% 84%, 100% 96%, 99% 100%,
+    91% 98.5%, 83% 100%, 75% 98.3%, 67% 100%, 59% 98.6%, 51% 100%, 43% 98.4%, 35% 100%,
+    27% 98.7%, 19% 100%, 11% 98.5%, 3% 100%, 0% 98%,
+    1.5% 87%, 0% 75%, 1.2% 63%, 0% 51%, 1.5% 39%, 0% 27%, 1.2% 15%, 0% 5%
+  );
+}
 
-.champ-profile-media img {
+.champ-ad:nth-child(3n + 1) {
+  transform: rotate(0.5deg);
+  clip-path: polygon(
+    0% 1%, 5% 2.5%, 11% 0%, 18% 2.2%, 25% 0.4%, 33% 2%, 41% 0.2%, 49% 2.4%,
+    57% 0%, 65% 1.9%, 73% 0.3%, 81% 2.2%, 89% 0%, 96% 1.7%, 100% 0.3%,
+    99% 10%, 100% 20%, 98.7% 30%, 100% 40%, 99% 50%, 100% 60%, 98.7% 70%, 100% 80%, 99% 90%, 100% 98%,
+    93% 100%, 85% 98.2%, 77% 100%, 69% 98.5%, 61% 100%, 53% 98.3%, 45% 100%, 37% 98.6%,
+    29% 100%, 21% 98.4%, 13% 100%, 5% 98.7%, 0% 100%,
+    1% 89%, 0% 78%, 1.3% 67%, 0% 56%, 1% 45%, 0% 34%, 1.3% 23%, 0% 12%, 1% 4%
+  );
+}
+
+.champ-ad:nth-child(3n + 2) {
+  transform: rotate(-0.3deg);
+  clip-path: polygon(
+    0% 2.6%, 7% 0.5%, 15% 2.2%, 23% 0%, 31% 1.9%, 39% 0.3%, 47% 2.3%, 55% 0%,
+    63% 1.8%, 71% 0.4%, 79% 2.1%, 87% 0%, 95% 1.6%, 100% 0.6%,
+    99% 14%, 100% 28%, 98.4% 42%, 100% 56%, 99% 70%, 100% 84%, 98.4% 96%, 100% 100%,
+    90% 98.6%, 80% 100%, 70% 98.3%, 60% 100%, 50% 98.7%, 40% 100%, 30% 98.4%, 20% 100%,
+    10% 98.6%, 0% 100%,
+    1.4% 88%, 0% 76%, 1.1% 64%, 0% 52%, 1.4% 40%, 0% 28%, 1.1% 16%, 0% 6%
+  );
+}
+
+.champ-ad:hover {
+  transform: rotate(0deg) translateY(-2px);
+  filter: drop-shadow(var(--shadow-lg));
+}
+
+.champ-ad-media {
+  overflow: hidden;
+  margin: -1.5rem -1.5rem 1.1rem;
+  aspect-ratio: 4 / 3;
+  background: #0b0a09;
+}
+
+.champ-ad-media img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
   filter: grayscale(1) contrast(1.18) brightness(0.86);
-  transition: filter 900ms ease, transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.champ-profile-media::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0.13;
-  background-image: radial-gradient(rgba(0, 0, 0, 0.9) 0.9px, transparent 1px);
-  background-size: 4px 4px;
-}
-
-.champ-profile:hover .champ-profile-media img {
-  filter: grayscale(0) contrast(1);
-  transform: scale(1.035);
-}
-
-/* No photo yet — a bold monogram plate stands in for it, so an unfinished
-   entry still looks like a deliberate design rather than a placeholder. */
-.champ-profile-plate {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--accent);
-  background-image: radial-gradient(rgba(255, 255, 255, 0.9) 0.9px, transparent 1px);
-  background-size: 4px 4px;
-  background-blend-mode: overlay;
-}
-
-.champ-profile-plate span {
+.champ-ad-num {
+  display: inline-block;
   font-family: var(--font-anton), sans-serif;
-  font-size: clamp(3.5rem, 9vw, 6rem);
-  color: rgba(255, 255, 255, 0.94);
-  letter-spacing: 0.02em;
-}
-
-.champ-profile-tape {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  translate: -50% 0;
-  rotate: -2.5deg;
-  width: clamp(88px, 26%, 130px);
-  height: 26px;
-  z-index: 3;
-  background: rgba(212, 175, 55, 0.3);
-  border-inline: 1px dashed rgba(0, 0, 0, 0.18);
-}
-
-.champ-profile-body { min-width: 0; }
-
-.champ-profile-num {
-  display: block;
-  font-family: var(--font-anton), sans-serif;
-  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-size: 0.85rem;
   color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.champ-ad-type { color: var(--ink-soft); margin-bottom: 0.35rem; }
+
+.champ-ad-name {
+  font-size: clamp(1.35rem, 2.6vw, 1.7rem);
+  line-height: 1.1;
   margin-bottom: 0.75rem;
+  /* A hand-inked letterpress line rarely sits perfectly true — the
+     displacement map roughens the letterforms just enough to read as
+     printed under uneven pressure rather than rendered by a browser. */
+  filter: url(#champ-ink);
 }
 
-.champ-profile-type {
-  color: var(--accent);
-  margin-bottom: 0.6rem;
-}
-
-.champ-profile-name {
-  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
-  line-height: 1.05;
-  margin-bottom: 0.85rem;
-}
-
-.champ-profile-lede {
+.champ-ad-lede {
   font-family: var(--font-instrument-serif), Georgia, serif;
   font-style: italic;
-  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-size: 1rem;
   line-height: 1.5;
   color: var(--ink-soft);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.1rem;
 }
 
-.champ-profile-toggle {
+.champ-ad-toggle {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -3543,41 +3715,189 @@ body.nav-open .scroll-bar {
   cursor: pointer;
 }
 
-.champ-profile-toggle span {
+.champ-ad-toggle span {
   font-family: var(--font-anton), sans-serif;
   font-size: 1.15rem;
   color: var(--accent);
   line-height: 1;
 }
 
-.champ-profile-more {
+.champ-ad-more {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 320ms ease;
 }
 
-.champ-profile-body.is-open .champ-profile-more {
-  grid-template-rows: 1fr;
-}
+.champ-ad-body.is-open .champ-ad-more { grid-template-rows: 1fr; }
 
-.champ-profile-more-inner {
+.champ-ad-more-inner {
   overflow: hidden;
   display: grid;
   gap: 0.85rem;
 }
 
-.champ-profile-body.is-open .champ-profile-more-inner {
+.champ-ad-body.is-open .champ-ad-more-inner {
   padding-top: 1.1rem;
   margin-top: 0.35rem;
   border-top: 1px solid var(--rule);
 }
 
-.champ-profile-social {
+.champ-ad-social {
   color: var(--accent);
   text-decoration: none;
 }
 
-.champ-profile-social:hover { text-decoration: underline; }
+.champ-ad-social:hover { text-decoration: underline; }
+
+/* THE TICKET — every ad is a stub as much as a notice: the copy on the
+   left, a die-cut perforation, and a narrow strip on the right carrying a
+   faux serial number set the way a raffle or ringside ticket numbers its
+   counterfoil. */
+.champ-ad-ticket {
+  display: flex;
+  align-items: stretch;
+  gap: 0.9rem;
+}
+
+.champ-ad-body { min-width: 0; flex: 1; }
+
+.champ-ad-stub {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  padding-left: 0.85rem;
+  border-left: 2px dashed var(--ink-soft);
+}
+
+.champ-ad-serial {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-meta);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.champ-ad--boxer .champ-ad-stub { border-left-color: var(--ink); }
+
+.champ-ad--stamp .champ-ad-stub { border-left-color: rgba(242, 235, 221, 0.4); }
+.champ-ad--stamp .champ-ad-serial { color: var(--gold); }
+
+/* Layout A — "The Boxer". Heavy border, name shouted in caps, the way a
+   fight bill sets the top-of-the-card name. */
+.champ-ad--boxer {
+  border: 4px solid var(--ink);
+  padding: 1.75rem 1.5rem 2rem;
+}
+
+.champ-ad--boxer .champ-ad-media { margin: -1.75rem -1.5rem 1.1rem; }
+
+.champ-ad-plate {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent);
+}
+
+.champ-ad-plate span {
+  font-family: var(--font-anton), sans-serif;
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.champ-ad--boxer .champ-ad-name {
+  font-family: var(--font-anton), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+/* Layout B — "The Personal Notice". No border at all, just a rule top and
+   bottom and an underlined name — the classified column, not the display ad. */
+.champ-ad--notice {
+  background: transparent;
+  filter: none;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 1.35rem 0.25rem 1.6rem;
+}
+
+.champ-ad--notice .champ-ad-name {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: clamp(1.2rem, 2.4vw, 1.45rem);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+/* Layout C — "The Stamp". Inverted, with the same torn edge every card gets
+   (set once, above, by position). */
+.champ-ad--stamp {
+  background: var(--ink);
+  color: var(--paper-light);
+  filter: none;
+  padding: 1.85rem 1.7rem 2.1rem;
+}
+
+.champ-ad--stamp .champ-ad-num,
+.champ-ad--stamp .champ-ad-type,
+.champ-ad--stamp .champ-statement-q {
+  color: var(--gold);
+}
+
+.champ-ad--stamp .champ-ad-name,
+.champ-ad--stamp .champ-ad-lede,
+.champ-ad--stamp .champ-ad-toggle,
+.champ-ad--stamp .champ-statement li {
+  color: var(--paper-light);
+}
+
+.champ-ad--stamp .champ-ad-toggle span { color: var(--gold); }
+.champ-ad--stamp .champ-ad-more-inner { border-top-color: rgba(242, 235, 221, 0.25); }
+.champ-ad--stamp .champ-ad-social { color: var(--gold); }
+
+@media (max-width: 560px) {
+  .champ-wall { columns: 1; }
+}
+
+/* ===========================================================================
+   THE LEDGER — everyone else who's signed on, set as a hand-signed sign-in
+   sheet rather than another row of cards: a name, a dashed rule, what they
+   did. Adding a supporter is adding one line, not building another ad. */
+.champ-ledger {
+  list-style: none;
+  columns: 2;
+  column-gap: clamp(2rem, 5vw, 3.5rem);
+}
+
+.champ-ledger-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  break-inside: avoid;
+  padding: 0.65rem 0;
+  border-bottom: 1px dashed var(--ink);
+}
+
+.champ-ledger-name { font-weight: 600; }
+
+.champ-ledger-note {
+  text-align: right;
+  flex-shrink: 3;
+}
+
+@media (max-width: 560px) {
+  .champ-ledger { columns: 1; }
+}
 
 /* The statement — each Champion's own words against a fixed set of prompts,
    so a new entry always reads the same shape regardless of who wrote it. */

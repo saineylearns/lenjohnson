@@ -31,7 +31,7 @@ export default function ChampionGrid() {
       </div>
 
       {visible.length ? (
-        <div className="champ-profiles">
+        <div className="champ-wall">
           {visible.map((champion, i) => (
             <ChampionCard key={champion.id} champion={champion} index={i} />
           ))}

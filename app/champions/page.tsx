@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import PageHero from '@/components/PageHero';
 import Section from '@/components/Section';
 import ChampionGrid from '@/components/champions/ChampionGrid';
+import { OTHERS } from '@/lib/champions';
 import { CONTACT_EMAIL } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -37,42 +38,78 @@ export default function ChampionsPage() {
       </PageHero>
 
       <div className="champ">
+        {/* Referenced by CSS `filter: url(#champ-ink)` on the recruit
+            headline and every Champion name — a shared displacement map so
+            the letterforms read as inked and slightly uneven rather than
+            rendered. Zero-size and hidden; it exists only to be referenced. */}
+        <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
+          <filter id="champ-ink">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.4" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </svg>
+
         <Section bg="cream">
-          <div className="champ-intro stack-loose">
-            <div className="stack">
-              <p className="champ-kicker label">Why Community Champions?</p>
-              <h2 className="display-font h-small">
-                Len was denied official titles — but he became a champion through
-                community struggle.
-              </h2>
-              <p className="body-md">
-                We believe we can all strive to do the same, and become champions in
-                our own communities. Len created space for people to come together,
-                across divides, to work for a fairer world. We’re asking Champions to
-                do the same — supporting the campaign, in whatever way they best can,
-                to continue his legacy and work.
-              </p>
+          {/* A CALL TO ARMS — a union recruitment poster stood in for the old
+              "about" copy: a thick inverted band, one shouted headline, and a
+              manicule pointing the eye at the "how to help" column. */}
+          <div className="champ-recruit stack-loose">
+            <div className="champ-recruit-band">
+              <p className="label">Notice to the community</p>
+            </div>
+            <h2 className="display-font champ-recruit-h">
+              WANTED: CHAMPIONS<br />OF THE WORKING CLASS
+            </h2>
+            <p className="body-md champ-recruit-sub">
+              Len was denied official titles — but he became a champion through
+              community struggle. We believe we can all strive to do the same,
+              and become champions in our own communities.
+            </p>
+
+            {/* WHAT IS A CHAMPION — a full-bleed inverted banner, the same
+                knockout treatment as the headline above, introducing the
+                "pasted notices" below it. */}
+            <div className="champ-what-banner">
+              <h3 className="display-font champ-what-banner-h">What is a Champion?</h3>
             </div>
 
-            <div className="champ-two-col">
-              <div className="stack-tight">
-                <h3 className="champ-subhead display-font">What is a Champion?</h3>
-                <p className="body-sm text-muted">For us, they’re people or organisations who:</p>
-                <ul className="champ-bullets body-sm">
-                  {WHAT_IS_A_CHAMPION.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="stack-tight">
-                <h3 className="champ-subhead display-font">How Champions help</h3>
-                <p className="body-sm text-muted">That might be by:</p>
-                <ul className="champ-bullets body-sm">
-                  {HOW_TO_HELP.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </div>
+            {/* Three notices, pasted up separately rather than listed — each
+                its own scrap of paper with its own border weight and its own
+                slight lean, the way a noticeboard accumulates handbills one
+                at a time rather than all at once. */}
+            <div className="champ-notices">
+              {WHAT_IS_A_CHAMPION.map((item) => (
+                <div className="champ-notice" key={item}>
+                  <span className="champ-manicule--notice" aria-hidden="true">☞</span>
+                  <p className="body-sm">{item}</p>
+                </div>
+              ))}
+            </div>
+
+            <h3 className="display-font champ-subhead champ-how-h">How Champions help</h3>
+            <p className="champ-kicker label champ-tape-kicker">Tale of the tape</p>
+
+            {/* THE TALE OF THE TAPE — a boxing stat grid stood in for a plain
+                list: four quadrants behind heavy 4px rules, each one
+                "redacted" to a black government-file block on hover. */}
+            <div className="champ-tape">
+              {HOW_TO_HELP.map((item, i) => (
+                <div className="champ-tape-cell" key={item}>
+                  <span className="champ-tape-num label">{String(i + 1).padStart(2, '0')}</span>
+                  <p className="champ-tape-text body-sm">{item}</p>
+                  <div className="champ-tape-redact" aria-hidden="true">
+                    <p className="champ-tape-redact-text">{item}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="champ-signature">
+              <span className="champ-signature-mark" aria-hidden="true">X</span>
+              <span className="champ-signature-rule" aria-hidden="true" />
+              <span className="champ-signature-label body-sm">
+                Supporter of the Len Johnson Campaign
+              </span>
             </div>
           </div>
         </Section>
@@ -82,7 +119,7 @@ export default function ChampionsPage() {
             <div className="stack champ-grid-head">
               <p className="champ-kicker label">Meet the Champions</p>
               <h2 className="display-font h-small">
-                People and businesses who’ve gone above and beyond.
+                People and organisations who’ve gone above and beyond.
               </h2>
               <p className="body-sm text-muted">
                 Filter by what they’re known for, or open a profile to read their
@@ -90,6 +127,27 @@ export default function ChampionsPage() {
               </p>
             </div>
             <ChampionGrid />
+          </div>
+        </Section>
+
+        <Section bg="cream">
+          {/* THE LEDGER — everyone else, signed on like a gym sign-in sheet
+              rather than another row of cards. */}
+          <div className="stack-loose">
+            <div className="stack">
+              <p className="champ-kicker label">And with thanks to</p>
+              <h2 className="display-font h-small">Everyone else who’s signed on.</h2>
+            </div>
+            <ul className="champ-ledger">
+              {OTHERS.map((other) => (
+                <li key={other.name} className="champ-ledger-row">
+                  <span className="champ-ledger-name">{other.name}</span>
+                  <span className="champ-ledger-note body-sm text-muted">
+                    {other.contribution}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </Section>
 
