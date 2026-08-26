@@ -19,7 +19,7 @@
  *   3. I'm / We're proud to support the Len Johnson Campaign because ....
  * ...and closing with what they're actually going to do:
  *   4. Here's what I'm / we're going to do.
- * `voice` picks "I" for an individual or "we" for a business/organisation,
+ * `voice` picks "I" for an individual or "we" for an organisation,
  * so the page can render the right pronoun in every prompt without it
  * needing to be typed out (or gendered) by hand each time.
  */
@@ -32,7 +32,7 @@ export type ChampionCategory =
   | 'Fundraising'
   | 'Mental health';
 
-export type ChampionType = 'Individual' | 'Business' | 'Organisation';
+export type ChampionType = 'Individual' | 'Organisation';
 
 export type ChampionVoice = 'I' | 'we';
 
@@ -94,4 +94,21 @@ export const ALL_CATEGORIES: ChampionCategory[] = [
   'Culture & arts',
   'Fundraising',
   'Mental health',
+];
+
+/**
+ * Everyone else who's chipped in — the ledger. Lighter-weight than a full
+ * Champion entry: a name and a line about what they did, nothing more, so
+ * adding a supporter here is one object, not a whole statement. Two
+ * prototype rows, same as the single Jane Doe Champion above — replace with
+ * real names as they come in.
+ */
+export type Supporter = {
+  name: string;
+  contribution: string;
+};
+
+export const OTHERS: Supporter[] = [
+  { name: 'John Smith', contribution: 'Donated the printing for our first flyers' },
+  { name: 'Ardwick Amateur Boxing Club', contribution: 'Hosted our launch night' },
 ];
