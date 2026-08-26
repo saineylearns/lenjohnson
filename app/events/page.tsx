@@ -21,15 +21,6 @@ export default function EventsPage() {
           <div className="ev-masthead-grid">
             <p className="label ev-masthead-mark">LJC / Events</p>
             <h1 className="display-font ev-masthead-h">EVENTS.</h1>
-            <p className="display-font ev-masthead-sub">
-              THE CAMPAIGN
-              <br />
-              IN THE WORLD.
-            </p>
-            <p className="label ev-masthead-meta">
-              <span>Manchester</span>
-              <span>2021&mdash;2026</span>
-            </p>
           </div>
         </div>
 

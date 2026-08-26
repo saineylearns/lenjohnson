@@ -4121,26 +4121,6 @@ body.nav-open .scroll-bar {
   line-height: 0.82;
 }
 
-.ev-masthead-sub {
-  grid-column: 2;
-  grid-row: 3;
-  justify-self: end;
-  max-width: 16ch;
-  text-align: right;
-  font-size: clamp(1.5rem, 4.4vw, 2.75rem);
-  line-height: 0.95;
-}
-
-.ev-masthead-meta {
-  grid-column: 1;
-  grid-row: 3;
-  align-self: end;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  color: var(--ink-soft);
-}
-
 /* The plate breaks the container on purpose — a poster pasted across the
    full width of the sheet, ruled off hard top and bottom like the plate head
    every other page opens on, but standing on its own rather than carrying a
@@ -4363,23 +4343,11 @@ body.nav-open .scroll-bar {
   }
 
   .ev-masthead-mark,
-  .ev-masthead-h,
-  .ev-masthead-sub,
-  .ev-masthead-meta {
+  .ev-masthead-h {
     grid-column: 1;
     grid-row: auto;
     justify-self: start;
     text-align: left;
-  }
-
-  .ev-masthead-sub {
-    margin-top: 0.5rem;
-  }
-
-  .ev-masthead-meta {
-    flex-direction: row;
-    gap: 1rem;
-    margin-top: 1rem;
   }
 
   .ev-entry-photo-body,
