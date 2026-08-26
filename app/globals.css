@@ -4064,6 +4064,335 @@ body.nav-open .scroll-bar {
 }
 
 /* ===========================================================================
+   THE EVENTS PAGE — a masthead and a register, not a hero and a card grid.
+   Three container widths do the work one `.container` can't: `.ev-wide` for
+   the masthead and its plate, `.ev-archive-w` for the register, `.ev-reading`
+   for the one block of unaccompanied prose. No rounded corners, no pills, no
+   card backgrounds — thin rules carry the structure instead. */
+.ev-wide {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.ev-archive-w {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.ev-reading {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* THE MASTHEAD — an asymmetric front page. EVENTS. sits large and left; the
+   catalogue mark and the standfirst sit right, at two different rows, so
+   nothing lines up into a centred hero. The photograph runs full-bleed
+   underneath as its own plate rather than sitting behind the headline. */
+.ev-masthead {
+  padding-top: clamp(2rem, 6vh, 4rem);
+}
+
+.ev-masthead > .ev-wide {
+  padding-bottom: clamp(1.5rem, 4vh, 2.5rem);
+  border-bottom: var(--line-heavy);
+}
+
+.ev-masthead-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.5rem;
+  row-gap: 0.5rem;
+}
+
+.ev-masthead-mark {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: right;
+  color: var(--ink-soft);
+}
+
+.ev-masthead-h {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  font-size: clamp(4.5rem, 17vw, 13rem);
+  line-height: 0.82;
+}
+
+.ev-masthead-sub {
+  grid-column: 2;
+  grid-row: 3;
+  justify-self: end;
+  max-width: 16ch;
+  text-align: right;
+  font-size: clamp(1.5rem, 4.4vw, 2.75rem);
+  line-height: 0.95;
+}
+
+.ev-masthead-meta {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  color: var(--ink-soft);
+}
+
+/* The plate breaks the container on purpose — a poster pasted across the
+   full width of the sheet, ruled off hard top and bottom like the plate head
+   every other page opens on, but standing on its own rather than carrying a
+   headline. */
+.ev-masthead-plate {
+  position: relative;
+  border-top: var(--line-heavy);
+  border-bottom: var(--line-heavy);
+  overflow: hidden;
+}
+
+.ev-masthead-plate img {
+  display: block;
+  width: 100%;
+  height: clamp(20rem, 58vh, 34rem);
+  object-fit: cover;
+}
+
+.ev-masthead-cap {
+  padding-top: 0.75rem;
+  border-top: 0;
+}
+
+/* WHAT'S HAPPENING — an honest empty state. No fabricated date, no card
+   waiting to be filled: a short statement and a typographic way to reach us,
+   set in the one reading-width column on the page. */
+.ev-upcoming {
+  padding: clamp(3rem, 7vh, 5rem) 0;
+}
+
+.ev-section-kicker {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--brick);
+}
+
+.ev-upcoming-h {
+  margin-bottom: 1rem;
+  font-size: clamp(1.75rem, 4.5vw, 2.75rem);
+}
+
+.ev-textlink {
+  display: inline-block;
+  margin-top: 1.25rem;
+  padding-bottom: 2px;
+  border-bottom: 2px solid var(--brick);
+  font-family: var(--font-meta);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  transition: padding-left 120ms linear, border-color 120ms linear;
+}
+
+.ev-textlink:hover {
+  padding-left: 0.35rem;
+  border-color: var(--ink);
+}
+
+/* FROM THE ARCHIVE — the register. Ruled off from the section above it,
+   then each entry ruled off from the next, so the page never needs a card
+   background to say where one thing ends and another begins. */
+.ev-archive {
+  padding: clamp(2rem, 5vh, 3.5rem) 0 clamp(4rem, 8vh, 6rem);
+  border-top: var(--line-heavy);
+}
+
+.ev-archive-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.ev-archive-ref {
+  color: var(--ink-soft);
+}
+
+.ev-entry {
+  padding: clamp(2rem, 4vh, 3rem) 0;
+  border-bottom: var(--line);
+}
+
+.ev-entry:last-child {
+  border-bottom: 0;
+}
+
+.ev-entry-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ev-entry-no {
+  color: var(--ink-soft);
+}
+
+.ev-entry-year {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  color: var(--brick);
+}
+
+.ev-entry-rule {
+  margin: 0 0 1.25rem;
+  border: 0;
+  border-top: var(--line-heavy);
+}
+
+.ev-entry-title {
+  max-width: 22ch;
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.75rem, 4.5vw, 3rem);
+}
+
+/* Type A — large photograph, asymmetric two-up: the picture wider than the
+   metadata beside it, not a caption stripe under a fixed-ratio thumbnail. */
+.ev-entry-photo-body {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  align-items: start;
+  gap: 2.5rem;
+}
+
+.ev-entry-figure img {
+  transition: transform 220ms ease;
+}
+
+.ev-entry-figure:hover img {
+  transform: scale(1.015);
+}
+
+/* A modern graphic or poster kept as printed, the same reasoning as
+   `.events-plate-img` — grading it down to match a 1920s print would lie
+   about what kind of object it is. */
+.ev-entry-img-color {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: none;
+}
+
+.ev-entry-meta-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-top: 0.25rem;
+}
+
+/* A second piece of print pinned in beside the photograph — a flyer, a
+   ticket — smaller than the main plate and set slightly off true, the way
+   something gets tucked into the corner of an archive folder. */
+.ev-entry-doc {
+  max-width: 11rem;
+  transform: rotate(-1.2deg);
+}
+
+.ev-metadata {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ev-metadata > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: var(--line);
+}
+
+.ev-metadata dt {
+  color: var(--ink-soft);
+}
+
+.ev-metadata dd {
+  text-align: right;
+}
+
+/* Type B — text-led, no image: a large stat stands where a photograph would
+   have gone, and the prose runs beside it in one reading-width column. */
+.ev-entry-text-body {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: 2.5rem;
+}
+
+.ev-entry-stat {
+  line-height: 0.85;
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  color: var(--brick);
+}
+
+.ev-entry-stat .label {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--ink-soft);
+}
+
+.ev-entry-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 60ch;
+}
+
+.ev-entry-cite {
+  margin-top: 0.5rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 768px) {
+  .ev-masthead-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ev-masthead-mark,
+  .ev-masthead-h,
+  .ev-masthead-sub,
+  .ev-masthead-meta {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    text-align: left;
+  }
+
+  .ev-masthead-sub {
+    margin-top: 0.5rem;
+  }
+
+  .ev-masthead-meta {
+    flex-direction: row;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .ev-entry-photo-body,
+  .ev-entry-text-body {
+    grid-template-columns: 1fr;
+  }
+
+  .ev-entry-stat {
+    font-size: clamp(3rem, 14vw, 4rem);
+  }
+}
+
+/* ===========================================================================
    THE CLIPPING — the boxing record, cut out of a paper and marked up by hand.
    Two voices only: the printed one (mono masthead, slab figures, hard rules)
    and the hand that went over it afterwards (a red stroke down the margin, a
