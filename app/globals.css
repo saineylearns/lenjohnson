@@ -4326,6 +4326,72 @@ body.nav-open .scroll-bar {
   text-align: right;
 }
 
+/* A strip of further evidence — extra photographs from the same entry,
+   run in a row beneath it like contact prints laid out on a light box,
+   never as wide or as prominent as the main plate above. */
+.ev-entry-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.ev-entry-strip-item img {
+  transition: transform 220ms ease;
+}
+
+.ev-entry-strip-item:hover img {
+  transform: scale(1.03);
+}
+
+/* Every plate on the Events page is a contemporary photograph, not archive
+   material standing in for something older — so, unlike the rest of the
+   site, none of it gets graded down to a 1920s print. */
+.ev .archive-image {
+  filter: none;
+}
+
+.ev .archive-image-wrap::after {
+  display: none;
+}
+
+/* Click any plate on the Events page to see it full size, over a dimmed
+   sheet rather than a card or modal chrome. */
+.ev-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: rgba(20, 16, 12, 0.92);
+  cursor: zoom-out;
+}
+
+.ev-lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.5);
+}
+
+.ev-lightbox-close {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: transparent;
+  color: var(--paper-light);
+  font-size: 2.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
 /* Type B — text-led, no image: a large stat stands where a photograph would
    have gone, and the prose runs beside it in one reading-width column. */
 .ev-entry-text-body {

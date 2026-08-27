@@ -48,6 +48,13 @@ export type CampaignEvent = {
     alt: string;
     caption: string;
   };
+  /** A strip of further photographs from the same event, run below the
+   *  main entry — extra evidence rather than the entry's carrying image. */
+  gallery?: {
+    src: string;
+    alt: string;
+    caption: string;
+  }[];
   variant: EventVariant;
 };
 
@@ -79,6 +86,38 @@ export const EVENTS: CampaignEvent[] = [
       alt: '‘The Trilogy’ matchday poster for Len Johnson All Stars v FC United Legends, 12 July 2026, Broadhurst Park',
       caption: '‘The Trilogy’ — 12 Jul 2026, Broadhurst Park',
     },
+    gallery: [
+      {
+        src: '/images/events/football-event-2.webp',
+        alt: 'Two players celebrate a goal together on the pitch, one lifted off the ground',
+        caption: 'A goal celebration, Broadhurst Park',
+      },
+      {
+        src: '/images/events/football-event-9.webp',
+        alt: 'The Len Johnson All Stars lift the trophy in front of a board reading Len Johnson Charity Match Winners, 4 May 2024',
+        caption: 'Len Johnson Charity Match winners, 4 May 2024',
+      },
+      {
+        src: '/images/events/football-event-5.webp',
+        alt: 'Players from both teams sit and stand together holding a Show Racism the Red Card banner after the match',
+        caption: 'Players from both sides with the Show Racism the Red Card banner',
+      },
+      {
+        src: '/images/events/football-event-12.webp',
+        alt: 'Two players embrace after the match, one wearing a Len Johnson FC All Stars shirt printed with Uncrowned Champion',
+        caption: 'Len Johnson FC All Stars, ‘Uncrowned Champion’ shirt',
+      },
+      {
+        src: '/images/events/angry-ginge-football.webp',
+        alt: 'YouTuber Angry Ginge holds up a signed matchday shirt printed GINGE 13',
+        caption: 'Angry Ginge with his signed matchday shirt',
+      },
+      {
+        src: '/images/events/luke-littler-football.webp',
+        alt: 'Darts player Luke Littler holds a Len Johnson FC All Stars shirt',
+        caption: 'Luke Littler with a Len Johnson FC All Stars shirt',
+      },
+    ],
     variant: 'photo',
   },
   {
@@ -102,6 +141,18 @@ export const EVENTS: CampaignEvent[] = [
       caption: 'Knockout Blow!, in schools and community venues across Manchester',
       keepColor: true,
     },
+    gallery: [
+      {
+        src: '/images/events/ko-blow.webp',
+        alt: 'A large group of young people and youth workers pose together in a community hall after a performance, beneath banners reading Love and Peace',
+        caption: 'After a performance, in a Manchester community hall',
+      },
+      {
+        src: '/images/events/len-play.webp',
+        alt: 'The cast and campaign visit a museum display on the Manchester Fifth Pan-African Congress of 1945, alongside a boxer statuette',
+        caption: 'Cast and campaign at an exhibition on the 1945 Manchester Pan-African Congress',
+      },
+    ],
     variant: 'photo',
   },
   {
@@ -119,10 +170,63 @@ export const EVENTS: CampaignEvent[] = [
       'There have been 14 Breaking Barz so far, including one at the legendary Manchester venue, The Band on the Wall. Our artists have gone on to gain work elsewhere at festivals and larger venues and we are very proud that this has happened in Len’s name.',
     ],
     image: {
+      src: '/images/events/breaking-barz-1.webp',
+      alt: 'A group of friends pose together outside the Old Abbey Taphouse, under its Free House sign, at a Breaking Barz night',
+      caption: 'Breaking Barz, outside the Old Abbey Taphouse',
+    },
+    document: {
       src: '/images/breaking-barz.webp',
       alt: "Breaking Barz — the music night celebrating Len Johnson's resistance",
-      caption: 'Breaking Barz, Old Abbey Taphouse, Manchester',
+      caption: 'Breaking Barz poster',
     },
+    variant: 'photo',
+  },
+  {
+    id: 'len-johnson-cup',
+    archiveNo: '004',
+    year: 'n.d.',
+    title: 'The Len Johnson Community Cup',
+    location: 'Moss Side Fire Station Boxing Club, Manchester',
+    category: 'Community & boxing',
+    // Description limited to what the photographs themselves show, plus the
+    // venue as confirmed directly by the campaign — no date is recorded, so
+    // none is claimed.
+    body: [
+      "A trophy engraved ‘The Len Johnson Cup — Manchester's Uncrowned Boxing Champion — The People's Champion — 135 fights, 95 wins’, presented to Moss Side Fire Station Boxing Club.",
+      "Campaign volunteers take Len's story out to park stalls, boxing gyms and community groups, sharing his history with a new generation.",
+    ],
+    image: {
+      src: '/images/events/community-cup.webp',
+      alt: 'The Moss Side Fire Station Boxing Club team pose together holding the Len Johnson Cup trophy',
+      caption: 'The Len Johnson Cup, presented to Moss Side Fire Station Boxing Club',
+    },
+    document: {
+      src: '/images/events/community-day-2.webp',
+      alt: 'Two children with face paint hold Len Johnson Campaign leaflets beside the Len Johnson Cup trophy in a park',
+      caption: 'Len Johnson Campaign stall, with the Cup and campaign literature',
+    },
+    gallery: [
+      {
+        src: '/images/events/community-day.webp',
+        alt: 'Campaign supporters at a park stall hold Len Johnson Campaign leaflets and boxing gloves beside the Cup',
+        caption: 'The Campaign stall, in the park',
+      },
+      {
+        src: '/images/events/community-work.webp',
+        alt: 'Campaign members in conversation with community elders in a Manchester boxing gym',
+        caption: 'In conversation with community elders at a boxing gym',
+      },
+      {
+        src: '/images/events/community-work-1.webp',
+        alt: 'Campaign supporters at a boxing gym hold a canvas portrait of Len Johnson in his boxing stance',
+        caption: 'Campaign supporters with a portrait of Len Johnson, at a boxing gym',
+      },
+      {
+        src: '/images/events/community-work-2.webp',
+        alt: 'Campaign supporters at an exhibition on Manchester history, beside a display case with a boxer statuette',
+        caption: 'Visiting an exhibition on Len Johnson’s Manchester',
+      },
+    ],
     variant: 'photo',
   },
 ];

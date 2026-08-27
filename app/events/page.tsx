@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import FlagStripe from '@/components/FlagStripe';
+import ClickableImage from '@/components/events/ClickableImage';
 import { EVENTS } from '@/lib/events';
 import { CONTACT_EMAIL } from '@/lib/site';
 
@@ -25,16 +26,15 @@ export default function EventsPage() {
         </div>
 
         <figure className="ev-masthead-plate">
-          <div className="archive-image-wrap">
-            <img
-              src="/images/breaking-barz.webp"
-              alt="Breaking Barz — the music night celebrating Len Johnson's resistance"
-              className="archive-image"
-            />
-          </div>
+          <ClickableImage
+            wrapClassName="archive-image-wrap"
+            className="archive-image"
+            src="/images/events/football-event-hero.webp"
+            alt="A packed stand at Broadhurst Park watches players from Len Johnson FC All Stars and FC United Legends come together pitchside"
+          />
         </figure>
         <p className="archive-caption ev-masthead-cap ev-wide">
-          Breaking Barz, Manchester &mdash; Photograph: Len Johnson Campaign
+          Len Johnson FC All Stars v FC United Legends, Broadhurst Park &mdash; Photograph: Len Johnson Campaign
         </p>
       </header>
 
@@ -82,17 +82,16 @@ export default function EventsPage() {
                 {event.variant === 'photo' && event.image && (
                   <div className="ev-entry-photo-body">
                     <figure className="ev-entry-figure">
-                      <div className="archive-image-wrap">
-                        <img
-                          src={event.image.src}
-                          alt={event.image.alt}
-                          className={
-                            event.image.keepColor
-                              ? 'ev-entry-img-color'
-                              : 'archive-image'
-                          }
-                        />
-                      </div>
+                      <ClickableImage
+                        wrapClassName="archive-image-wrap"
+                        className={
+                          event.image.keepColor
+                            ? 'ev-entry-img-color'
+                            : 'archive-image'
+                        }
+                        src={event.image.src}
+                        alt={event.image.alt}
+                      />
                       <figcaption className="archive-caption">
                         {event.image.caption}
                       </figcaption>
@@ -100,13 +99,12 @@ export default function EventsPage() {
                     <div className="ev-entry-meta-col">
                       {event.document && (
                         <figure className="ev-entry-doc">
-                          <div className="archive-image-wrap">
-                            <img
-                              src={event.document.src}
-                              alt={event.document.alt}
-                              className="events-plate-img"
-                            />
-                          </div>
+                          <ClickableImage
+                            wrapClassName="archive-image-wrap"
+                            className="events-plate-img"
+                            src={event.document.src}
+                            alt={event.document.alt}
+                          />
                           <figcaption className="archive-caption">
                             {event.document.caption}
                           </figcaption>
@@ -138,6 +136,22 @@ export default function EventsPage() {
                         <p className="body-sm" key={j}>{para}</p>
                       ))}
                     </div>
+                  </div>
+                )}
+
+                {event.variant === 'photo' && event.gallery && event.gallery.length > 0 && (
+                  <div className="ev-entry-strip">
+                    {event.gallery.map((shot, k) => (
+                      <figure className="ev-entry-strip-item" key={k}>
+                        <ClickableImage
+                          wrapClassName="archive-image-wrap"
+                          className="archive-image"
+                          src={shot.src}
+                          alt={shot.alt}
+                        />
+                        <figcaption className="archive-caption">{shot.caption}</figcaption>
+                      </figure>
+                    ))}
                   </div>
                 )}
 
