@@ -956,7 +956,7 @@ body.nav-open .scroll-bar {
 .site-footer {
   background: var(--paper);
   border-top: none;
-  padding: 0 0 2.5rem;
+  padding: 0 2rem 2.5rem;
 }
 
 /* The broadside banner every page ends its footer on: loud, condensed, and
