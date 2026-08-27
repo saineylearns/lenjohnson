@@ -694,19 +694,24 @@ body.nav-open .scroll-bar {
 
 /* SITE NAVIGATION */
 .site-nav {
-  /* `sticky`, not `fixed`. iOS Safari can visibly detach a `fixed` bar from
-     the top edge during momentum scroll and address-bar hide/show — it
-     drifts down and "floats" mid-page before snapping back. `sticky` is
-     pinned by layout rather than the visual viewport, so it doesn't have
-     that failure mode. */
-  position: sticky;
-  /* -1px, not 0. iOS Safari has a separate, well-documented off-by-one bug
-     where a `sticky` element pinned at exactly `top: 0` can leave a sliver
-     of whatever was scrolled past showing above it for a frame — the browser
-     hasn't yet committed the bar to its stuck position. Parking the sticky
-     threshold 1px above the edge makes it engage a moment earlier and closes
-     that gap; the box-shadow rule below hides the 1px offset. */
-  top: -1px;
+  /* Two earlier approaches both ran into iOS Safari bugs that pinning
+     something statically at the very top edge seems to invite:
+       - `position: fixed` on its own can visibly detach from the top
+         during momentum scroll / address-bar hide-show, drifting down and
+         "floating" mid-page before snapping back.
+       - `position: sticky`, with or without a forced GPU layer, could get
+         caught up in Safari's dynamic-toolbar-collapse animation, which
+         would briefly composite a stale bitmap of the bar — a strip of
+         whatever the page looked like a moment earlier — into the space
+         the toolbar vacates, above the real content and sometimes above
+         the status bar itself.
+     `fixed` plus hiding the bar on scroll-down and revealing it on
+     scroll-up (Nav.tsx) sidesteps both: the bar is never a static passenger
+     at the boundary Safari's own toolbar logic cares about — it's already
+     something the page moves under script control, on the same `transform`
+     mechanism most sites use for exactly this pattern. */
+  position: fixed;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
@@ -719,23 +724,19 @@ body.nav-open .scroll-bar {
   box-shadow:
     inset 0 -4px 0 -1px var(--charcoal),
     inset 0 -6px 0 -5px var(--charcoal);
-  transition: background 300ms ease;
-  /* Deliberately NOT `transform: translateZ(0)` / `will-change: transform` /
-     `backface-visibility: hidden` here, despite those being the standard
-     folklore fix for iOS Safari sticky-repaint jank (this bar carried all
-     three for a while). That trio forces the bar onto its own GPU-composited
-     layer — and it's that promoted layer, combined with `position: sticky`
-     right at the top edge, that Safari's dynamic address bar gets confused
-     by: as the toolbar collapses or expands on scroll, Safari briefly
-     composites a stale bitmap of that layer — a strip of whatever the page
-     looked like a moment earlier — into the space the toolbar is
-     vacating, above the real content and sometimes above the status bar
-     itself. A plain sticky element with no forced layer doesn't get pulled
-     into that separate snapshot path, so it doesn't have this failure mode.
-     If a different, milder repaint glitch shows up later (stale pixels
-     under the bar failing to redraw at their new scroll offset — the
-     original reason this hack was added), that's the one folklore fix
-     doesn't have a good answer for; reach for it again there, not here. */
+  transform: translateY(0);
+  transition: background 300ms ease, transform 250ms ease;
+}
+
+.site-nav.is-hidden {
+  transform: translateY(-100%);
+}
+
+/* Respect a genuine "no motion" preference — jump instead of slide. */
+@media (prefers-reduced-motion: reduce) {
+  .site-nav {
+    transition: background 300ms ease;
+  }
 }
 
 .site-nav-inner {
