@@ -725,18 +725,18 @@ body.nav-open .scroll-bar {
     inset 0 -4px 0 -1px var(--charcoal),
     inset 0 -6px 0 -5px var(--charcoal);
   transform: translateY(0);
-  transition: background 300ms ease, transform 250ms ease;
+  /* No transition on `transform`, deliberately. An animated slide-in landed
+     in the same window iOS Safari runs its own dynamic-toolbar reveal
+     animation — two transform animations racing on the same fixed-to-
+     viewport element — and that pairing turned out to be what produced the
+     ghost frame, not sticky-vs-fixed positioning itself (confirmed: the
+     glitch tracked the reveal transition, not the hide). Snapping instantly
+     removes the second animation from the race entirely. */
+  transition: background 300ms ease;
 }
 
 .site-nav.is-hidden {
   transform: translateY(-100%);
-}
-
-/* Respect a genuine "no motion" preference — jump instead of slide. */
-@media (prefers-reduced-motion: reduce) {
-  .site-nav {
-    transition: background 300ms ease;
-  }
 }
 
 .site-nav-inner {
