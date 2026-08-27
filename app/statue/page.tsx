@@ -193,16 +193,14 @@ export default function StatuePage() {
           <div className="archive-image-wrap">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/sculptor.webp"
-              alt="Taslim Martin working on the clay maquette of Len Johnson in his studio"
+              src="/images/main-maquette.webp"
+              alt="The clay maquette of Len Johnson, in a boxing stance, on a wooden base"
               className="archive-image"
             />
           </div>
         </figure>
         <p className="label st-maquette-cap">
           Maquette &mdash; Len Johnson &mdash; preliminary model
-          <br />
-          Photograph: David Hyde
         </p>
         <p className="label st-artist-id">
           <span>London</span>

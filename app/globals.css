@@ -4893,3 +4893,421 @@ img[src*="statue"]         { object-position: 62% 0%; }
 /* A poster, not a photograph — the artwork reads from the top down, so keep
    the head of the bill rather than any one face inside it. */
 img[src*="breaking-barz"]  { object-position: 50% 0%; }
+
+/* ==========================================================================
+   Gallery page — "the campaign as seen, heard and remembered." Colour
+   photography stays colour throughout: none of this reuses `.archive-image`
+   (that class grades every photo down to a 1920s-print look, the opposite
+   of what a contemporary gallery needs — see the Events page's own
+   `.ev .archive-image { filter: none; }` for the same override, done the
+   same way). `.gal-photo` is the plain, unfiltered plate this page uses
+   instead.
+   ========================================================================== */
+
+.gal {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.gal-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: none;
+}
+
+/* Small, editorial, uppercase metadata type — used for every caption and
+   section kicker on this page instead of a card label. */
+.gal-caption {
+  font-family: var(--font-meta);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* --- HERO ---------------------------------------------------------------
+   No dimmed photograph, no centred headline — a rail of interface metadata
+   over one dominant word, set slightly off the left edge so it reads as
+   placed rather than centred. */
+.gal-hero {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: clamp(5rem, 13vw, 9rem) var(--gutter) clamp(2.5rem, 6vw, 4rem);
+}
+
+.gal-hero-rail {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 0;
+  margin-bottom: 1.5rem;
+  border-top: var(--line);
+  border-bottom: var(--line);
+  font-family: var(--font-meta);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.gal-hero-h {
+  margin: 0 0 0 clamp(0px, 4vw, 2.5rem);
+  font-size: clamp(4.5rem, 17vw, 12rem);
+  line-height: 0.85;
+  letter-spacing: -0.01em;
+}
+
+/* --- FEATURED PHOTOGRAPH -------------------------------------------------
+   One large plate, no card, allowed to run wider than the archive measure
+   below it. */
+.gal-featured {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto clamp(4rem, 9vw, 7rem);
+  padding: 0 var(--gutter);
+}
+
+.gal-featured-btn {
+  all: unset;
+  cursor: zoom-in;
+  display: block;
+  width: min(82vw, 1250px);
+  max-width: 100%;
+}
+
+.gal-featured-img {
+  transition: transform 220ms ease;
+}
+
+.gal-featured-btn:hover .gal-featured-img {
+  transform: scale(1.015);
+}
+
+.gal-featured-caption {
+  margin-top: 0.85rem;
+  text-align: center;
+}
+
+/* --- PHOTOGRAPHIC ARCHIVE -------------------------------------------------
+   Deliberate, named layouts rather than a repeating card grid. Each plate
+   keeps the site's plain ink rule as its only frame — no rounded corners,
+   no shadow. */
+.gal-archive {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3.5rem, 9vw, 6.5rem);
+}
+
+.gal-plate {
+  all: unset;
+  cursor: zoom-in;
+  display: block;
+  width: 100%;
+  border: var(--line);
+  background: var(--paper-dark);
+}
+
+.gal-plate img {
+  transition: transform 220ms ease;
+}
+
+.gal-plate:hover img {
+  transform: scale(1.015);
+}
+
+.gal-row-feature .gal-plate,
+.gal-row-wide .gal-plate {
+  width: 100%;
+}
+
+.gal-row-portrait {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.gal-row-portrait .gal-plate {
+  width: min(46vw, 420px);
+}
+
+.gal-row-offset {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.gal-row-offset .gal-plate {
+  width: min(58vw, 560px);
+}
+
+.gal-row-split,
+.gal-row-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: start;
+}
+
+/* A slight vertical stagger between the two — controlled asymmetry rather
+   than two images snapped to the same baseline. */
+.gal-row-pair > *:nth-child(2) {
+  margin-top: clamp(1.5rem, 5vw, 3.5rem);
+}
+
+/* --- CONTACT SHEET --------------------------------------------------------
+   The one density moment: small plates, tight grid, a deliberate change of
+   pace from the wide archive above it. */
+.gal-contact-sheet-wrap {
+  max-width: 1500px;
+  margin: 0 auto clamp(4rem, 9vw, 7rem);
+  padding: 0 var(--gutter);
+}
+
+.gal-contact-kicker {
+  margin-bottom: 1rem;
+}
+
+.gal-contact-sheet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.65rem;
+}
+
+.gal-contact-plate {
+  all: unset;
+  cursor: zoom-in;
+  display: block;
+  border: var(--line);
+  background: var(--paper-dark);
+}
+
+.gal-contact-plate img {
+  transition: transform 220ms ease;
+}
+
+.gal-contact-plate:hover img {
+  transform: scale(1.03);
+}
+
+/* --- MOVING IMAGE / YOUTUBE ------------------------------------------------
+   Poster-first cards with a restrained play ring — no gradient overlay, no
+   oversized button. The player itself (iframe or <video>) only mounts once
+   someone clicks. */
+.gal-moving {
+  max-width: 1500px;
+  margin: 0 auto clamp(4rem, 9vw, 7rem);
+  padding: 0 var(--gutter);
+}
+
+.gal-section-kicker {
+  margin-bottom: 1.5rem;
+}
+
+.gal-moving-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.gal-film-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: var(--line);
+  background: var(--ink);
+}
+
+.gal-film-iframe,
+.gal-film-video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.gal-film-poster {
+  all: unset;
+  position: absolute;
+  inset: 0;
+  display: block;
+  cursor: pointer;
+}
+
+.gal-film-poster-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gal-film-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3rem;
+  height: 3rem;
+  transform: translate(-50%, -50%);
+  border: var(--line-heavy);
+  border-radius: 50%;
+  background: rgba(232, 224, 209, 0.85);
+}
+
+.gal-film-play::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 56%;
+  width: 0;
+  height: 0;
+  transform: translate(-50%, -50%);
+  border-style: solid;
+  border-width: 0.5rem 0 0.5rem 0.85rem;
+  border-color: transparent transparent transparent var(--ink);
+}
+
+.gal-film figcaption {
+  margin-top: 0.6rem;
+}
+
+/* --- FEATURE FILM TRAILER --------------------------------------------------
+   The genuine tonal shift: black ground, the one video that matters most,
+   native controls, no autoplay. */
+.gal-trailer {
+  background: var(--ink);
+  padding: clamp(4rem, 10vw, 8rem) var(--gutter);
+}
+
+.gal-trailer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.gal-trailer-kicker {
+  color: var(--paper-light);
+  opacity: 0.75;
+  margin-bottom: 1.5rem;
+}
+
+.gal-trailer-video {
+  display: block;
+  width: 100%;
+  background: #000;
+}
+
+/* --- LIGHTBOX ---------------------------------------------------------- */
+.gal-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: rgba(10, 9, 7, 0.94);
+  cursor: zoom-out;
+}
+
+.gal-lightbox-figure {
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+}
+
+.gal-lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.5);
+}
+
+.gal-lightbox-caption {
+  margin-top: 1rem;
+  color: var(--paper-light);
+  text-align: center;
+}
+
+.gal-lightbox-close {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  background: transparent;
+  color: var(--paper-light);
+  font-size: 2.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gal-lightbox-nav {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  background: transparent;
+  color: var(--paper-light);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.gal-lightbox-prev { left: 0.75rem; }
+.gal-lightbox-next { right: 0.75rem; }
+
+@media (max-width: 720px) {
+  .gal-row-split,
+  .gal-row-pair {
+    grid-template-columns: 1fr;
+  }
+
+  .gal-row-pair > *:nth-child(2) {
+    margin-top: 0;
+  }
+
+  .gal-row-portrait .gal-plate,
+  .gal-row-offset .gal-plate {
+    width: 100%;
+  }
+
+  .gal-featured-btn {
+    width: 100%;
+  }
+
+  /* At narrow widths "GALLERY." can overflow its box; word-break then
+     orphans the trailing period onto its own line, where at this font
+     size it reads as a stray black square. Give the headline the room
+     it needs instead of letting it wrap mid-word. */
+  .gal-hero-h {
+    margin-left: 0;
+    font-size: clamp(3.4rem, 15vw, 12rem);
+    overflow-wrap: normal;
+    word-break: keep-all;
+  }
+
+  .gal-lightbox-nav {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gal-featured-img,
+  .gal-plate img,
+  .gal-contact-plate img {
+    transition: none;
+  }
+}

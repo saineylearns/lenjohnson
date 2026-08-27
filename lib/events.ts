@@ -117,6 +117,46 @@ export const EVENTS: CampaignEvent[] = [
         alt: 'Darts player Luke Littler holds a Len Johnson FC All Stars shirt',
         caption: 'Luke Littler with a Len Johnson FC All Stars shirt',
       },
+      {
+        src: '/images/events/football-event-1.webp',
+        alt: 'A young fan poses for a selfie wearing a Show Racism the Red Card shirt, surrounded by other spectators in the stand',
+        caption: 'A fan in the stand, Show Racism the Red Card',
+      },
+      {
+        src: '/images/events/football-event-3.webp',
+        alt: 'Two players hold up a matchday shirt printed Thomas 8, in front of the Football Club United of Manchester banner',
+        caption: "A matchday shirt, printed 'Thomas 8'",
+      },
+      {
+        src: '/images/events/football-event-4.webp',
+        alt: 'A group of supporters lean over the stand barrier, branded Dragonfly Crowd, during the match',
+        caption: 'Supporters in the stand',
+      },
+      {
+        src: '/images/events/football-event-6.webp',
+        alt: 'A player in Len Johnson FC All Stars kit walks pitchside, smiling',
+        caption: 'Pitchside at Broadhurst Park',
+      },
+      {
+        src: '/images/events/football-event-7.webp',
+        alt: "Players celebrate, one holding aloft a trophy engraved 'The Len Johnson Cup — Manchester's Uncrowned Boxing Champion'",
+        caption: 'Celebrating with the Len Johnson Cup',
+      },
+      {
+        src: '/images/events/football-event-8.webp',
+        alt: 'A player holds a small bronze boxer statuette aloft against the sky, pitchside at Broadhurst Park',
+        caption: 'A boxer statuette, held up pitchside',
+      },
+      {
+        src: '/images/events/football-event-10.webp',
+        alt: 'Players celebrate together, arms raised, running across the pitch',
+        caption: 'A celebration on the pitch',
+      },
+      {
+        src: '/images/events/football-event-11.webp',
+        alt: 'Two players pose by the goalpost, one holding the match ball',
+        caption: 'By the goalpost, Broadhurst Park',
+      },
     ],
     variant: 'photo',
   },
@@ -152,6 +192,11 @@ export const EVENTS: CampaignEvent[] = [
         alt: 'The cast and campaign visit a museum display on the Manchester Fifth Pan-African Congress of 1945, alongside a boxer statuette',
         caption: 'Cast and campaign at an exhibition on the 1945 Manchester Pan-African Congress',
       },
+      {
+        src: '/images/events/ko-blow-2.webp',
+        alt: 'A school group poses together holding printed Len Johnson name cards from the workshop',
+        caption: 'A school workshop, with Len Johnson name cards',
+      },
     ],
     variant: 'photo',
   },
@@ -179,6 +224,18 @@ export const EVENTS: CampaignEvent[] = [
       alt: "Breaking Barz — the music night celebrating Len Johnson's resistance",
       caption: 'Breaking Barz poster',
     },
+    gallery: [
+      {
+        src: '/images/events/breaking-barz-promo.webp',
+        alt: 'Factory International presents Breaking Barz, Black History Month, at Aviva Studios — poster with an archival photograph of Len Johnson in a boxing stance',
+        caption: 'Breaking Barz, Black History Month — Aviva Studios',
+      },
+      {
+        src: '/images/events/breaking-barz-promo-2.webp',
+        alt: 'Factory International presents Breaking Barz: Misha B, Black History Month, at Aviva Studios, 30 October',
+        caption: 'Breaking Barz: Misha B — Aviva Studios',
+      },
+    ],
     variant: 'photo',
   },
   {
