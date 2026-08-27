@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 /**
  * Wraps a single archive plate so it can be opened full size — a click (or
@@ -21,6 +22,40 @@ export default function ClickableImage({
   wrapClassName?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  // A portal target only exists once we're in the browser — this also
+  // sidesteps the SSR/client markup mismatch a portal would otherwise cause.
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Several plates on this page sit inside a rotated wrapper (the "pinned
+  // document" tilt). A `position: fixed` element rendered underneath a
+  // transformed ancestor is pinned to that ancestor, not the viewport — so
+  // without a portal the lightbox would open tiny and skewed instead of
+  // filling the screen. Rendering it straight onto <body> avoids that.
+  const lightbox = open && (
+    <div
+      className="ev-lightbox"
+      onClick={() => setOpen(false)}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') setOpen(false);
+      }}
+      role="dialog"
+      aria-modal="true"
+    >
+      <button
+        className="ev-lightbox-close"
+        aria-label="Close"
+        onClick={() => setOpen(false)}
+      >
+        &times;
+      </button>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={src} alt={alt} className="ev-lightbox-img" />
+    </div>
+  );
 
   return (
     <>
@@ -41,27 +76,7 @@ export default function ClickableImage({
         <img src={src} alt={alt} className={className} />
       </div>
 
-      {open && (
-        <div
-          className="ev-lightbox"
-          onClick={() => setOpen(false)}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') setOpen(false);
-          }}
-          role="dialog"
-          aria-modal="true"
-        >
-          <button
-            className="ev-lightbox-close"
-            aria-label="Close"
-            onClick={() => setOpen(false)}
-          >
-            &times;
-          </button>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={src} alt={alt} className="ev-lightbox-img" />
-        </div>
-      )}
+      {mounted && lightbox && createPortal(lightbox, document.body)}
     </>
   );
 }
