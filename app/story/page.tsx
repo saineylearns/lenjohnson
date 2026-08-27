@@ -79,18 +79,26 @@ export default function StoryPage() {
           <div className="ls-cols ls-cols-lead" style={{ marginTop: 'clamp(2rem, 5vh, 3rem)' }}>
             <div className="ls-prose">
               <p className="ls-lede ls-drop">
-                Len Johnson (1902-1974) was an outstanding boxer, socialist
-                organiser, and community activist whose life and social
-                activism has been largely overlooked. Sadly, despite a
-                remarkable boxing record, Len was denied a chance to fight for
-                a British Title because of the colour of his skin. Len lived
-                his final years in poverty and ill health and died on 28
-                September 1974 at Oldham General Hospital.
+                Len Johnson Campaign C.I.C (Community Interest Company) are
+                working with Len&rsquo;s family and our community partners,
+                including the charity Odd Arts, to honour Len&rsquo;s life
+                and legacy as a true uncrowned champion.
               </p>
               <p>
-                Len Johnson Campaign Community Interest Company (C.I.C.) are
-                working with Len&rsquo;s family to honour Len&rsquo;s life and
-                achievements both in the boxing ring and outside of it.
+                Len Johnson (1902-1974) was an outstanding Mancunian boxer,
+                the best of his generation, who won 95 fights, beating the
+                very best in the world at the time. However, because of an
+                official &lsquo;colour bar&rsquo; in British boxing at the
+                time, Len was denied the opportunity to fight for a British
+                Boxing Title because both his parents weren&rsquo;t white.
+              </p>
+              <p>
+                Len did not give up. He became a community champion, an
+                activist who helped organise the Pan-African Congress in
+                Manchester, resisted the informal colour bars in pubs, hotels
+                and employment, campaigned for better housing, and brought
+                different communities together at the New International club
+                that he set up with friends.
               </p>
             </div>
 
@@ -147,7 +155,7 @@ export default function StoryPage() {
                   machinist. The interracial marriage meant the family
                   experienced significant racism. Margaret was attacked in the
                   street because she married a Black man, suffering permanent
-                  disfigurement. She was disowned by her own family, but the
+                  facial disfigurement. She was disowned by her own family, but the
                   couple found lodgings with the Connell family, a bricklayer,
                   Sal and his wife, and, as Len wrote, &lsquo;They became
                   Mother&rsquo;s self-appointed parents and later my
@@ -194,8 +202,12 @@ export default function StoryPage() {
                   Growing up Len was trained by his father as a boxer in the
                   boxing booths, travelling around fairgrounds. By 1920 Len
                   was fighting professionally as a middleweight boxer. You can
-                  read all about Len&rsquo;s boxing record her{' '}
-                  <a href="https://boxrec.com" target="_blank" rel="noopener noreferrer">
+                  read all about Len&rsquo;s boxing record here:{' '}
+                  <a
+                    href="https://boxrec.com/wiki/index.php/Len_Johnson"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     BoxRec: Len Johnson
                   </a>
                 </p>
@@ -243,11 +255,12 @@ export default function StoryPage() {
                   width rather than squeezed beside the plate — a clipping
                   pinned to the page is an object, not a sidebar. */}
               <BoxingRecord />
-            </div>
 
-            <div className="ls-block">
+              {/* Kept in the same block as the record above it, rather than
+                  a new .ls-block — the record comparison and the champions
+                  Len beat are one continuous argument, not two chapters. */}
               <Reveal>
-                <h2 className="ls-h">
+                <h2 className="ls-h" style={{ marginTop: 'clamp(2rem, 5vh, 3rem)' }}>
                   Len beat champions
                   <br />
                   <em>still no belt</em>
@@ -302,7 +315,8 @@ export default function StoryPage() {
               <div className="ls-prose">
                 <p className="ls-lede">
                   In British boxing the &lsquo;colour bar&rsquo; was directly
-                  written into its constitution in 1911 following a proposed
+                  written into the British Boxing Board of Control&rsquo;s
+                  constitution in 1911 following a proposed
                   fight for the heavyweight title between the champion, the
                   Black American Jack Johnson and the British white
                   contender, Bombardier Billy Wells.
@@ -322,14 +336,7 @@ export default function StoryPage() {
               </div>
             </div>
 
-            <div className="ls-prose" style={{ marginTop: 'clamp(1.5rem, 4vh, 2rem)', maxWidth: '62ch' }}>
-              <p>
-                Lord Lonsdale, (of Lonsdale Belt fame) president of the
-                National Sporting Club, wrote
-              </p>
-            </div>
-
-            <PullQuote dark attribution="LORD LONSDALE, PRESIDENT OF THE NATIONAL SPORTING CLUB">
+            <PullQuote dark attribution="LORD LONSDALE, PRESIDENT OF THE NATIONAL SPORTING CLUB (OF LONSDALE BELT FAME)">
               &lsquo;So strong was the stand taken by the Home Office that the
               legality of all boxing was made conditional upon the
               non-arrangement of inter-coloured contests.&rsquo;
@@ -401,13 +408,54 @@ export default function StoryPage() {
             </Reveal>
 
             <div className="ls-cols ls-cols-flip" style={{ marginTop: 'clamp(2rem, 5vh, 3rem)' }}>
-              <ArchivePlaceholder label="Fifth Pan-African Congress, 1945" dark />
+              <div>
+                <figure className="ls-plate ls-cut">
+                  <span className="ls-tape" aria-hidden="true" />
+                  <div className="ls-plate-media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/pan-african-congress-delegates.webp"
+                      alt="Delegates at the Fifth Pan-African Congress, Manchester, 1945, seated and standing for a group portrait outdoors"
+                    />
+                  </div>
+                  <figcaption className="ls-cap">
+                    Delegates, Fifth Pan-African Congress, 1945
+                  </figcaption>
+                </figure>
+
+                <figure
+                  className="ls-plate ls-cut ls-cut-alt"
+                  style={{ marginTop: 'clamp(2.5rem, 6vh, 3.5rem)' }}
+                >
+                  <span className="ls-tape" aria-hidden="true" />
+                  <div className="ls-plate-media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/images/pan-african-congress-poster.webp"
+                      alt="Pan-African Congress programme poster: a world gathering of Africans and peoples of African descent, convened in Manchester, 13 to 21 October 1945"
+                    />
+                  </div>
+                  <figcaption className="ls-cap">
+                    Congress programme, 13&ndash;21 October 1945
+                  </figcaption>
+                </figure>
+
+                <p className="label" style={{ marginTop: '1.25rem' }}>
+                  <a
+                    href="https://www.panafricancongress.org/history/the-fifth-pan-african-congress/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Pan African Movement | The Fifth Pan African Congress
+                  </a>
+                </p>
+              </div>
               <div className="ls-prose">
                 <p className="ls-lede ls-drop">
-                  Len&rsquo;s experiences, and a meeting with American singer,
-                  actor and activist, Paul Robeson, politicised Len who
-                  wanted to bring the different communities of Manchester
-                  together and to fight injustice.
+                  Len&rsquo;s experiences, and a friendship with American
+                  singer, actor and activist, Paul Robeson, politicised Len
+                  who wanted to bring the different communities of
+                  Manchester together and to fight injustice.
                 </p>
                 <p>
                   In October 1945 Manchester was decided on as the location

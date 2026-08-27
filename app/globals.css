@@ -3138,12 +3138,9 @@ body.nav-open .scroll-bar {
 .ls-broadsheet p {
   text-align: justify;
   hyphens: auto;
-  /* Tighter than the site's normal reading line (1.75) — a paper column
-     was set dense to save newsprint, and the tighter measure is what makes
-     the block read as authoritative type rather than a web paragraph. Set
-     dense enough that ascenders and descenders from adjacent lines nearly
-     touch — hyphenation and justification are carrying the legibility. */
-  line-height: 1.15;
+  /* Requested at 1.5 — dense enough to read as a set column rather than
+     app copy, but not so tight the lines crowd each other. */
+  line-height: 1.5;
 }
 
 @media (min-width: 880px) {
@@ -3239,15 +3236,23 @@ body.nav-open .scroll-bar {
      runs off the edge of the sheet on the outside, so neither edge lines up
      with the column it nominally sits in. The inside stops about 20px short
      of the text — a picture that crashes into the words is a picture you
-     can't read past, and the copy has to survive the layout. */
+     can't read past, and the copy has to survive the layout.
+
+     The inner overlap is intentionally smaller than the gap it's cutting
+     into (clamp(1.75rem, 4vw, 3.5rem), i.e. 28–56px): -3.25rem (52px) used
+     to outrun that gap at laptop widths just above the 1000px activation
+     point, where 4vw is still only ~35–45px — the photo ran straight over
+     the first letter of every line instead of stopping short of it. -1.75rem
+     stays comfortably under the gap's own minimum, so it never crosses into
+     the text at any width this rule is active. */
   .ls-cols-lead > .ls-plate {
-    margin-left: -3.25rem;
+    margin-left: -1.75rem;
     margin-right: -5rem;
   }
 
   /* Mirrored, for the chapters that lead with the image. */
   .ls-cols-flip > .ls-plate {
-    margin-right: -3.25rem;
+    margin-right: -1.75rem;
     margin-left: -5rem;
   }
 }
