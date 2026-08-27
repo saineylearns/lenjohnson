@@ -101,6 +101,15 @@
    gives a site, and it sidesteps the App Router scroll-to-top conflict this
    block used to carve an exception around. */
 
+/* iOS Safari's vertical rubber-band bounce (overscroll past the top or
+   bottom edge) is what triggers its worst `position: sticky` repaint bug —
+   a stale tile from further down the page flashing in above the sticky nav,
+   even above the status bar, for a frame. Turning off the bounce removes
+   the trigger; it doesn't touch normal in-bounds scrolling on any browser. */
+html {
+  overscroll-behavior-y: none;
+}
+
 body {
   font-family: var(--font-instrument), 'Instrument Sans', -apple-system, sans-serif;
   /* Two offset dot grids plus a fine directional fibre streak, layered over
@@ -691,7 +700,13 @@ body.nav-open .scroll-bar {
      pinned by layout rather than the visual viewport, so it doesn't have
      that failure mode. */
   position: sticky;
-  top: 0;
+  /* -1px, not 0. iOS Safari has a separate, well-documented off-by-one bug
+     where a `sticky` element pinned at exactly `top: 0` can leave a sliver
+     of whatever was scrolled past showing above it for a frame — the browser
+     hasn't yet committed the bar to its stuck position. Parking the sticky
+     threshold 1px above the edge makes it engage a moment earlier and closes
+     that gap; the box-shadow rule below hides the 1px offset. */
+  top: -1px;
   left: 0;
   right: 0;
   z-index: 1000;
