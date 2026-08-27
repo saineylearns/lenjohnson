@@ -101,15 +101,6 @@
    gives a site, and it sidesteps the App Router scroll-to-top conflict this
    block used to carve an exception around. */
 
-/* iOS Safari's vertical rubber-band bounce (overscroll past the top or
-   bottom edge) is what triggers its worst `position: sticky` repaint bug —
-   a stale tile from further down the page flashing in above the sticky nav,
-   even above the status bar, for a frame. Turning off the bounce removes
-   the trigger; it doesn't touch normal in-bounds scrolling on any browser. */
-html {
-  overscroll-behavior-y: none;
-}
-
 body {
   font-family: var(--font-instrument), 'Instrument Sans', -apple-system, sans-serif;
   /* Two offset dot grids plus a fine directional fibre streak, layered over
@@ -681,7 +672,17 @@ h3.display-font {
   width: 100%;
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 100ms linear;
+  /* No transition, deliberately — this is the same fix as `.site-nav`,
+     applied to the element the nav rewrite missed. This bar's JS rewrites
+     `transform` on every single scroll event, and with a transition set,
+     every one of those writes became its own little eased animation on a
+     `position: fixed, top: 0` layer — animating continuously for as long
+     as the page scrolls, including the exact moments Safari runs its own
+     dynamic-toolbar animation. That overlap, not the nav's positioning
+     scheme, is the more likely source of the ghosting: three different
+     nav strategies all failed identically, while this bar sat untouched
+     through every one of them. Writing the value straight, with nothing
+     to ease, removes the second animation from the race. */
 }
 
 /* Hide the scroll progress strip while the mobile menu is open — it sits
