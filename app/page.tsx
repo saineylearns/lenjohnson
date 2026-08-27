@@ -139,22 +139,19 @@ export default function Home() {
             <h3 className="display-font legacy-title">Champions</h3>
           </Link>
 
-          {/* 03 — Handbill. Printed in brick, with the bill for the match
-              pasted onto the left of it — the way a poster goes up with the
-              picture on one side and the type set beside it. */}
+          {/* 03 — Programme. Same object as Champions: a banded head over a
+              full-scale plate, title set below — brought in line with the
+              other three rather than built as its own one-off poster. */}
           <Link href="/events" className="legacy-item legacy-events">
-            <div className="legacy-events-plate">
+            <div className="legacy-band">Programme</div>
+            <div className="archive-image-wrap legacy-media">
               <img
-                src="/images/lenmatchevents.jpeg"
+                src="/images/events/football-event-hero.webp"
                 alt=""
                 className="archive-image"
               />
             </div>
-            <div className="legacy-events-bill">
-              <span className="legacy-meta legacy-meta-invert">Handbill</span>
-              <h3 className="condensed-font legacy-bill-title">Events</h3>
-              <span className="legacy-meta legacy-meta-invert">Manchester</span>
-            </div>
+            <h3 className="display-font legacy-title">Events</h3>
           </Link>
 
           {/* 04 — Plates, clipped to a board. */}

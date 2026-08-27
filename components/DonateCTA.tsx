@@ -12,7 +12,6 @@ export default function DonateCTA() {
   return (
     <section className="donate-cta">
       <div className="donate-cta-inner">
-        <p className="donate-cta-kicker label">Manchester needs a statue</p>
         <h2 className="donate-cta-h display-font">
           GET LEN
           <br />

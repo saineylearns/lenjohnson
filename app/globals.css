@@ -1189,7 +1189,7 @@ body.nav-open .scroll-bar {
 
 .legacy-story   { grid-column: 1; grid-row: 1; }
 .legacy-champions { grid-column: 2; grid-row: 1; }
-.legacy-events  { grid-column: 1; grid-row: 2; width: 70%; }
+.legacy-events  { grid-column: 1; grid-row: 2; }
 .legacy-gallery { grid-column: 2; grid-row: 2; }
 
 /* Deliberate, fixed offsets — the objects were laid down by hand and never
@@ -1258,8 +1258,6 @@ body.nav-open .scroll-bar {
   color: var(--ink-soft);
 }
 
-.legacy-meta-invert { color: rgba(242, 235, 221, 0.85); }
-
 /* 01 — FRONT PAGE. A masthead rule, then the headline, then the plate. */
 .legacy-masthead {
   display: flex;
@@ -1288,56 +1286,9 @@ body.nav-open .scroll-bar {
   text-transform: uppercase;
 }
 
-.legacy-champions .legacy-title {
+.legacy-champions .legacy-title,
+.legacy-events .legacy-title {
   border-top: var(--line);
-}
-
-/* 03 — HANDBILL. Printed in brick, rules top and bottom, set centred the way
-   a fight bill is — with the bill for the match pasted onto the left of it. */
-.legacy-events {
-  flex-direction: row;
-  align-items: stretch;
-  padding: 0;
-  background: var(--brick);
-  color: var(--paper-light);
-  border-color: var(--ink);
-  text-align: center;
-}
-
-/* The pasted-on bill. Ruled off from the type rather than framed, so it reads
-   as part of the same printed sheet and not as a thumbnail in a card. */
-.legacy-events-plate {
-  flex: 0 0 38%;
-  min-width: 0;
-  overflow: hidden;
-  border-right: 2px solid var(--ink);
-}
-
-.legacy-events-plate .archive-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Colour, like the poster it is — the archive grade belongs to the
-     photographs, not to something printed this decade. */
-  filter: none;
-}
-
-.legacy-events-bill {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  min-width: 0;
-  padding: 1.25rem 1rem;
-}
-
-.legacy-bill-title {
-  font-size: clamp(2rem, 5vw, 3.4rem);
-  letter-spacing: 0.04em;
-  border-block: 2px solid rgba(242, 235, 221, 0.6);
-  padding: 0.35rem 1.25rem;
 }
 
 /* 04 — PLATES ON A BOARD. Clipped at the top edge, caption ruled below. */
@@ -1396,9 +1347,7 @@ body.nav-open .scroll-bar {
   .legacy-story { height: 21rem; }
   .legacy-champions { height: 15rem; }
   .legacy-gallery { height: 15rem; }
-  /* Still the shortest of the four, but tall enough that the pasted-on bill
-     reads as a poster rather than a sliver. */
-  .legacy-events { height: 11rem; }
+  .legacy-events { height: 15rem; }
 
   .legacy-gallery:hover,
   .legacy-gallery:focus-visible,
@@ -3954,13 +3903,6 @@ body.nav-open .scroll-bar {
   display: grid;
   justify-items: center;
   gap: 1.5rem;
-}
-
-.donate-cta-kicker {
-  font-family: var(--font-meta);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--ink-soft);
 }
 
 .donate-cta-h {
