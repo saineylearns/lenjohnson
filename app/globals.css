@@ -720,17 +720,22 @@ body.nav-open .scroll-bar {
     inset 0 -4px 0 -1px var(--charcoal),
     inset 0 -6px 0 -5px var(--charcoal);
   transition: background 300ms ease;
-  /* iOS Safari has a known repaint bug with `position: sticky`: the strip of
-     page content that scrolls in behind the bar can fail to repaint at its
-     new offset, so stale pixels are left showing through/under the nav and
-     it reads as the bar "overlapping" content as you scroll. Promoting the
-     bar to its own compositing layer sidesteps WebKit's buggy repaint path
-     for the sticky element entirely. */
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  will-change: transform;
+  /* Deliberately NOT `transform: translateZ(0)` / `will-change: transform` /
+     `backface-visibility: hidden` here, despite those being the standard
+     folklore fix for iOS Safari sticky-repaint jank (this bar carried all
+     three for a while). That trio forces the bar onto its own GPU-composited
+     layer — and it's that promoted layer, combined with `position: sticky`
+     right at the top edge, that Safari's dynamic address bar gets confused
+     by: as the toolbar collapses or expands on scroll, Safari briefly
+     composites a stale bitmap of that layer — a strip of whatever the page
+     looked like a moment earlier — into the space the toolbar is
+     vacating, above the real content and sometimes above the status bar
+     itself. A plain sticky element with no forced layer doesn't get pulled
+     into that separate snapshot path, so it doesn't have this failure mode.
+     If a different, milder repaint glitch shows up later (stale pixels
+     under the bar failing to redraw at their new scroll offset — the
+     original reason this hack was added), that's the one folklore fix
+     doesn't have a good answer for; reach for it again there, not here. */
 }
 
 .site-nav-inner {
