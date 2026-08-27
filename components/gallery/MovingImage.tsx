@@ -7,15 +7,19 @@ import Reveal from '@/components/story/Reveal';
 
 /**
  * Cinema-programme section: posters first, real players only once someone
- * asks for one. A `<iframe>` swapped in on click keeps the initial page
- * light — no YouTube script or player loads until then. Titles aren't
- * invented; each plays under a plain "Film 0N" until the campaign supplies
- * the real ones.
+ * asks for one. An `<iframe>` swapped in on click keeps the initial page
+ * light — no YouTube script or player loads until then.
+ *
+ * The films used to run at 278x156 under the labels FILM 01 to FILM 04 —
+ * smaller than most of the still photographs on the same page, and with
+ * nothing to tell anyone what they were about to watch. They now carry the
+ * title and publisher YouTube itself lists for each video (see
+ * lib/gallery.ts) and print at least 480px wide.
  */
 export default function MovingImage({ films }: { films: YouTubeFilm[] }) {
   return (
     <section className="gal-moving">
-      <p className="label gal-section-kicker">Moving image</p>
+      <h2 className="label gal-section-kicker">Moving image</h2>
       <div className="gal-moving-grid">
         {films.map((film, i) => (
           <Reveal key={film.id} delay={((i % 3) as 0 | 1 | 2)}>
@@ -32,7 +36,10 @@ export default function MovingImage({ films }: { films: YouTubeFilm[] }) {
 
 function YouTubePlayer({ film, index }: { film: YouTubeFilm; index: number }) {
   const [playing, setPlaying] = useState(false);
+  // hqdefault is 480x360 — the largest thumbnail guaranteed to exist for
+  // every video. maxresdefault is bigger but 404s on plenty of uploads.
   const poster = `https://i.ytimg.com/vi/${film.youtubeId}/hqdefault.jpg`;
+  const number = String(index).padStart(2, '0');
 
   return (
     <figure className="gal-film">
@@ -40,7 +47,7 @@ function YouTubePlayer({ film, index }: { film: YouTubeFilm; index: number }) {
         {playing ? (
           <iframe
             src={`https://www.youtube-nocookie.com/embed/${film.youtubeId}?autoplay=1`}
-            title={`Film ${String(index).padStart(2, '0')}`}
+            title={film.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
             className="gal-film-iframe"
@@ -50,15 +57,23 @@ function YouTubePlayer({ film, index }: { film: YouTubeFilm; index: number }) {
             type="button"
             className="gal-film-poster"
             onClick={() => setPlaying(true)}
-            aria-label={`Play film ${String(index).padStart(2, '0')}`}
+            aria-label={`Play “${film.title}” (${film.source})`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={poster} alt="" loading="lazy" className="gal-film-poster-img" />
+            <img src={poster} alt="" loading="lazy" width={480} height={360} className="gal-film-poster-img" />
             <span className="gal-film-play" aria-hidden="true" />
           </button>
         )}
       </div>
-      <figcaption className="gal-caption">Film {String(index).padStart(2, '0')}</figcaption>
+      <figcaption className="gal-film-cap">
+        <span className="label gal-film-num">{number}</span>
+        <span className="gal-film-title">{film.title}</span>
+        <span className="label gal-film-source">
+          <span>{film.source}</span>
+          <span>YouTube</span>
+          {film.duration ? <span>{film.duration}</span> : null}
+        </span>
+      </figcaption>
     </figure>
   );
 }
@@ -91,13 +106,21 @@ function LocalClip() {
               src={BREAKING_BARZ_CLIP.poster}
               alt=""
               loading="lazy"
+              width={1280}
+              height={714}
               className="gal-film-poster-img"
             />
             <span className="gal-film-play" aria-hidden="true" />
           </button>
         )}
       </div>
-      <figcaption className="gal-caption">Breaking Barz</figcaption>
+      <figcaption className="gal-film-cap">
+        <span className="label gal-film-num">05</span>
+        <span className="gal-film-title">Breaking Barz</span>
+        <span className="label gal-film-source">
+          <span>Len Johnson Campaign</span>
+        </span>
+      </figcaption>
     </figure>
   );
 }

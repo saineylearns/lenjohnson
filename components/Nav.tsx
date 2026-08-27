@@ -5,13 +5,19 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { DONATE_URL, EXTERNAL_LINK_PROPS } from '@/lib/links';
 
+// The statue first. The campaign exists to put Len Johnson in bronze in
+// Manchester city centre, and that destination used to sit fifth of six,
+// behind the two emptiest pages on the site. Champions moves to the end
+// until it has real Champions in it. "More information" leaves the bar
+// altogether — it is the vaguest label available and the page it points at
+// is a reference desk, which belongs in the footer with the other
+// reference material, not in a five-item primary nav.
 const NAV_LINKS = [
+  { href: '/statue', label: 'The statue' },
   { href: '/story', label: "Len's story" },
-  { href: '/champions', label: 'Champions' },
   { href: '/events', label: 'Events' },
   { href: '/gallery', label: 'Gallery' },
-  { href: '/statue', label: 'The statue' },
-  { href: '/more-information', label: 'More information' },
+  { href: '/champions', label: 'Champions' },
 ];
 
 // Roughly matches the header's real rendered height (measured precisely
@@ -26,6 +32,8 @@ export default function Nav() {
   const [hidden, setHidden] = useState(false);
   const [navHeight, setNavHeight] = useState(DEFAULT_NAV_HEIGHT);
   const headerRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   // Measure the header's actual height (it varies with the wordmark's
   // clamp()'d font size across breakpoints) and reserve exactly that much
@@ -134,13 +142,67 @@ export default function Nav() {
     };
   }, [menuOpen]);
 
+  // The menu covers the whole viewport, so it has to behave like a modal
+  // dialog and not merely look like one. Escape already closed it; what was
+  // missing was the focus half — tabbing past the last item walked straight
+  // into the page underneath, which is still there, still focusable, and
+  // completely invisible. Focus moves in on open, cycles inside the panel,
+  // and returns to the burger on close.
   useEffect(() => {
     if (!menuOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMenuOpen(false);
+
+    const panel = menuRef.current;
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+
+    // The burger sits at z-index 1000, above the panel's 999 — it is the
+    // dialog's visible close control even though it lives in the header
+    // markup, so it belongs inside the cycle. Without it a keyboard user
+    // trapped in the panel would have Escape and nothing else.
+    const focusable = (): HTMLElement[] => {
+      const inPanel = Array.from(
+        panel?.querySelectorAll<HTMLElement>('a[href], button:not([disabled])') ?? []
+      ).filter((el) => el.getClientRects().length > 0);
+      return toggleRef.current ? [...inPanel, toggleRef.current] : inPanel;
     };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+
+    focusable()[0]?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        return;
+      }
+      if (e.key !== 'Tab') return;
+
+      const items = focusable();
+      if (items.length === 0) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement;
+
+      // Wrap at both ends, and also catch the case where focus has somehow
+      // ended up outside the panel entirely (browser chrome, a stray
+      // programmatic focus) by pulling it back to the first item.
+      const inside = items.includes(active as HTMLElement);
+
+      if (e.shiftKey && (active === first || !inside)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !inside)) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      // Only take focus back if it is still somewhere inside the panel we're
+      // tearing down; if the user has clicked a link, let the new page have it.
+      if (panel?.contains(document.activeElement)) {
+        (toggleRef.current ?? previouslyFocused)?.focus();
+      }
+    };
   }, [menuOpen]);
 
   const isActive = (href: string) =>
@@ -175,11 +237,12 @@ export default function Nav() {
           <a
             href={DONATE_URL}
             {...EXTERNAL_LINK_PROPS}
-            className="pill pill-gold site-nav-donate"
+            className="button site-nav-donate"
           >
             <span>Donate</span>
           </a>
           <button
+            ref={toggleRef}
             type="button"
             className={`site-nav-toggle ${menuOpen ? 'is-open' : ''}`}
             onClick={() => setMenuOpen((open) => !open)}
@@ -211,9 +274,13 @@ export default function Nav() {
         header's own small box instead of the viewport, collapsing the
         overlay down to a sliver behind the burger icon. */}
     <div
+      ref={menuRef}
       id="mobile-menu"
       className={`mobile-menu ${menuOpen ? 'is-open' : ''}`}
       hidden={!menuOpen}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Site menu"
     >
       <ul className="mobile-menu-links">
         {NAV_LINKS.map((link) => (
@@ -228,7 +295,7 @@ export default function Nav() {
           </li>
         ))}
       </ul>
-      <a href={DONATE_URL} {...EXTERNAL_LINK_PROPS} className="pill pill-gold mt-8">
+      <a href={DONATE_URL} {...EXTERNAL_LINK_PROPS} className="button mobile-menu-donate mt-8">
         <span>Donate</span>
       </a>
     </div>

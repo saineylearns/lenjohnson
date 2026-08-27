@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import FlagStripe from './FlagStripe';
+import ArchiveImage from './ArchiveImage';
 
 type PageHeroProps = {
   image: string;
@@ -17,7 +18,7 @@ export default function PageHero({
   return (
     <>
       <section className="hero page-hero">
-        <img src={image} alt={imageAlt} className="hero-bg" />
+        <ArchiveImage src={image} alt={imageAlt} className="hero-bg" sizes="100vw" priority />
         <div className="hero-overlay"></div>
         <div className="hero-content">
           {label ? <p className="label text-gold mb-6 slide-up">{label}</p> : null}

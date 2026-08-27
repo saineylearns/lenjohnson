@@ -89,18 +89,50 @@ export const FEATURED_PHOTO: GalleryPhoto = {
 export const ALL_PHOTOS: GalleryPhoto[] = [FEATURED_PHOTO, ...ARCHIVE_PHOTOS];
 
 // Moving image — YouTube, plus the Breaking Barz clip hosted locally rather
-// than uploaded to YouTube. No titles are supplied yet, so none are
-// invented; each plays as "Film 0N" until the campaign names them.
+// than uploaded to YouTube.
+//
+// These played as "FILM 01" through "FILM 04" because no titles had been
+// supplied and none were going to be invented. They didn't need to be:
+// every one of these films is public, and its title and publisher are
+// published by YouTube itself. The four below are read straight from
+// YouTube's oEmbed endpoint for each video id — not written here, and not
+// paraphrased. `duration` is still open: oEmbed doesn't carry it, so it is
+// optional and simply doesn't print until someone fills it in.
 export type YouTubeFilm = {
   id: string;
   youtubeId: string;
+  title: string;
+  /** The channel that published it — a source line, not a credit. */
+  source: string;
+  /** e.g. "6 min". Omit rather than estimate. */
+  duration?: string;
 };
 
 export const YOUTUBE_FILMS: YouTubeFilm[] = [
-  { id: 'yt-1', youtubeId: 'mubC_K5HCuQ' },
-  { id: 'yt-2', youtubeId: 'myw_W83WD50' },
-  { id: 'yt-3', youtubeId: 'NaIR78fEG2g' },
-  { id: 'yt-4', youtubeId: 'V1GRCML2eig' },
+  {
+    id: 'yt-1',
+    youtubeId: 'mubC_K5HCuQ',
+    title: 'Len Johnson: British Boxing Champion — Drunk History: Black Stories',
+    source: 'Comedy Central UK',
+  },
+  {
+    id: 'yt-2',
+    youtubeId: 'myw_W83WD50',
+    title: 'Breaking Barz: No Dogs, No Blacks, No Irish — Len Johnson',
+    source: 'Baazir',
+  },
+  {
+    id: 'yt-3',
+    youtubeId: 'NaIR78fEG2g',
+    title: 'FC United vs Celebrity Team — the Len Johnson Charity Football Match',
+    source: 'Skiddle',
+  },
+  {
+    id: 'yt-4',
+    youtubeId: 'V1GRCML2eig',
+    title: 'I Played 2 Charity Football Matches In 1 Day',
+    source: 'angryginge13',
+  },
 ];
 
 export const BREAKING_BARZ_CLIP = {

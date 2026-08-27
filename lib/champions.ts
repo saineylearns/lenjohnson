@@ -64,13 +64,13 @@ export type Champion = {
 };
 
 /**
- * No Champions announced yet. While this array is empty the page holds open
- * CHAMPION_SLOTS vacant entries instead — the prompts every Champion will
- * answer, each one reading "Coming soon" — so the section shows the shape of
- * what's coming rather than a placeholder name pretending to be real.
+ * No Champions announced yet. While this array is empty the page renders no
+ * grid at all — the line of copy above it ("Our first Champions are signing
+ * on now…") carries the whole message on its own.
  *
- * Adding the first real Champion is one object in this array; the vacant
- * slots disappear on their own the moment there is anything to show. Shape:
+ * Adding the first real Champion is one object in this array; the grid and
+ * its category filters appear on their own the moment there is anything to
+ * show. Shape:
  *
  *   {
  *     id: 'jane-doe',
@@ -84,9 +84,6 @@ export type Champion = {
  */
 export const CHAMPIONS: Champion[] = [];
 
-/** How many vacant entries to hold open until real Champions land. */
-export const CHAMPION_SLOTS = 6;
-
 export const ALL_CATEGORIES: ChampionCategory[] = [
   'Anti-racism',
   'Community education',
@@ -99,16 +96,19 @@ export const ALL_CATEGORIES: ChampionCategory[] = [
 /**
  * Everyone else who's chipped in — the ledger. Lighter-weight than a full
  * Champion entry: a name and a line about what they did, nothing more, so
- * adding a supporter here is one object, not a whole statement. Two
- * prototype rows, same as the single Jane Doe Champion above — replace with
- * real names as they come in.
+ * adding a supporter here is one object, not a whole statement.
+ *
+ * Emptied deliberately. It previously shipped two prototype rows — "John
+ * Smith — Donated the printing for our first flyers" and "Ardwick Amateur
+ * Boxing Club — Hosted our launch night" — written as examples of the shape
+ * and then published as though they were real supporters, under a heading
+ * reading "And with thanks to". A campaign asking the public for money
+ * cannot invent the people thanking it. The section hides itself while this
+ * array is empty; put real names in and it returns.
  */
 export type Supporter = {
   name: string;
   contribution: string;
 };
 
-export const OTHERS: Supporter[] = [
-  { name: 'John Smith', contribution: 'Donated the printing for our first flyers' },
-  { name: 'Ardwick Amateur Boxing Club', contribution: 'Hosted our launch night' },
-];
+export const OTHERS: Supporter[] = [];

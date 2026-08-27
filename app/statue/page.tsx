@@ -1,68 +1,134 @@
 import type { Metadata } from 'next';
 import FlagStripe from '@/components/FlagStripe';
+import ArchiveImage from '@/components/ArchiveImage';
+import { pageMetadata } from '@/lib/seo';
+import { SITE_URL } from '@/lib/site';
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/statue" },
-  title: "The Statue",
+export const metadata: Metadata = pageMetadata({
+  path: '/statue',
+  title: 'The Statue',
   description:
-    "A public art commission for Manchester city centre: the campaign, the family, the sculptor Taslim Martin, and the maquette that came before the statue.",
-};
+    'A public art commission for Manchester city centre: the campaign, the family, the sculptor Taslim Martin, and the maquette that came before the statue.',
+  image: '/images/main-maquette.webp',
+  imageAlt: "Taslim Martin's maquette of Len Johnson, modelled in clay",
+});
 
 /**
  * The Statue — a public art commission dossier, not a charity landing page.
  * Every paragraph below is reproduced verbatim from copy supplied directly
  * by the campaign: nothing here has been rewritten, shortened or turned
- * into marketing copy. The `01`/`02`/etc. markers, the numbered tally and
- * the marginalia notes are catalogue/UI devices only — they visualise facts
- * already stated in the prose beside them, they don't add to it.
+ * into marketing copy. The `01`/`02`/etc. markers and the commission record
+ * are catalogue/UI devices only — they visualise facts already stated in the
+ * prose beside them, they don't add to it.
  *
  * Where Len's Story page is the biography, this page is the civic project:
  * the record of how Manchester is putting him back into its own streets. It
  * shares the site's type, colour and image treatment but not its layouts —
  * see app/globals.css's `.st-*` rules, scoped the same way `.ev-*` is.
  *
- * One editorial call made without a supplied photograph to back it: the
- * final section names Manchester and "life size" only in bare type, with no
- * city-centre or finished-statue photograph, because no statue exists yet —
- * only the maquette below does. Using an unrelated statue photo there would
- * have implied a fact the copy doesn't support.
+ * The page opens on the maquette. It used to open on 174px of THE STATUE. on
+ * bare cream, followed by a full-bleed studio portrait — a 317x500 file
+ * stretched across 1294px, a 4x upscale that rendered visibly soft — with the
+ * maquette held back until two-thirds down. This is the one page on the site
+ * whose hero has a job type cannot do: show people what they are paying for.
+ * The portrait is gone rather than demoted; Len's likeness now arrives as the
+ * sculpture itself, and again in the boxing photograph further down.
+ *
+ * Still missing, and only the campaign can supply it: dates for the
+ * commission record, the fundraising target and how much is raised, and the
+ * statue's location. The final section names Manchester and "life size" in
+ * bare type because no site has been given to us — and for a fundraising
+ * page, the absence of a place is the absence of the ask.
  */
+/**
+ * The commission, as structured data.
+ *
+ * Every field below is stated in the prose on this page: the sculptor, the
+ * medium, the fact that what exists so far is a maquette rather than the
+ * statue, and who commissioned it. The fields Google would also like — a
+ * date, a location, dimensions — are absent here for the same reason they
+ * are absent from the page: the campaign has not supplied them, and a
+ * structured-data graph is the last place to start guessing, because it is
+ * the copy machines quote back without a reader to sanity-check it.
+ */
+const maquetteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VisualArtwork',
+  name: 'Maquette for the Len Johnson statue',
+  description:
+    'A preliminary clay model of Len Johnson, made ahead of the full-size statue for Manchester.',
+  artform: 'Sculpture',
+  artMedium: 'Clay',
+  artworkSurface: 'Wooden base',
+  image: `${SITE_URL}/images/main-maquette.webp`,
+  creator: {
+    '@type': 'Person',
+    name: 'Taslim Martin',
+    jobTitle: 'Sculptor',
+  },
+  commissioner: {
+    '@type': 'NGO',
+    name: 'Len Johnson Campaign',
+    url: SITE_URL,
+  },
+  about: {
+    '@type': 'Person',
+    name: 'Len Johnson',
+    alternateName: 'Leonard Benker Johnson',
+  },
+};
+
 export default function StatuePage() {
   return (
     <article className="st">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(maquetteJsonLd) }}
+      />
       <header className="st-masthead">
         <div className="st-wide">
-          <p className="label st-masthead-top">
-            <span>Statue</span>
-            <span>01</span>
-          </p>
-          <h1 className="display-font st-masthead-h">
-            THE
-            <br />
-            STATUE.
-          </h1>
-          <p className="label st-masthead-meta">
-            <span>Len Johnson</span>
-            <span>Manchester</span>
-            <span>Public art</span>
-          </p>
+          <div className="st-masthead-grid">
+            <div>
+              <p className="label st-masthead-top">
+                <span>Statue</span>
+                <span>01</span>
+              </p>
+              <h1 className="display-font st-masthead-h">
+                THE
+                <br />
+                STATUE.
+              </h1>
+              <p className="label st-masthead-meta">
+                <span>Len Johnson</span>
+                <span>Manchester</span>
+                <span>Public art</span>
+              </p>
+            </div>
+
+            {/* The thing being paid for, at the top of the page that asks for
+                the money. In colour: this is clay Taslim Martin is working
+                now, not archive material. */}
+            <figure className="st-masthead-plate">
+              <div className="archive-image-wrap is-colour">
+                <ArchiveImage
+                  src="/images/main-maquette.webp"
+                  alt="Taslim Martin's clay maquette of Len Johnson, in a boxing stance on a wooden base"
+                  className="archive-image"
+                  sizes="(max-width: 820px) 100vw, 44vw"
+                  priority
+                />
+              </div>
+              <figcaption className="label st-masthead-credit">
+                <span>Taslim Martin</span>
+                <span>Maquette</span>
+                <span>Clay</span>
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </header>
 
       <FlagStripe />
-
-      {/* THE PERSON — encountered before the argument. */}
-      <figure className="st-figure-bleed">
-        <div className="archive-image-wrap" style={{ height: '100%', border: 'none' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/portrait.webp"
-            alt="Len Johnson, studio portrait"
-            className="archive-image"
-          />
-        </div>
-        <figcaption className="archive-caption st-wide">Len Johnson</figcaption>
-      </figure>
 
       {/* 01 — THE IDEA. Two paragraphs of the campaign's political and civic
           argument, each paired with a photograph, the pairing reversed
@@ -70,7 +136,7 @@ export default function StatuePage() {
       <section style={{ paddingTop: 'clamp(3rem, 8vh, 6rem)' }}>
         <div className="st-pair">
           <div className="st-pair-text">
-            <span className="label st-num">01 — The idea</span>
+            <h2 className="label st-num">01 — The idea</h2>
             <div className="st-copy body-md">
               <p>
                 The idea for a statue of Len came from members of the
@@ -84,11 +150,11 @@ export default function StatuePage() {
           </div>
           <figure className="st-pair-image">
             <div className="archive-image-wrap">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <ArchiveImage
                 src="/images/press/archives.webp"
                 alt="Len Johnson greets supporters, from the Working Class Movement Library archive"
                 className="archive-image"
+                sizes="(max-width: 700px) 100vw, 45vw"
               />
             </div>
             <figcaption className="archive-caption">
@@ -100,12 +166,13 @@ export default function StatuePage() {
 
         <div className="st-pair st-pair--reverse" style={{ marginTop: 'clamp(2.5rem, 6vh, 4rem)' }}>
           <figure className="st-pair-image">
-            <div className="archive-image-wrap">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+            {/* A campaign fundraiser, photographed last season. */}
+            <div className="archive-image-wrap is-colour">
+              <ArchiveImage
                 src="/images/charity-match.webp"
                 alt="A young supporter at a Len Johnson Campaign fundraising match, wearing a Show Racism the Red Card shirt"
                 className="archive-image"
+                sizes="(max-width: 700px) 100vw, 45vw"
               />
             </div>
             <figcaption className="archive-caption">
@@ -134,7 +201,7 @@ export default function StatuePage() {
           this block. */}
       <section style={{ paddingTop: 'clamp(3.5rem, 9vh, 7rem)' }}>
         <div className="st-reading">
-          <span className="label st-num">02 — The family</span>
+          <h2 className="label st-num">02 — The family</h2>
           <div className="st-copy body-md">
             <p>
               Len’s family fully support the campaign for a statue. So much
@@ -147,12 +214,11 @@ export default function StatuePage() {
         </div>
       </section>
 
-      {/* 03 — THE SCULPTOR. The commissioning paragraph, then the shortlist
-          fact it contains, visualised as a catalogue tally rather than
-          restated as new copy. */}
+      {/* 03 — THE SCULPTOR. The commissioning paragraph, then the stages it
+          describes, filed as a record rather than restated as new copy. */}
       <section style={{ paddingTop: 'clamp(3.5rem, 9vh, 7rem)' }}>
         <div className="st-reading">
-          <span className="label st-num">03 — The sculptor</span>
+          <h2 className="label st-num">03 — The sculptor</h2>
           <div className="st-copy body-md">
             <p>
               The campaign is now able to move forward with the final
@@ -168,39 +234,104 @@ export default function StatuePage() {
           </div>
         </div>
 
-        <div className="st-tally" role="list" aria-label="The commissioning process, by numbers">
-          <div className="st-tally-item" role="listitem">
-            <span className="condensed-font st-tally-num">6</span>
-            <span className="label st-tally-label">Sculptors shortlisted</span>
-          </div>
-          <div className="st-tally-item" role="listitem">
-            <span className="condensed-font st-tally-num">2</span>
-            <span className="label st-tally-label">Artists shortlisted</span>
-          </div>
-          <div className="st-tally-item" role="listitem">
-            <span className="condensed-font st-tally-num">1</span>
-            <span className="label st-tally-label">Commission awarded</span>
-          </div>
-        </div>
+        {/* THE COMMISSION RECORD. Every line below is a restatement of the
+            paragraph above it — six invited, two shortlisted, Taslim Martin
+            chosen, a maquette commissioned and delivered, a final
+            fundraising push still to run. Nothing is added.
+
+            There are no dates here because the campaign has not given us
+            any. The record wants them: a public art dossier is a dated
+            document, and "shortlist drawn — March 2024" is worth more to a
+            donor than any of this without one. */}
+        <ol className="st-record label" aria-label="The commission, stage by stage">
+          <li className="st-record-row" data-state="done">
+            <span className="st-record-num">01</span>
+            <span className="st-record-stage">
+              Invitations issued
+              <span className="st-record-note">
+                Six sculptors drawn up as a shortlist and formally invited to
+                bid for the commission.
+              </span>
+            </span>
+            <span className="st-record-state">Complete</span>
+          </li>
+          <li className="st-record-row" data-state="done">
+            <span className="st-record-num">02</span>
+            <span className="st-record-stage">
+              Shortlist reduced
+              <span className="st-record-note">Two artists.</span>
+            </span>
+            <span className="st-record-state">Complete</span>
+          </li>
+          <li className="st-record-row" data-state="done">
+            <span className="st-record-num">03</span>
+            <span className="st-record-stage">
+              Commission awarded
+              <span className="st-record-note">
+                Taslim Martin &mdash; a London based sculptor of African and
+                Caribbean heritage.
+              </span>
+            </span>
+            <span className="st-record-state">Complete</span>
+          </li>
+          <li className="st-record-row" data-state="done">
+            <span className="st-record-num">04</span>
+            <span className="st-record-stage">
+              Maquette commissioned
+              <span className="st-record-note">
+                A preliminary model of Len, to test the final statue&rsquo;s
+                design and look before it is made.
+              </span>
+            </span>
+            <span className="st-record-state">Complete</span>
+          </li>
+          <li className="st-record-row" data-state="done">
+            <span className="st-record-num">05</span>
+            <span className="st-record-stage">
+              Maquette delivered
+              <span className="st-record-note">
+                Accepted by the campaign. It is the photograph at the top of
+                this page.
+              </span>
+            </span>
+            <span className="st-record-state">Complete</span>
+          </li>
+          <li className="st-record-row" data-state="open">
+            <span className="st-record-num">06</span>
+            <span className="st-record-stage">
+              Final fundraising push
+              <span className="st-record-note">
+                For the life-size statue, to be unveiled in Manchester city
+                centre.
+              </span>
+            </span>
+            <span className="st-record-state">In progress</span>
+          </li>
+        </ol>
       </section>
 
-      {/* TASLIM MARTIN — the maquette encountered as an object, then the
-          artist dossier. The identifying words below are lifted straight
-          from the paragraph above, not invented. */}
+      {/* TASLIM MARTIN — a second view of the commission, then the artist
+          dossier. The identifying words below are lifted straight from the
+          paragraph above, not invented. */}
       <section className="st-maquette">
-        <p className="label st-maquette-mark">Taslim Martin</p>
+        <h2 className="label st-maquette-mark">Taslim Martin</h2>
         <figure className="st-maquette-frame">
-          <div className="archive-image-wrap">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/main-maquette.webp"
-              alt="The clay maquette of Len Johnson, in a boxing stance, on a wooden base"
+          {/* A second view. The clay at the top of the page is the working
+              model; this is the same figure finished in bronze, photographed
+              out at a ground. Both are the campaign's own, so both are in
+              colour — greyscaling them filed a commission still in progress
+              alongside 1920s press photographs. */}
+          <div className="archive-image-wrap is-colour">
+            <ArchiveImage
+              src="/images/statue.webp"
+              alt="The Len Johnson maquette in a bronze finish, photographed pitchside at a football ground"
               className="archive-image"
+              sizes="(max-width: 900px) 100vw, 50vw"
             />
           </div>
         </figure>
         <p className="label st-maquette-cap">
-          Maquette &mdash; Len Johnson &mdash; preliminary model
+          Maquette &mdash; Len Johnson &mdash; bronze finish
         </p>
         <p className="label st-artist-id">
           <span>London</span>
@@ -210,8 +341,8 @@ export default function StatuePage() {
       </section>
 
       <section style={{ paddingTop: 'clamp(3rem, 8vh, 5rem)' }}>
-        <div className="st-marginalia">
-          <div className="st-marginalia-text st-copy body-md">
+        <div className="st-reading">
+          <div className="st-copy body-md">
             <p>
               Taslim attended Art School in Cardiff and at the Royal College
               of Art in London. He was awarded the Sir Eduardo Paolozzi
@@ -226,23 +357,6 @@ export default function StatuePage() {
               of a younger Len, when he was boxing.
             </p>
           </div>
-          <aside className="st-marginalia-notes" aria-hidden="true">
-            <p className="label st-marginalia-note">
-              Royal College
-              <br />
-              of Art
-            </p>
-            <p className="label st-marginalia-note">
-              British
-              <br />
-              Museum
-            </p>
-            <p className="label st-marginalia-note">
-              Horniman
-              <br />
-              Gallery
-            </p>
-          </aside>
         </div>
       </section>
 
@@ -250,11 +364,11 @@ export default function StatuePage() {
       <section className="st-pivot">
         <figure className="st-pivot-img">
           <div className="archive-image-wrap">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <ArchiveImage
               src="/images/boxing.webp"
               alt="Len Johnson in a boxing stance, early in his career"
               className="archive-image"
+              sizes="(max-width: 900px) 100vw, 40vw"
             />
           </div>
         </figure>

@@ -3,11 +3,16 @@ import FlagStripe from '@/components/FlagStripe';
 import ClickableImage from '@/components/events/ClickableImage';
 import { EVENTS } from '@/lib/events';
 import { CONTACT_EMAIL } from '@/lib/site';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/events" },
-  title: "Events",
-};
+export const metadata: Metadata = pageMetadata({
+  path: '/events',
+  title: 'Events',
+  description:
+    'The campaign register: the FC United Legends match, Knockout Blow!, Breaking Barz and the Len Johnson Community Cup.',
+  image: '/images/events/football-event-hero.webp',
+  imageAlt: 'Len Johnson FC All Stars v FC United Legends at Broadhurst Park',
+});
 
 export default function EventsPage() {
   return (
@@ -45,7 +50,7 @@ export default function EventsPage() {
           nothing in it. */}
       <section className="ev-upcoming">
         <div className="ev-reading">
-          <p className="label ev-section-kicker">What&rsquo;s happening</p>
+          <h2 className="label ev-section-kicker">What&rsquo;s happening</h2>
           <p className="display-font ev-upcoming-h">No events confirmed yet.</p>
           <p className="body-md">
             Dates land here as they&rsquo;re confirmed. If you&rsquo;re
@@ -63,7 +68,7 @@ export default function EventsPage() {
       <section className="ev-archive">
         <div className="ev-archive-w">
           <div className="ev-archive-head">
-            <p className="label ev-section-kicker">From the archive</p>
+            <h2 className="label ev-section-kicker">From the archive</h2>
             <p className="label ev-archive-ref">LJC / EVENTS</p>
           </div>
 
@@ -74,7 +79,6 @@ export default function EventsPage() {
                   <span className="label ev-entry-no">
                     Archive no. {event.archiveNo}
                   </span>
-                  <span className="condensed-font ev-entry-year">{event.year}</span>
                 </div>
                 <hr className="ev-entry-rule" />
                 <h3 className="display-font ev-entry-title">{event.title}</h3>

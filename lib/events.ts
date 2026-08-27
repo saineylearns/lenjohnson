@@ -24,8 +24,6 @@ export type CampaignEvent = {
   id: string;
   /** Archive catalogue number, e.g. "001". Assigned by position below. */
   archiveNo: string;
-  /** The year (or span) as it should print. "n.d." where no date is recorded. */
-  year: string;
   title: string;
   location?: string;
   category?: string;
@@ -67,7 +65,6 @@ export const EVENTS: CampaignEvent[] = [
   {
     id: 'fc-united-legends',
     archiveNo: '001',
-    year: '2021–2026',
     title: 'FC United Legends v Len Johnson All Stars',
     location: 'Broadhurst Park, Manchester',
     category: 'Fundraising & sport',
@@ -163,7 +160,6 @@ export const EVENTS: CampaignEvent[] = [
   {
     id: 'knockout-blow',
     archiveNo: '002',
-    year: 'n.d.',
     title: 'Knockout Blow!',
     location: 'Greater Manchester',
     category: 'Theatre & education',
@@ -203,7 +199,6 @@ export const EVENTS: CampaignEvent[] = [
   {
     id: 'breaking-barz',
     archiveNo: '003',
-    year: '2021',
     title: 'Breaking Barz',
     location: 'Old Abbey Taphouse, Hulme',
     category: 'Community & music',
@@ -241,7 +236,6 @@ export const EVENTS: CampaignEvent[] = [
   {
     id: 'len-johnson-cup',
     archiveNo: '004',
-    year: 'n.d.',
     title: 'The Len Johnson Community Cup',
     location: 'Moss Side Fire Station Boxing Club, Manchester',
     category: 'Community & boxing',

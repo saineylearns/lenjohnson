@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import Reveal from '@/components/story/Reveal';
 import StatCounter from '@/components/story/StatCounter';
 import BoxingRecord from '@/components/story/BoxingRecord';
@@ -7,13 +8,17 @@ import ArchivePlaceholder from '@/components/story/ArchivePlaceholder';
 import StoryTimeline from '@/components/story/StoryTimeline';
 import ArchiveGallery from '@/components/story/ArchiveGallery';
 import SourcesAccordion from '@/components/story/SourcesAccordion';
+import ArchiveImage from '@/components/ArchiveImage';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/story" },
+export const metadata: Metadata = pageMetadata({
+  path: '/story',
   title: "Len's story",
   description:
     "Boxer, socialist organiser, community activist. The life of Len Johnson (1902–1974) — barred from a British title by boxing's colour bar, and the man who broke it outside the ring.",
-};
+  image: '/images/lenstory.png',
+  imageAlt: 'Len Johnson, candid portrait',
+});
 
 const LEGACY_GALLERY = [
   { src: '/images/press/archives.webp', alt: 'Len Johnson greets supporters, from the Working Class Movement Library archive' },
@@ -22,7 +27,12 @@ const LEGACY_GALLERY = [
 ];
 
 /** The sticky marker that runs down the left of every numbered chapter —
-    just the number now, no year or title. */
+    just the number now, no year or title.
+ *
+ *  It stays `aria-hidden`: the same numeral is carried inside each chapter's
+ *  own `<h2>` as visually-hidden text, so the document outline a screen
+ *  reader announces ("Chapter IV. Retirement from Boxing") matches what the
+ *  page shows, without the rail reading out numbers stripped of context. */
 function Rail({ num }: { num: string }) {
   return (
     <div className="ls-rail">
@@ -36,15 +46,13 @@ function Rail({ num }: { num: string }) {
 export default function StoryPage() {
   return (
     <article className="ls">
-      <div className="ls-grain" aria-hidden="true" />
 
       {/* ================================================================= */}
       {/* OPENING — establish the man and his city                          */}
       {/* ================================================================= */}
       <header className="ls-open">
         <div className="ls-open-media" aria-hidden="true">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/portrait.webp" alt="" />
+          <ArchiveImage src="/images/portrait.webp" alt="" sizes="(max-width: 900px) 100vw, 34vw" priority />
         </div>
         <div className="ls-wrap ls-open-inner">
           <p className="label" style={{ color: 'var(--gold)' }}>
@@ -105,10 +113,10 @@ export default function StoryPage() {
             <figure className="ls-plate ls-cut">
               <span className="ls-tape" aria-hidden="true" />
               <div className="ls-plate-media">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <ArchiveImage
                   src="/images/press/archives.webp"
                   alt="Len Johnson greets supporters at a boxing event"
+                  sizes="(max-width: 900px) 100vw, 55vw"
                 />
               </div>
               <figcaption className="ls-cap">
@@ -116,26 +124,33 @@ export default function StoryPage() {
               </figcaption>
             </figure>
           </div>
+
+          {/* The contents page. It used to sit two-thirds of the way down
+              chapter IX as an accordion whose bodies paraphrased prose the
+              reader had already passed; here it is what an index is for —
+              the whole life at a glance, and a way into any part of it. */}
+          <Reveal delay={1}>
+            <StoryTimeline />
+          </Reveal>
         </div>
       </section>
 
       {/* ================================================================= */}
       {/* CHAPTER I — EARLY LIFE                                             */}
       {/* ================================================================= */}
-      <section className="ls-act ls-act-i">
+      <section className="ls-act ls-act-i" id="chapter-i">
         <div className="ls-wrap ls-grid">
           <Rail num="I" />
           <div className="ls-block ls-body">
             <Reveal>
-              <h2 className="ls-h ls-h-sm">Early Life</h2>
+              <h2 className="ls-h ls-h-sm"><span className="visually-hidden">Chapter I. </span>Early Life</h2>
             </Reveal>
 
             <div className="ls-cols ls-cols-flip" style={{ marginTop: 'clamp(2rem, 5vh, 3rem)' }}>
               <figure className="ls-plate ls-cut ls-cut-alt">
                 <span className="ls-tape" aria-hidden="true" />
                 <div className="ls-plate-media">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/images/press/men.webp" alt="A young Len Johnson" />
+                  <ArchiveImage src="/images/press/men.webp" alt="A young Len Johnson" sizes="(max-width: 900px) 100vw, 40vw" />
                 </div>
                 <figcaption className="ls-cap">A young Len Johnson</figcaption>
               </figure>
@@ -172,10 +187,10 @@ export default function StoryPage() {
       {/* ================================================================= */}
       <figure className="ls-bleed">
         <div className="ls-bleed-media">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <ArchiveImage
             src="/images/hero.webp"
             alt="Len Johnson walking a Manchester street with four friends and two greyhounds"
+            sizes="100vw"
           />
         </div>
         <figcaption className="ls-bleed-cap">
@@ -188,13 +203,13 @@ export default function StoryPage() {
       {/* ================================================================= */}
       {/* CHAPTER II — BOXING CAREER                                         */}
       {/* ================================================================= */}
-      <section className="ls-act ls-act-ii ls-after-bleed">
+      <section className="ls-act ls-act-ii ls-after-bleed" id="chapter-ii">
         <div className="ls-wrap ls-grid">
           <Rail num="II" />
           <div className="ls-body">
             <div className="ls-block">
               <Reveal>
-                <h2 className="ls-h">Boxing career</h2>
+                <h2 className="ls-h"><span className="visually-hidden">Chapter II. </span>Boxing career</h2>
               </Reveal>
 
               <div className="ls-prose ls-broadsheet" style={{ marginTop: 'clamp(2rem, 5vh, 3rem)' }}>
@@ -228,10 +243,10 @@ export default function StoryPage() {
                 <figure className="ls-plate ls-cut">
                   <span className="ls-tape" aria-hidden="true" />
                   <div className="ls-plate-media">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <ArchiveImage
                       src="/images/boxing.webp"
                       alt="Len Johnson in a boxing stance, gloved and on guard"
+                      sizes="(max-width: 900px) 100vw, 45vw"
                     />
                   </div>
                   <figcaption className="ls-cap">
@@ -260,11 +275,11 @@ export default function StoryPage() {
                   a new .ls-block — the record comparison and the champions
                   Len beat are one continuous argument, not two chapters. */}
               <Reveal>
-                <h2 className="ls-h" style={{ marginTop: 'clamp(2rem, 5vh, 3rem)' }}>
+                <h3 className="ls-h ls-h-sm" style={{ marginTop: 'clamp(2rem, 5vh, 3rem)' }}>
                   Len beat champions
                   <br />
                   <em>still no belt</em>
-                </h2>
+                </h3>
               </Reveal>
 
               <div className="ls-prose ls-broadsheet" style={{ marginTop: 'clamp(1.75rem, 4vh, 2.5rem)' }}>
@@ -299,12 +314,12 @@ export default function StoryPage() {
       {/* ================================================================= */}
       {/* CHAPTER III — BOXING'S COLOUR BAR                                  */}
       {/* ================================================================= */}
-      <section className="ls-act ls-act-iii">
+      <section className="ls-act ls-act-iii" id="chapter-iii">
         <div className="ls-wrap ls-grid">
           <Rail num="III" />
           <div className="ls-block ls-body">
             <Reveal>
-              <h2 className="ls-h">
+              <h2 className="ls-h"><span className="visually-hidden">Chapter III. </span>
                 Boxing&apos;s
                 <br />
                 <em>colour bar</em>
@@ -361,12 +376,12 @@ export default function StoryPage() {
       {/* ================================================================= */}
       {/* CHAPTER IV — RETIREMENT FROM BOXING                                */}
       {/* ================================================================= */}
-      <section className="ls-act ls-act-iv">
+      <section className="ls-act ls-act-iv" id="chapter-iv">
         <div className="ls-wrap ls-grid">
           <Rail num="IV" />
           <div className="ls-block ls-body">
             <Reveal>
-              <h2 className="ls-h ls-h-sm">Retirement from Boxing</h2>
+              <h2 className="ls-h ls-h-sm"><span className="visually-hidden">Chapter IV. </span>Retirement from Boxing</h2>
             </Reveal>
 
             <div className="ls-prose" style={{ marginTop: 'clamp(1.5rem, 4vh, 2rem)', maxWidth: '62ch' }}>
@@ -395,12 +410,12 @@ export default function StoryPage() {
       {/* ================================================================= */}
       {/* CHAPTER V — PAN-AFRICAN CONGRESS MANCHESTER                        */}
       {/* ================================================================= */}
-      <section className="ls-act ls-act-v">
+      <section className="ls-act ls-act-v" id="chapter-v">
         <div className="ls-wrap ls-grid">
           <Rail num="V" />
           <div className="ls-block ls-body">
             <Reveal>
-              <h2 className="ls-h">
+              <h2 className="ls-h"><span className="visually-hidden">Chapter V. </span>
                 Pan-African Congress
                 <br />
                 <em>Manchester</em>
@@ -412,10 +427,10 @@ export default function StoryPage() {
                 <figure className="ls-plate ls-cut">
                   <span className="ls-tape" aria-hidden="true" />
                   <div className="ls-plate-media">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <ArchiveImage
                       src="/images/pan-african-congress-delegates.webp"
                       alt="Delegates at the Fifth Pan-African Congress, Manchester, 1945, seated and standing for a group portrait outdoors"
+                      sizes="(max-width: 900px) 100vw, 45vw"
                     />
                   </div>
                   <figcaption className="ls-cap">
@@ -429,10 +444,10 @@ export default function StoryPage() {
                 >
                   <span className="ls-tape" aria-hidden="true" />
                   <div className="ls-plate-media">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <ArchiveImage
                       src="/images/pan-african-congress-poster.webp"
                       alt="Pan-African Congress programme poster: a world gathering of Africans and peoples of African descent, convened in Manchester, 13 to 21 October 1945"
+                      sizes="(max-width: 900px) 100vw, 45vw"
                     />
                   </div>
                   <figcaption className="ls-cap">
@@ -476,12 +491,12 @@ export default function StoryPage() {
       {/* CHAPTER VI — NEW INTERNATIONAL SOCIETY AND CLUB AND COMMUNITY      */}
       {/* POLITICS                                                          */}
       {/* ================================================================= */}
-      <section className="ls-act ls-act-vi">
+      <section className="ls-act ls-act-vi" id="chapter-vi">
         <div className="ls-wrap ls-grid">
           <Rail num="VI" />
           <div className="ls-block ls-body">
             <Reveal>
-              <h2 className="ls-h ls-h-sm">
+              <h2 className="ls-h ls-h-sm"><span className="visually-hidden">Chapter VI. </span>
                 New International <em>Society</em>
                 <br />
                 and Club and community politics
@@ -565,12 +580,12 @@ export default function StoryPage() {
       {/* ================================================================= */}
       {/* CHAPTER VII — COMMUNITY ACTIVISM                                   */}
       {/* ================================================================= */}
-      <section className="ls-act ls-act-vii">
+      <section className="ls-act ls-act-vii" id="chapter-vii">
         <div className="ls-wrap ls-grid">
           <Rail num="VII" />
           <div className="ls-block ls-body">
             <Reveal>
-              <h2 className="ls-h ls-h-sm">Community activism</h2>
+              <h2 className="ls-h ls-h-sm"><span className="visually-hidden">Chapter VII. </span>Community activism</h2>
             </Reveal>
 
             <div className="ls-prose ls-broadsheet" style={{ marginTop: 'clamp(1.5rem, 4vh, 2rem)' }}>
@@ -592,12 +607,12 @@ export default function StoryPage() {
       {/* ================================================================= */}
       {/* CHAPTER VIII — BREAKING THE 'COLOUR BAR'                           */}
       {/* ================================================================= */}
-      <section className="ls-act ls-act-viii">
+      <section className="ls-act ls-act-viii" id="chapter-viii">
         <div className="ls-wrap ls-grid">
           <Rail num="VIII" />
           <div className="ls-block ls-body">
             <Reveal>
-              <h2 className="ls-h">
+              <h2 className="ls-h"><span className="visually-hidden">Chapter VIII. </span>
                 Breaking the
                 <br />
                 <em>&lsquo;colour bar&rsquo;</em>
@@ -654,12 +669,12 @@ export default function StoryPage() {
       {/* ================================================================= */}
       {/* CHAPTER IX — INSPIRING FUTURE ACTIVISM                             */}
       {/* ================================================================= */}
-      <section className="ls-act ls-act-ix">
+      <section className="ls-act ls-act-ix" id="chapter-ix">
         <div className="ls-wrap ls-grid">
           <Rail num="IX" />
           <div className="ls-block ls-body">
             <Reveal>
-              <h2 className="ls-h">
+              <h2 className="ls-h"><span className="visually-hidden">Chapter IX. </span>
                 Inspiring future
                 <br />
                 <em>activism</em>
@@ -704,13 +719,24 @@ export default function StoryPage() {
             </div>
             <Reveal delay={1}>
               <div style={{ marginTop: 'clamp(2.5rem, 6vh, 3.5rem)' }}>
-                <StoryTimeline />
-              </div>
-            </Reveal>
-            <Reveal delay={1}>
-              <div style={{ marginTop: 'clamp(2.5rem, 6vh, 3.5rem)' }}>
                 <ArchiveGallery images={LEGACY_GALLERY} />
               </div>
+            </Reveal>
+
+            {/* The story ended here, with nothing after it. A reader who has
+                come the whole length of the page is the one reader most
+                likely to want the campaign, and had to go back to the nav to
+                find it. */}
+            <Reveal delay={1}>
+              <aside className="ls-next">
+                <p className="label ls-next-kicker">Next</p>
+                <p className="display-font ls-next-h">
+                  A statue for Len, <em>in Manchester</em>
+                </p>
+                <Link href="/statue" className="label ls-next-link">
+                  The commission <span aria-hidden="true">&rarr;</span>
+                </Link>
+              </aside>
             </Reveal>
           </div>
         </div>

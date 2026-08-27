@@ -2,6 +2,7 @@
 
 import type { GalleryPhoto } from '@/lib/gallery';
 import Reveal from '@/components/story/Reveal';
+import ArchiveImage from '@/components/ArchiveImage';
 
 /**
  * The archive is art-directed, not a grid: `feature`/`portrait`/`offset`/
@@ -75,8 +76,7 @@ function Plate({
       onClick={() => onOpen(photo)}
       aria-label={`View full size: ${photo.alt}`}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={photo.src} alt={photo.alt} className="gal-photo" loading="lazy" />
+      <ArchiveImage src={photo.src} alt={photo.alt} className="gal-photo" sizes="(max-width: 600px) 50vw, (max-width: 1000px) 33vw, 300px" />
     </button>
   );
 }

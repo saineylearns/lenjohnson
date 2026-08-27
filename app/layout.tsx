@@ -122,9 +122,13 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     images: [
       {
+        // The file's real intrinsic size. It was declared as 1200x630 — the
+        // stock Open Graph ratio, not this image's — and a card whose stated
+        // ratio doesn't match the file it points at gets letterboxed or
+        // cropped by whatever is unfurling the link.
         url: "/images/hero.webp",
-        width: 1200,
-        height: 630,
+        width: 1320,
+        height: 743,
         alt: "Len Johnson with friends in Manchester",
       },
     ],

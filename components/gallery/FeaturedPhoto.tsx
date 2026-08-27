@@ -2,6 +2,7 @@
 
 import type { GalleryPhoto } from '@/lib/gallery';
 import Reveal from '@/components/story/Reveal';
+import ArchiveImage from '@/components/ArchiveImage';
 
 /**
  * One photograph, large, no card. `onOpen` hands the click up to the page
@@ -22,13 +23,12 @@ export default function FeaturedPhoto({
         onClick={onOpen}
         aria-label={`View full size: ${photo.alt}`}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <ArchiveImage
           src={photo.src}
           alt={photo.alt}
           className="gal-photo gal-featured-img"
-          loading="eager"
-          fetchPriority="high"
+          sizes="(max-width: 900px) 100vw, 70vw"
+          priority
         />
       </button>
       {photo.caption && <p className="gal-caption gal-featured-caption">{photo.caption}</p>}

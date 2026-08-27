@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import ArchiveImage from '@/components/ArchiveImage';
 
 export type GalleryImage = {
   src: string;
@@ -101,8 +102,7 @@ export default function ArchiveGallery({ images }: ArchiveGalleryProps) {
             onClick={() => setLightboxIndex(i)}
             aria-label={`View larger: ${image.alt}`}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={image.src} alt={image.alt} />
+            <ArchiveImage src={image.src} alt={image.alt} sizes="(max-width: 600px) 50vw, 280px" />
           </button>
         ))}
       </div>
@@ -170,11 +170,12 @@ export default function ArchiveGallery({ images }: ArchiveGalleryProps) {
                   </button>
                 </>
               ) : null}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <ArchiveImage
                 src={images[lightboxIndex].src}
                 alt={images[lightboxIndex].alt}
                 className="lightbox-image"
+                sizes="92vw"
+                priority
                 onClick={(e) => e.stopPropagation()}
               />
               {images.length > 1 ? (

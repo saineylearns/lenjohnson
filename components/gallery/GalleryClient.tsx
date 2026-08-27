@@ -32,13 +32,17 @@ export default function GalleryClient() {
     <div className="gal">
       <GalleryHero />
 
+      {/* The trailer leads. It used to sit at roughly 75% scroll depth,
+          after the YouTube strip, behind ~600px of empty cream and the
+          single word GALLERY — which meant the first screen of the page
+          about pictures contained no picture at all. */}
+      <FeatureFilm />
+
       <FeaturedPhoto photo={FEATURED_PHOTO} onOpen={() => openPhoto(FEATURED_PHOTO)} />
 
       <PhotoArchive photos={ARCHIVE_PHOTOS} onOpen={openPhoto} />
 
       <MovingImage films={YOUTUBE_FILMS} />
-
-      <FeatureFilm />
 
       <PhotoLightbox
         photos={ALL_PHOTOS}

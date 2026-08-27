@@ -79,6 +79,11 @@ export default function Footer() {
                   Len&apos;s story
                 </Link>
               </li>
+              <li>
+                <Link href="/more-information" className="site-footer-link">
+                  Sources &amp; contact
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { DONATE_URL, EXTERNAL_LINK_PROPS } from '@/lib/links';
+import ArchiveImage from '@/components/ArchiveImage';
+import FlagStripe from '@/components/FlagStripe';
 
 // Title and description come from the root layout's defaults; only the
 // canonical is page-specific, now that the layout no longer declares one
@@ -24,60 +26,61 @@ export default function Home() {
         </div>
 
         <div className="hero-bill">
-          <div className="hero-copy">
-            <h1 className="display-font hero-h">
-              {/* Line breaks collapse without a space in the accessible name,
-                  so the sentence is carried once in readable form. */}
-              <span className="visually-hidden">
-                A boxer who fought racism in the ring and on the streets.
-              </span>
-              <span aria-hidden="true">
-                A BOXER WHO<br />
-                FOUGHT <span className="hero-accent-green">RACISM</span><br />
-                IN THE RING<br />
-                AND ON THE <span className="hero-accent">STREETS.</span>
-              </span>
-            </h1>
-
-            <div className="hero-actions">
-              <a href="#explore" className="button">
-                Discover more <span aria-hidden="true">&darr;</span>
-              </a>
-              <a
-                href={DONATE_URL}
-                {...EXTERNAL_LINK_PROPS}
-                className="button button-quiet"
-              >
-                Support the statue
-              </a>
-            </div>
-          </div>
+          <h1 className="display-font hero-h">
+            {/* Line breaks collapse without a space in the accessible name,
+                so the sentence is carried once in readable form. */}
+            <span className="visually-hidden">
+              A boxer who fought racism in the ring and on the streets.
+            </span>
+            <span aria-hidden="true">
+              A BOXER WHO<br />
+              FOUGHT <span className="hero-accent-green">RACISM</span><br />
+              IN THE RING<br />
+              AND ON THE <span className="hero-accent">STREETS.</span>
+            </span>
+          </h1>
 
           {/* Pushed out of the nominal column so it sits on the page like a
               print pasted onto the sheet rather than a grid cell. */}
           <figure className="hero-plate">
             <div className="archive-image-wrap">
-              <img
+              <ArchiveImage
                 src="/images/hero.webp"
                 alt="Len Johnson with friends, Manchester"
                 className="archive-image"
+                sizes="(max-width: 900px) 100vw, 62vw"
+                priority
               />
             </div>
             <figcaption className="archive-caption">
               Len Johnson with friends, Manchester
             </figcaption>
           </figure>
+
+          {/* A direct child of the bill, not of the headline column. The
+              buttons used to sit under a headline 726px tall on a 1440×800
+              laptop, which put the entire donation path 236px below the fold
+              on first paint. Here they fill the ~440px of dead space that was
+              sitting under the photograph and land above it instead. */}
+          <div className="hero-actions">
+            <a href="#explore" className="button">
+              Discover more <span aria-hidden="true">&darr;</span>
+            </a>
+            <a
+              href={DONATE_URL}
+              {...EXTERNAL_LINK_PROPS}
+              className="button button-quiet"
+            >
+              Support the statue
+            </a>
+          </div>
         </div>
       </section>
 
-      <div className="flag-stripe" aria-hidden="true">
-        <div className="bg-green"></div>
-        <div className="bg-white"></div>
-        <div className="bg-orange"></div>
-        <div className="bg-white"></div>
-        <div className="bg-green"></div>
-        <div className="bg-blue"></div>
-      </div>
+      {/* The same stripe every other page closes its hero with — it was
+          hand-copied here, which is how the home page ended up as the one
+          place that shows the two flags without saying whose they are. */}
+      <FlagStripe />
 
       {/* A LINE OF WRITING, BEFORE THE GRID */}
       <section className="home-note">
@@ -101,11 +104,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* THE ARCHIVE — four destinations, deliberately built as four
-          different printed objects rather than four instances of one card:
-          a front page, a programme, a handbill and a board of plates. The
-          section's descriptive paragraph is the site's existing copy,
-          untouched; the headings and the small mono labels are interface. */}
+      {/* THE ARCHIVE — five destinations. They used to be four cards built as
+          four different printed objects — a front page, two programmes and a
+          board of plates — which made them repetitive in construction and
+          inconsistent in their labelling at the same time: a masthead bar on
+          one, a printed band on two, a meta line in a different place on the
+          fourth. They now share one head bar and one taxonomy, and are told
+          apart by the thing that actually carries meaning — how much of the
+          page each is given. The statue leads because the statue is the
+          point; it was previously not in this index at all. */}
       <section id="explore" className="archive-section">
         <div className="archive-head">
           <p className="label archive-head-kicker">Contents</p>
@@ -116,57 +123,84 @@ export default function Home() {
         </div>
 
         <div className="legacy-grid">
-          {/* 01 — Front page. The lead object: masthead rule, headline, plate. */}
-          <Link href="/story" className="legacy-item legacy-story">
+          {/* 01 — THE LEAD. Full width, and the only card with a photograph of
+              what the money is for. */}
+          <Link href="/statue" className="legacy-item legacy-statue">
             <div className="legacy-masthead">
               <span>File 01</span>
-              <span>1902&ndash;1974</span>
+              <span>The commission</span>
             </div>
             <h3 className="display-font legacy-title legacy-title-lead">
+              The Statue
+            </h3>
+            <div className="archive-image-wrap legacy-media is-colour">
+              <ArchiveImage
+                src="/images/main-maquette.webp"
+                alt=""
+                className="archive-image"
+                sizes="(max-width: 768px) 100vw, 92vw"
+              />
+            </div>
+          </Link>
+
+          {/* 02 — The life. */}
+          <Link href="/story" className="legacy-item legacy-story">
+            <div className="legacy-masthead">
+              <span>File 02</span>
+              <span>1902&ndash;1974</span>
+            </div>
+            <h3 className="display-font legacy-title legacy-title-mid">
               Len&apos;s Story
             </h3>
             <div className="archive-image-wrap legacy-media">
-              <img src="/images/lenstory.png" alt="" className="archive-image" />
+              <ArchiveImage src="/images/lenstory.png" alt="" className="archive-image" sizes="(max-width: 768px) 100vw, 60vw" />
             </div>
           </Link>
 
-          {/* 02 — Programme. Banded head, portrait plate, name set below. */}
+          {/* 03 — Demoted to the narrow column until there is a real Champion
+              to show; the page behind it is still a recruitment page. */}
           <Link href="/champions" className="legacy-item legacy-champions">
-            <div className="legacy-band">Programme</div>
-            <div className="archive-image-wrap legacy-media">
-              <img src="/images/crowd.webp" alt="" className="archive-image" />
+            <div className="legacy-masthead">
+              <span>File 03</span>
+              <span>Supporters</span>
             </div>
             <h3 className="display-font legacy-title">Champions</h3>
+            <div className="archive-image-wrap legacy-media">
+              <ArchiveImage src="/images/crowd.webp" alt="" className="archive-image" sizes="(max-width: 768px) 100vw, 35vw" />
+            </div>
           </Link>
 
-          {/* 03 — Programme. Same object as Champions: a banded head over a
-              full-scale plate, title set below — brought in line with the
-              other three rather than built as its own one-off poster. */}
+          {/* 04 — The register. */}
           <Link href="/events" className="legacy-item legacy-events">
-            <div className="legacy-band">Programme</div>
-            <div className="archive-image-wrap legacy-media">
-              <img
+            <div className="legacy-masthead">
+              <span>File 04</span>
+              <span>Register</span>
+            </div>
+            <h3 className="display-font legacy-title legacy-title-mid">Events</h3>
+            <div className="archive-image-wrap legacy-media is-colour">
+              <ArchiveImage
                 src="/images/events/football-event-hero.webp"
                 alt=""
                 className="archive-image"
+                sizes="(max-width: 768px) 100vw, 60vw"
               />
             </div>
-            <h3 className="display-font legacy-title">Events</h3>
           </Link>
 
-          {/* 04 — Plates, clipped to a board. */}
+          {/* 05 — The plates. */}
           <Link href="/gallery" className="legacy-item legacy-gallery">
-            <span className="legacy-clip" aria-hidden="true" />
-            <div className="archive-image-wrap legacy-media">
-              <img
+            <div className="legacy-masthead">
+              <span>File 05</span>
+              <span>Plates</span>
+            </div>
+            <h3 className="display-font legacy-title">Gallery</h3>
+            <div className="archive-image-wrap legacy-media is-colour">
+              <ArchiveImage
                 src="/images/charity-match.webp"
                 alt=""
                 className="archive-image"
+                sizes="(max-width: 768px) 100vw, 35vw"
               />
-            </div>
-            <div className="legacy-gallery-foot">
-              <h3 className="display-font legacy-title">Gallery</h3>
-              <span className="legacy-meta">Plates</span>
             </div>
           </Link>
         </div>

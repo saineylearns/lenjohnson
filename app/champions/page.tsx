@@ -4,11 +4,16 @@ import Section from '@/components/Section';
 import ChampionGrid from '@/components/champions/ChampionGrid';
 import { CHAMPIONS, OTHERS } from '@/lib/champions';
 import { CONTACT_EMAIL } from '@/lib/site';
+import { pageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/champions" },
-  title: "Champions for Len",
-};
+export const metadata: Metadata = pageMetadata({
+  path: '/champions',
+  title: 'Champions for Len',
+  description:
+    "Champions fundraise, share their skills, come to our events and help tell Len Johnson's story. The campaign is signing them on now.",
+  image: '/images/crowd.webp',
+  imageAlt: 'Crowd at a Len Johnson Campaign event',
+});
 
 const HOW_TO_HELP = [
   'Helping us fundraise',
@@ -54,7 +59,7 @@ export default function ChampionsPage() {
               "about" copy: a thick inverted band, one shouted headline, and a
               manicule pointing the eye at the "how to help" column. */}
           <div className="champ-recruit stack-loose">
-            <div className="champ-recruit-band">
+            <div className="champ-recruit-band bleed">
               <p className="label">Notice to the community</p>
             </div>
             <h2 className="display-font champ-recruit-h">
@@ -69,7 +74,7 @@ export default function ChampionsPage() {
             {/* WHAT IS A CHAMPION — a full-bleed inverted banner, the same
                 knockout treatment as the headline above, introducing the
                 "pasted notices" below it. */}
-            <div className="champ-what-banner">
+            <div className="champ-what-banner bleed">
               <h3 className="display-font champ-what-banner-h">What is a Champion?</h3>
             </div>
 
@@ -130,6 +135,7 @@ export default function ChampionsPage() {
           </div>
         </Section>
 
+        {OTHERS.length > 0 ? (
         <Section bg="cream">
           {/* THE LEDGER — everyone else, signed on like a gym sign-in sheet
               rather than another row of cards. */}
@@ -150,6 +156,7 @@ export default function ChampionsPage() {
             </ul>
           </div>
         </Section>
+        ) : null}
 
         <Section bg="cream">
           <div className="champ-cta">
@@ -162,7 +169,7 @@ export default function ChampionsPage() {
               organisation, and why you want to become a Champion. Sign-up is
               coming soon — in the meantime, get in touch directly.
             </p>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="pill pill-primary">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="button">
               <span>Get in touch</span>
             </a>
           </div>
