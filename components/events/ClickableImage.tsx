@@ -30,6 +30,31 @@ export default function ClickableImage({
     setMounted(true);
   }, []);
 
+  // Freeze the page behind the lightbox — otherwise a scroll or swipe meant
+  // for the enlarged image reaches the archive register underneath instead,
+  // and the whole page lurches. Compensate for the scrollbar's width so
+  // locking it doesn't shunt the layout sideways.
+  useEffect(() => {
+    if (!open) return;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const html = document.documentElement;
+    const prevHtmlOverflow = html.style.overflow;
+    const { overflow: prevBodyOverflow, paddingRight: prevBodyPadding } = document.body.style;
+    // The scrolling box is the <html> element in most browsers, not <body> —
+    // both need locking or a wheel/touch scroll still reaches the page
+    // behind the lightbox.
+    html.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    if (scrollbarWidth > 0) {
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
+    }
+    return () => {
+      html.style.overflow = prevHtmlOverflow;
+      document.body.style.overflow = prevBodyOverflow;
+      document.body.style.paddingRight = prevBodyPadding;
+    };
+  }, [open]);
+
   // Several plates on this page sit inside a rotated wrapper (the "pinned
   // document" tilt). A `position: fixed` element rendered underneath a
   // transformed ancestor is pinned to that ancestor, not the viewport — so
