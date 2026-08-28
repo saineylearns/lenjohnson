@@ -5,7 +5,6 @@ import StatCounter from '@/components/story/StatCounter';
 import BoxingRecord from '@/components/story/BoxingRecord';
 import PullQuote from '@/components/story/PullQuote';
 import ArchivePlaceholder from '@/components/story/ArchivePlaceholder';
-import StoryTimeline from '@/components/story/StoryTimeline';
 import ArchiveGallery from '@/components/story/ArchiveGallery';
 import SourcesAccordion from '@/components/story/SourcesAccordion';
 import ArchiveImage from '@/components/ArchiveImage';
@@ -125,13 +124,6 @@ export default function StoryPage() {
             </figure>
           </div>
 
-          {/* The contents page. It used to sit two-thirds of the way down
-              chapter IX as an accordion whose bodies paraphrased prose the
-              reader had already passed; here it is what an index is for —
-              the whole life at a glance, and a way into any part of it. */}
-          <Reveal delay={1}>
-            <StoryTimeline />
-          </Reveal>
         </div>
       </section>
 
