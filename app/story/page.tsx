@@ -15,8 +15,11 @@ export const metadata: Metadata = pageMetadata({
   title: "Len's story",
   description:
     "Boxer, socialist organiser, community activist. The life of Len Johnson (1902–1974) — barred from a British title by boxing's colour bar, and the man who broke it outside the ring.",
-  image: '/images/lenstory.png',
-  imageAlt: 'Len Johnson, candid portrait',
+  // lenstory.png is 408×550 — portrait at 3:4, which social platforms render
+  // as a broken thumbnail rather than a summary_large_image card. men.webp is
+  // 800×449 (16:9), already used on this page, and is the right shape.
+  image: '/images/press/men.webp',
+  imageAlt: 'A young Len Johnson',
 });
 
 const LEGACY_GALLERY = [

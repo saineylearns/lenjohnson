@@ -80,6 +80,16 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/events" className="site-footer-link">
+                  Events
+                </Link>
+              </li>
+              <li>
+                <Link href="/gallery" className="site-footer-link">
+                  Gallery
+                </Link>
+              </li>
+              <li>
                 <Link href="/more-information" className="site-footer-link">
                   Sources &amp; contact
                 </Link>
