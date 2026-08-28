@@ -4866,7 +4866,22 @@ a.story-index-link:hover .story-index-event {
 }
 
 .st-close-marks span {
+  /* `white-space: nowrap` prevents `word-break: break-word` on `.display-font`
+     from splitting "MANCHESTER" and "LIFE-SIZE" mid-letter on narrow viewports.
+     The two markers are typographic stamps, not running text — they must never
+     hyphenate or wrap mid-word regardless of column width. */
   font-size: clamp(2rem, 7vw, 5rem);
+  white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+  /* At phone widths the two words can't share a row without mid-word breaks.
+     Stack them instead — each on its own line, full-width, left-aligned.
+     The border pair (top + bottom) still frames the block as before. */
+  .st-close-marks {
+    flex-direction: column;
+    gap: 0.25em;
+  }
 }
 
 .st-close-copy {
