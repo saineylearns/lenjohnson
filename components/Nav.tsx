@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { DONATE_URL, EXTERNAL_LINK_PROPS } from '@/lib/links';
@@ -210,21 +211,125 @@ export default function Nav() {
 
   return (
     <>
-    <header
-      ref={headerRef}
-      className={`site-nav ${scrolled ? 'is-scrolled' : ''} ${hidden ? 'is-hidden' : ''}`}
-    >
-      <nav className="site-nav-inner" aria-label="Main">
-        <Link href="/" className="site-wordmark display-font text-sm">
-          LEN JOHNSON<br />CAMPAIGN
-        </Link>
+      {/* ── DESKTOP SIDEBAR ──────────────────────────────────────────
+          Fixed left column — the broadsheet index rail. Visible on
+          screens wide enough to leave reasonable content space alongside
+          it (≥ 901px). Hidden on narrower viewports; the mobile header
+          takes over there. */}
+      <aside className="site-sidebar" aria-label="Site navigation">
+        <div className="site-sidebar-top">
+          {/* Portrait — square crop, ink border, slight print-registration
+              tilt. Not a circular avatar: this is an archive plate. */}
+          <Link href="/" aria-label="Len Johnson Campaign — home" className="site-sidebar-portrait-link">
+            <div className="site-sidebar-portrait">
+              <Image
+                src="/images/portrait.webp"
+                alt="Len Johnson"
+                width={80}
+                height={80}
+                className="archive-image site-sidebar-portrait-img"
+                priority
+              />
+            </div>
+          </Link>
 
-        <ul className="site-nav-links">
+          <Link href="/" className="site-sidebar-wordmark display-font" aria-label="Home">
+            LEN JOHNSON<br />CAMPAIGN
+          </Link>
+          <p className="site-sidebar-dates label">1902–1974</p>
+
+          <nav aria-label="Main">
+            <ul className="site-sidebar-links">
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`site-sidebar-link label${isActive(link.href) ? ' is-active' : ''}`}
+                    aria-current={isActive(link.href) ? 'page' : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+
+        <div className="site-sidebar-bottom">
+          <a
+            href={DONATE_URL}
+            {...EXTERNAL_LINK_PROPS}
+            className="button site-sidebar-donate"
+          >
+            <span>Donate</span>
+          </a>
+        </div>
+      </aside>
+
+      {/* ── MOBILE HEADER ────────────────────────────────────────────
+          The existing fixed top bar. Hidden at ≥ 901px (the sidebar
+          replaces it). The hide-on-scroll behaviour and all associated
+          scroll/body-lock/focus-trap logic below is mobile-only. */}
+      <header
+        ref={headerRef}
+        className={`site-nav ${scrolled ? 'is-scrolled' : ''} ${hidden ? 'is-hidden' : ''}`}
+      >
+        <nav className="site-nav-inner" aria-label="Main">
+          <Link href="/" className="site-wordmark display-font text-sm">
+            LEN JOHNSON<br />CAMPAIGN
+          </Link>
+
+          <div className="site-nav-actions">
+            <a
+              href={DONATE_URL}
+              {...EXTERNAL_LINK_PROPS}
+              className="button site-nav-donate"
+            >
+              <span>Donate</span>
+            </a>
+            <button
+              ref={toggleRef}
+              type="button"
+              className={`site-nav-toggle ${menuOpen ? 'is-open' : ''}`}
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            >
+              <span className={`burger ${menuOpen ? 'is-open' : ''}`} aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      {/* Height spacer for the fixed mobile header. Hidden on desktop
+          where the sidebar doesn't displace vertical flow. */}
+      <div className="nav-spacer" style={{ height: navHeight }} aria-hidden="true" />
+
+      {/* ── MOBILE MENU OVERLAY ──────────────────────────────────────
+          Full-screen modal: ink ground, paper text, gold DONATE.
+          Rendered as a sibling of the header (not a child) to avoid
+          the transformed-ancestor containing-block problem — see the
+          long comment in the original Nav. */}
+      <div
+        ref={menuRef}
+        id="mobile-menu"
+        className={`mobile-menu ${menuOpen ? 'is-open' : ''}`}
+        hidden={!menuOpen}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site menu"
+      >
+        <ul className="mobile-menu-links">
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`site-nav-link label ${isActive(link.href) ? 'is-active' : ''}`}
+                className="display-font h-small text-white"
                 aria-current={isActive(link.href) ? 'page' : undefined}
               >
                 {link.label}
@@ -232,73 +337,10 @@ export default function Nav() {
             </li>
           ))}
         </ul>
-
-        <div className="site-nav-actions">
-          <a
-            href={DONATE_URL}
-            {...EXTERNAL_LINK_PROPS}
-            className="button site-nav-donate"
-          >
-            <span>Donate</span>
-          </a>
-          <button
-            ref={toggleRef}
-            type="button"
-            className={`site-nav-toggle ${menuOpen ? 'is-open' : ''}`}
-            onClick={() => setMenuOpen((open) => !open)}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-          >
-            <span className={`burger ${menuOpen ? 'is-open' : ''}`} aria-hidden="true">
-              <i />
-              <i />
-              <i />
-            </span>
-          </button>
-        </div>
-      </nav>
-    </header>
-
-    {/* `.site-nav` is `position: fixed`, so it's out of the document flow —
-        without this, the page's first section would sit directly under the
-        very top of the viewport, behind the bar. Kept in sync with the
-        header's real, responsive height via ResizeObserver above rather
-        than a guessed constant. */}
-    <div style={{ height: navHeight }} aria-hidden="true" />
-
-    {/* Rendered as a sibling of the header, not a child of it. `.site-nav`
-        carries a `transform` (the hide/show animation) and a transformed
-        ancestor becomes the containing block for any `position: fixed`
-        descendant — this menu's `inset: 0` would then resolve against the
-        header's own small box instead of the viewport, collapsing the
-        overlay down to a sliver behind the burger icon. */}
-    <div
-      ref={menuRef}
-      id="mobile-menu"
-      className={`mobile-menu ${menuOpen ? 'is-open' : ''}`}
-      hidden={!menuOpen}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Site menu"
-    >
-      <ul className="mobile-menu-links">
-        {NAV_LINKS.map((link) => (
-          <li key={link.href}>
-            <Link
-              href={link.href}
-              className="display-font h-small text-white"
-              aria-current={isActive(link.href) ? 'page' : undefined}
-            >
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <a href={DONATE_URL} {...EXTERNAL_LINK_PROPS} className="button mobile-menu-donate mt-8">
-        <span>Donate</span>
-      </a>
-    </div>
+        <a href={DONATE_URL} {...EXTERNAL_LINK_PROPS} className="button mobile-menu-donate mt-8">
+          <span>Donate</span>
+        </a>
+      </div>
     </>
   );
 }

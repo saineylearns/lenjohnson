@@ -64,6 +64,7 @@
   /* LAYOUT */
   --max-width: 1400px;
   --gutter: clamp(1rem, 3vw, 4rem);
+  --sidebar-w: 220px;
   /* Height of the fixed header bar. It is content-driven rather than set —
      102px at desktop, 108px at 375px, since `.site-nav-inner` keeps the same
      padding at every width and only the wordmark's leading moves. Rounded up
@@ -999,6 +1000,151 @@ body.nav-open .scroll-bar {
     padding: 0.6rem 0.85rem;
     font-size: var(--meta-sm);
   }
+}
+
+/* ── SIDEBAR ──────────────────────────────────────────────────────────────
+   Fixed left column at desktop widths — a broadsheet index rail.
+   - Square portrait at top: archive-filtered, 1px ink border, slight tilt
+   - Wordmark + date range below the portrait
+   - Nav links stacked, IBM Plex Mono uppercase, no icons
+   - DONATE button anchored at the bottom of the column
+
+   Hidden entirely on mobile (≤ 900px); the existing .site-nav top bar
+   takes over there. On desktop the mobile header and its height spacer
+   are hidden in return.
+   ─────────────────────────────────────────────────────────────────────── */
+.site-sidebar {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  /* Hide the mobile top bar — sidebar replaces it. */
+  .site-nav,
+  .nav-spacer {
+    display: none !important;
+  }
+
+  /* Push all page content (main, footer, donate strip) to the right of
+     the fixed sidebar column. */
+  body {
+    padding-left: var(--sidebar-w);
+  }
+
+  .site-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--sidebar-w);
+    background: var(--paper-light);
+    /* Double-rule right border — the broadsheet masthead convention */
+    box-shadow:
+      inset -4px 0 0 -1px var(--ink),
+      inset -6px 0 0 -5px var(--ink);
+    z-index: 100;
+    overflow-y: auto;
+    padding: 1.75rem 1.25rem 1.5rem;
+  }
+}
+
+.site-sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Portrait: square, archive-filtered, 1px ink border + hard shadow.
+   Tilted ~1deg anticlockwise — the print-registration mark the site
+   uses on image plates throughout. */
+.site-sidebar-portrait-link {
+  display: inline-block;
+  transform: rotate(-1deg);
+  transform-origin: bottom left;
+}
+
+.site-sidebar-portrait {
+  width: 80px;
+  height: 80px;
+  border: var(--line);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Crop the tall portrait to a square head shot */
+.site-sidebar-portrait-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center 15%;
+}
+
+.site-sidebar-wordmark {
+  display: block;
+  font-size: 1rem;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+  margin-top: 0.25rem;
+}
+
+.site-sidebar-wordmark:hover { color: var(--brick); }
+
+.site-sidebar-dates {
+  color: var(--ink-soft);
+  margin-top: -0.25rem;
+}
+
+/* Nav list — stacked, ruled between each item like a broadsheet
+   contents page. No icons, ever. */
+.site-sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 0;
+}
+
+.site-sidebar-link {
+  display: block;
+  padding: 0.65rem 0;
+  color: var(--ink);
+  text-decoration: none;
+  border-top: var(--line);
+  opacity: 0.75;
+  transition: color 80ms linear, opacity 80ms linear;
+}
+
+.site-sidebar-links li:last-child .site-sidebar-link {
+  border-bottom: var(--line);
+}
+
+.site-sidebar-link:hover {
+  color: var(--brick);
+  opacity: 1;
+}
+
+.site-sidebar-link.is-active {
+  color: var(--brick);
+  opacity: 1;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
+
+.site-sidebar-bottom {
+  padding-top: 1.5rem;
+}
+
+/* Full-width primary CTA at the bottom of the column. */
+.site-sidebar-donate {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0.65rem 1rem;
 }
 
 /* Plain text pages (privacy). No hero — the nav is `sticky` and already
