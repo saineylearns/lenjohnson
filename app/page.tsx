@@ -118,7 +118,7 @@ export default function Home() {
           <p className="label archive-head-kicker">Contents</p>
           <h2 className="display-font archive-head-h">The Archive</h2>
           <p className="body-md archive-head-note">
-            Dive into his life story, meet the champions supporting the campaign, discover the events that keep his memory alive, and explore the gallery of moments that define this movement.
+            Dive into his life story, discover the events that keep his memory alive, and explore the gallery of moments that define this movement.
           </p>
         </div>
 
@@ -154,19 +154,6 @@ export default function Home() {
             </h3>
             <div className="archive-image-wrap legacy-media">
               <ArchiveImage src="/images/lenstory.png" alt="" className="archive-image" sizes="(max-width: 768px) 100vw, 60vw" />
-            </div>
-          </Link>
-
-          {/* 03 — Demoted to the narrow column until there is a real Champion
-              to show; the page behind it is still a recruitment page. */}
-          <Link href="/champions" className="legacy-item legacy-champions">
-            <div className="legacy-masthead">
-              <span>File 03</span>
-              <span>Supporters</span>
-            </div>
-            <h3 className="display-font legacy-title">Champions</h3>
-            <div className="archive-image-wrap legacy-media">
-              <ArchiveImage src="/images/crowd.webp" alt="" className="archive-image" sizes="(max-width: 768px) 100vw, 35vw" />
             </div>
           </Link>
 
