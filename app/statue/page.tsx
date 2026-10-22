@@ -136,6 +136,10 @@ export default function StatuePage() {
           presses play. playsInline so iOS doesn't force fullscreen. */}
       <section className="st-statement-video">
         <div className="st-wide">
+          <p className="label st-video-kicker">The campaign</p>
+          <h2 className="display-font st-video-h">
+            PUT LEN<br />IN BRONZE.
+          </h2>
           <video
             src="/videos/len-johnson-statement.mp4"
             poster="/images/statement-poster.jpg"

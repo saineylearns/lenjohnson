@@ -4720,6 +4720,20 @@ a.story-index-link:hover .story-index-event {
   padding: clamp(2.5rem, 7vh, 5rem) 0;
 }
 
+.st-video-kicker {
+  text-align: center;
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+
+.st-video-h {
+  text-align: center;
+  font-size: clamp(2.8rem, 8vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+}
+
 .st-video {
   display: block;
   width: 100%;
