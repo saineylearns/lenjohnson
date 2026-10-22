@@ -4714,6 +4714,23 @@ a.story-index-link:hover .story-index-event {
   padding: 0 var(--gutter);
 }
 
+/* Statement video — portrait 9:16 kept to a comfortable column width so it
+   doesn't dominate a wide desktop layout. */
+.st-statement-video {
+  padding: clamp(2.5rem, 7vh, 5rem) 0;
+}
+
+.st-video {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  aspect-ratio: 9 / 16;
+  border: var(--line);
+  box-shadow: var(--shadow-md);
+  background: var(--ink);
+}
+
 /* The reading column every long-form paragraph sits in — deliberately far
    short of the site's 1280px container so prose reads as a printed essay,
    not a full-width web page. */

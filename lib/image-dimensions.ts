@@ -74,6 +74,7 @@ export const IMAGE_DIMENSIONS: Record<string, [number, number]> = {
   '/images/media/charity-match/08-fc-celebration.jpg': [1290, 1590],
   '/images/media/charity-match/09-fc-fans.jpg': [1290, 1517],
   '/images/media/charity-match/10-fc-team-banner.jpg': [1290, 1531],
+  '/images/statement-poster.jpg': [720, 1280],
   '/images/pan-african-congress-delegates.webp': [1600, 960],
   '/images/pan-african-congress-poster.webp': [1600, 2141],
   '/images/portrait.webp': [317, 500],

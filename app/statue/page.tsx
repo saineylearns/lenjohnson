@@ -130,6 +130,23 @@ export default function StatuePage() {
 
       <FlagStripe />
 
+      {/* STATEMENT VIDEO — the campaign announcement, in the campaign's own
+          words. Portrait 9:16 (filmed vertically); max-width keeps it from
+          filling a 1440px desktop column. autoPlay/muted/loop off: the user
+          presses play. playsInline so iOS doesn't force fullscreen. */}
+      <section className="st-statement-video">
+        <div className="st-wide">
+          <video
+            src="/videos/len-johnson-statement.mp4"
+            poster="/images/statement-poster.jpg"
+            controls
+            playsInline
+            preload="metadata"
+            className="st-video"
+          />
+        </div>
+      </section>
+
       {/* 01 — THE IDEA. Two paragraphs of the campaign's political and civic
           argument, each paired with a photograph, the pairing reversed
           between the two so the page doesn't repeat one template. */}
