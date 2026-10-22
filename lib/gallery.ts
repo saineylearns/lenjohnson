@@ -53,21 +53,21 @@ export const ARCHIVE_PHOTOS: GalleryPhoto[] = [
     layout: 'offset',
   },
   {
-    id: 'bb-portrait-1',
-    src: '/images/media/breaking-barz/03-artist.webp',
-    alt: 'A performer on stage at a Breaking Barz night, lit by red and blue stage light',
+    id: 'fc-celebration',
+    src: '/images/media/charity-match/08-fc-celebration.jpg',
+    alt: 'Players rush to celebrate a goal at the Len Johnson charity match',
     layout: 'portrait',
   },
   {
-    id: 'bb-portrait-2',
-    src: '/images/media/breaking-barz/06-artist3.webp',
-    alt: 'A performer connected to Breaking Barz, seated portrait',
+    id: 'fc-fans',
+    src: '/images/media/charity-match/09-fc-fans.jpg',
+    alt: 'A player in a Show Racism the Red Card shirt takes a selfie with fans after the match',
     layout: 'pair',
   },
   {
-    id: 'bb-portrait-3',
-    src: '/images/media/breaking-barz/07-artist4.webp',
-    alt: 'A performer connected to Breaking Barz, portrait under red light',
+    id: 'fc-team-banner',
+    src: '/images/media/charity-match/10-fc-team-banner.jpg',
+    alt: 'The team pose for a group photo in front of a Show Racism the Red Card banner',
     layout: 'pair',
   },
   {
@@ -82,7 +82,6 @@ export const FEATURED_PHOTO: GalleryPhoto = {
   id: 'trophy',
   src: '/images/media/charity-match/03-trophy.webp',
   alt: 'The winning team celebrate with the Len Johnson Cup under a banner reading "Len Johnson Charity Match Winners, 4th May"',
-  caption: 'Len Johnson Charity Match winners, 4 May',
   layout: 'feature',
 };
 

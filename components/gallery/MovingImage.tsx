@@ -65,15 +65,6 @@ function YouTubePlayer({ film, index }: { film: YouTubeFilm; index: number }) {
           </button>
         )}
       </div>
-      <figcaption className="gal-film-cap">
-        <span className="label gal-film-num">{number}</span>
-        <span className="gal-film-title">{film.title}</span>
-        <span className="label gal-film-source">
-          <span>{film.source}</span>
-          <span>YouTube</span>
-          {film.duration ? <span>{film.duration}</span> : null}
-        </span>
-      </figcaption>
     </figure>
   );
 }
@@ -114,13 +105,6 @@ function LocalClip() {
           </button>
         )}
       </div>
-      <figcaption className="gal-film-cap">
-        <span className="label gal-film-num">05</span>
-        <span className="gal-film-title">Breaking Barz</span>
-        <span className="label gal-film-source">
-          <span>Len Johnson Campaign</span>
-        </span>
-      </figcaption>
     </figure>
   );
 }
