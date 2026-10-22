@@ -726,10 +726,10 @@ export default function StoryPage() {
               <aside className="ls-next">
                 <p className="label ls-next-kicker">Next</p>
                 <p className="display-font ls-next-h">
-                  A statue for Len, <em>in Manchester</em>
+                  Events
                 </p>
-                <Link href="/statue" className="label ls-next-link">
-                  The commission <span aria-hidden="true">&rarr;</span>
+                <Link href="/events" className="label ls-next-link">
+                  The register <span aria-hidden="true">&rarr;</span>
                 </Link>
               </aside>
             </Reveal>
