@@ -18,7 +18,6 @@ const NAV_LINKS = [
   { href: '/story', label: "Len's story" },
   { href: '/events', label: 'Events' },
   { href: '/gallery', label: 'Gallery' },
-  { href: '/champions', label: 'Champions' },
 ];
 
 // Roughly matches the header's real rendered height (measured precisely

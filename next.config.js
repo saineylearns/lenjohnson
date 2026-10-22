@@ -21,8 +21,13 @@ const nextConfig = {
     return [
       {
         source: '/get-involved',
-        destination: '/champions',
+        destination: '/',
         permanent: true,
+      },
+      {
+        source: '/champions',
+        destination: '/',
+        permanent: false,
       },
     ];
   },
