@@ -313,8 +313,19 @@ export default function StatuePage() {
             </span>
             <span className="st-record-state">Complete</span>
           </li>
-          <li className="st-record-row" data-state="open">
+          <li className="st-record-row" data-state="done">
             <span className="st-record-num">06</span>
+            <span className="st-record-stage">
+              Statue site secured with Council
+              <span className="st-record-note">
+                Manchester City Council has confirmed the site for the
+                life-size statue in the city centre.
+              </span>
+            </span>
+            <span className="st-record-state">Complete</span>
+          </li>
+          <li className="st-record-row" data-state="open">
+            <span className="st-record-num">07</span>
             <span className="st-record-stage">
               Final fundraising push
               <span className="st-record-note">
