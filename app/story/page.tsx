@@ -729,7 +729,7 @@ export default function StoryPage() {
                   Events
                 </p>
                 <Link href="/events" className="label ls-next-link">
-                  The register <span aria-hidden="true">&rarr;</span>
+                  See all events <span aria-hidden="true">&rarr;</span>
                 </Link>
               </aside>
             </Reveal>
